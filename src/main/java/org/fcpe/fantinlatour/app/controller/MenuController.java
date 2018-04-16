@@ -2,12 +2,8 @@ package org.fcpe.fantinlatour.app.controller;
 
 import java.util.ResourceBundle;
 
-import org.fcpe.fantinlatour.app.context.AppContext;
 import org.fcpe.fantinlatour.app.controller.validator.MenuValidator;
 import org.fcpe.fantinlatour.dao.DataException;
-import org.fcpe.fantinlatour.model.AnneeScolaire;
-import org.fcpe.fantinlatour.model.ClasseFactory;
-import org.fcpe.fantinlatour.model.ConseilLocalConfig;
 import org.fcpe.fantinlatour.model.ConseilLocalEtablissement;
 import org.fcpe.fantinlatour.model.controller.ConseilLocalEtablissementManager;
 import org.fcpe.fantinlatour.model.controller.ConseilLocalEtablissementManagerListener;
@@ -46,14 +42,12 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 	@FXML
 	private MenuBar menuBar;
 	private ViewFactory viewFactory;
-	private AppContext appContext;
+
 	private ConseilLocalEtablissementManager conseilLocalEtablissementManager;
 
 	@FXML
 	private void handleNew(final ActionEvent event) {
-		AnneeScolaire anneeScolaire = new AnneeScolaire(SpringFactory.getService(ClasseFactory.ID),
-				SpringFactory.getService("calendar"), SpringFactory.getService(ConseilLocalConfig.ID));
-		appContext.setAnneeScolaire(anneeScolaire);
+		
 		viewFactory.createStage("newconseillocal", Modality.APPLICATION_MODAL).show();
 
 	}
@@ -68,17 +62,42 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 			exceptionAlertDialog.showAndWait();
 		}
 	}
+	
+	/**
+	 * Handle action related to "Sortir" menu item.
+	 * 
+	 * @param event
+	 *            Event on "Sortir" menu item.
+	 */
+	@FXML
+	private void handleQuit(final ActionEvent event) {
+		System.exit(0);
 
+	}
+
+	/**
+	 * Handle action related to "About" menu item.
+	 * 
+	 * @param event
+	 *            Event on "About" menu item.
+	 */
+	@FXML
+	private void handleAboutAction(final ActionEvent event) {
+		provideAboutFunctionality();
+	}
+
+	@FXML
+	private void handleRenameConseilLocal(final ActionEvent event) {
+		
+		viewFactory.createStage("renameconseillocal", Modality.APPLICATION_MODAL).show();
+	}
 	
 	@FXML
 	private void handleManageMailinglist(final ActionEvent event) {
 		provideUnsupportedFunction();
 	}
 	
-	@FXML
-	private void handleRenameConseilLocal(final ActionEvent event) {
-		provideUnsupportedFunction();
-	}
+	
 	
 	@FXML
 	private void handleDeleteConseilLocal(final ActionEvent event) {
@@ -114,28 +133,7 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 
 	
 
-	/**
-	 * Handle action related to "Sortir" menu item.
-	 * 
-	 * @param event
-	 *            Event on "Sortir" menu item.
-	 */
-	@FXML
-	private void handleQuit(final ActionEvent event) {
-		System.exit(0);
-
-	}
-
-	/**
-	 * Handle action related to "About" menu item.
-	 * 
-	 * @param event
-	 *            Event on "About" menu item.
-	 */
-	@FXML
-	private void handleAboutAction(final ActionEvent event) {
-		provideAboutFunctionality();
-	}
+	
 
 	/**
 	 * Handle action related to input (in this case specifically only responds to
@@ -171,7 +169,6 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 	@Override
 	public void initialize(java.net.URL arg0, ResourceBundle arg1) {
 		viewFactory = SpringFactory.getService(ViewFactory.ID);
-		appContext = SpringFactory.getService(AppContext.ID);
 		conseilLocalEtablissementManager = SpringFactory
 				.getService(ConseilLocalEtablissementManager.ID);
 		

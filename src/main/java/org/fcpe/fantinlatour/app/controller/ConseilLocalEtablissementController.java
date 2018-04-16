@@ -20,6 +20,7 @@ import javafx.scene.control.ComboBox;
 
 public class ConseilLocalEtablissementController extends AbstractConseilLocalController {
 
+
 	private static final String TYPE_ETABLISSEMENT_UNSELECTED = "org.fcpe.fantinlatour.view.newconseillocal.type.tooltip.unselected";
 
 	@FXML
@@ -54,6 +55,7 @@ public class ConseilLocalEtablissementController extends AbstractConseilLocalCon
 
 			conseilLocalEtablissementManager.create(nameTextField.getText(), typeComboBox.getValue(),
 					defaultCheckBox.isSelected());
+			super.execute(event);
 
 		} catch (DataException e) {
 

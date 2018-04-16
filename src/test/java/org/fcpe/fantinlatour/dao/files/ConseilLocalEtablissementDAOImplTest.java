@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -235,6 +236,74 @@ public class ConseilLocalEtablissementDAOImplTest {
 		assertEquals(2,existingConseilEtablissements.size());
 		assertEquals("ConseilLocal1",existingConseilEtablissements.get(0));
 		assertEquals("ConseilLocal2",existingConseilEtablissements.get(1));
+		
+		support.verifyAll();
+	}
+	
+	@Test
+	public void testRenameWhenRenameIsOK() throws DataException {
+		
+		EasyMock.expect(appDirManager.exists())
+		.andReturn(true).anyTimes();
+		EasyMock.expect(appDirManager.getAbsolutePath())
+		.andReturn(FileUtils.getAbsolutePath("userhome", "appRoot/Dir")).anyTimes();
+		File oldFile = ctrl.createMock(File.class);
+
+		EasyMock.expect(
+				fileFactory.create("userhome" + File.separator + "appRoot/Dir" + File.separator  + "oldName.ext"))
+				.andReturn(oldFile);
+		
+		File newFile = ctrl.createMock(File.class);
+
+		EasyMock.expect(
+				fileFactory.create("userhome" + File.separator + "appRoot/Dir" + File.separator  + "newName.ext"))
+				.andReturn(newFile);
+		
+		EasyMock.expect(oldFile.renameTo(newFile))
+				.andReturn(true);
+		
+		
+		support.replayAll();
+		
+		conseilLocalEtablissementDAOImpl.rename("oldName", "newName");
+		
+		support.verifyAll();
+	}
+	
+	@Test
+	public void testRenameWhenRenameOperationFailed()  {
+		
+		EasyMock.expect(appDirManager.exists())
+		.andReturn(true).anyTimes();
+		EasyMock.expect(appDirManager.getAbsolutePath())
+		.andReturn(FileUtils.getAbsolutePath("userhome", "appRoot/Dir")).anyTimes();
+		File oldFile = ctrl.createMock(File.class);
+
+		EasyMock.expect(
+				fileFactory.create("userhome" + File.separator + "appRoot/Dir" + File.separator  + "oldName.ext"))
+				.andReturn(oldFile);
+		
+		File newFile = ctrl.createMock(File.class);
+
+		EasyMock.expect(
+				fileFactory.create("userhome" + File.separator + "appRoot/Dir" + File.separator  + "newName.ext"))
+				.andReturn(newFile);
+		
+		EasyMock.expect(oldFile.renameTo(newFile))
+				.andReturn(false);
+		
+		
+		support.replayAll();
+		
+		try {
+			conseilLocalEtablissementDAOImpl.rename("oldName", "newName");
+			fail("Should throw DataException");
+		} catch (DataException aExp) {
+			assertEquals("org.fcpe.fantinlatour.dao.files.ConseilLocalEtablissementDAOImpl.rename.failed",
+					aExp.getMessage());
+
+		}
+		
 		
 		support.verifyAll();
 	}

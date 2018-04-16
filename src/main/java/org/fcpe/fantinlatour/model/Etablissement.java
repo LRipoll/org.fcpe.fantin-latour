@@ -37,4 +37,9 @@ public class Etablissement {
 		return typeEtablissement;
 	}
 
+	public void setNom(String nom) {
+		this.nom = nom;
+		
+	}
+
 }

@@ -12,6 +12,7 @@ import org.fcpe.fantinlatour.dao.DataException;
 import org.fcpe.fantinlatour.model.ConseilLocalEtablissement;
 import org.fcpe.fantinlatour.model.ConseilLocalEtablissementFactory;
 import org.fcpe.fantinlatour.model.TypeEtablissement;
+import org.fcpe.fantinlatour.service.SpringFactory;
 
 public class ConseilLocalEtablissementDAOImpl extends AbstractFileManager implements ConseilLocalEtablissementDAO {
 
@@ -105,6 +106,15 @@ public class ConseilLocalEtablissementDAOImpl extends AbstractFileManager implem
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public void rename(String oldName, String newName) throws DataException {
+		File file = getFile(oldName);
+		if (!file.renameTo(getFile(newName)))  {
+			throw new DataException(SpringFactory.getMessage("org.fcpe.fantinlatour.dao.files.ConseilLocalEtablissementDAOImpl.rename.failed"), new IOException("Rename failed"));
+		}
+		
 	}
 
 }

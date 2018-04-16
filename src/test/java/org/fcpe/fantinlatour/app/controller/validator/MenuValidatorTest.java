@@ -70,7 +70,7 @@ public class MenuValidatorTest {
 		ctrl = support.createControl();
 
 		Pair<? extends Node> root = createGraph();
-		NodeAdapter adapter = new NodeAdapter(root.node);
+		new NodeAdapter(root.node);
 		menuController = ctrl.createMock(MenuController.class);
 		conseilLocalEtablissementManager = ctrl.createMock(ConseilLocalEtablissementManager.class);
 		menuValidator = new MenuValidator(menuController, menuBar, conseilLocalEtablissementManager);

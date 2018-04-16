@@ -14,6 +14,7 @@ import org.fcpe.fantinlatour.dao.ConseilLocalEtablissementDAO;
 import org.fcpe.fantinlatour.dao.DataException;
 import org.fcpe.fantinlatour.dao.UserPreferencesDAO;
 import org.fcpe.fantinlatour.model.ConseilLocalEtablissement;
+import org.fcpe.fantinlatour.model.Etablissement;
 import org.fcpe.fantinlatour.model.TypeEtablissement;
 import org.junit.Before;
 import org.junit.Test;
@@ -169,6 +170,75 @@ public class ConseilLocalEtablissementManagerTest {
 		support.replayAll();
 
 		conseilLocalEtablissementManager.open("opened");
+		assertSame(conseilLocalEtablissement, conseilLocalEtablissementManager.getCurrentConseilLocalEtablissement());
+		support.verifyAll();
+	}
+	
+	@Test
+	public void testRenameWhenItisNotTheDefault() throws DataException {
+
+		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
+		Etablissement etablissement = ctrl.createMock(Etablissement.class);
+		
+		EasyMock.expect(conseilLocalEtablissement.getEtablissement()).andReturn(etablissement).anyTimes();
+		EasyMock.expect(etablissement.getNom()).andReturn("opened");
+		
+		EasyMock.expect(userPreferencesDAO.getDefaultConseilLocalName()).andReturn("Default");
+
+		EasyMock.expect(conseilLocalEtablissementDAO.load("opened")).andReturn(conseilLocalEtablissement);
+		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
+		EasyMock.expectLastCall().once();
+		
+		conseilLocalEtablissementDAO.rename("opened","newName");
+		EasyMock.expectLastCall().once();
+		
+		etablissement.setNom("newName");
+		EasyMock.expectLastCall().once();
+		
+		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
+		EasyMock.expectLastCall().once();
+		
+		
+		support.replayAll();
+
+		conseilLocalEtablissementManager.open("opened");
+		conseilLocalEtablissementManager.rename("newName");
+		assertSame(conseilLocalEtablissement, conseilLocalEtablissementManager.getCurrentConseilLocalEtablissement());
+		support.verifyAll();
+	}
+	
+	@Test
+	public void testRenameWhenItisTheDefault() throws DataException {
+
+		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
+		Etablissement etablissement = ctrl.createMock(Etablissement.class);
+		
+		EasyMock.expect(conseilLocalEtablissement.getEtablissement()).andReturn(etablissement).anyTimes();
+		EasyMock.expect(etablissement.getNom()).andReturn("opened");
+		
+		EasyMock.expect(userPreferencesDAO.getDefaultConseilLocalName()).andReturn("opened");
+
+		EasyMock.expect(conseilLocalEtablissementDAO.load("opened")).andReturn(conseilLocalEtablissement);
+		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
+		EasyMock.expectLastCall().once();
+		
+		conseilLocalEtablissementDAO.rename("opened","newName");
+		EasyMock.expectLastCall().once();
+		
+		etablissement.setNom("newName");
+		EasyMock.expectLastCall().once();
+		
+		userPreferencesDAO.setDefaultConseilLocalName("newName");
+		EasyMock.expectLastCall().once();
+		
+		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
+		EasyMock.expectLastCall().once();
+		
+		
+		support.replayAll();
+
+		conseilLocalEtablissementManager.open("opened");
+		conseilLocalEtablissementManager.rename("newName");
 		assertSame(conseilLocalEtablissement, conseilLocalEtablissementManager.getCurrentConseilLocalEtablissement());
 		support.verifyAll();
 	}
