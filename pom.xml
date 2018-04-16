@@ -56,6 +56,11 @@
 		<testSourceDirectory>src/test</testSourceDirectory>
 		<plugins>
 			<plugin>
+		      <groupId>com.github.ferstl</groupId>
+		      <artifactId>depgraph-maven-plugin</artifactId>
+		      <version>3.0.1</version>
+		    </plugin>
+			<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>downloads-maven-plugin</artifactId>
 				<version>0.6</version>

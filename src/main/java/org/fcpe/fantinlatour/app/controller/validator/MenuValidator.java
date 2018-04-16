@@ -1,5 +1,7 @@
 package org.fcpe.fantinlatour.app.controller.validator;
 
+import java.util.List;
+
 import org.fcpe.fantinlatour.app.controller.MenuController;
 import org.fcpe.fantinlatour.app.controller.utils.INodeVisitor;
 import org.fcpe.fantinlatour.app.controller.utils.NodeAdapter;
@@ -41,19 +43,23 @@ public class MenuValidator implements ConseilLocalEtablissementManagerListener, 
 	@Override
 	public boolean visit(NodeAdapter nodeAdapter) {
 		
+		
 		if (MENU_CONSEILLOCAL_OPEN.equals(nodeAdapter.idProperty().getValue())) {
 			Menu menu = (Menu) nodeAdapter.getFXObject();
 			try {
-				for(String conseilLocalEtablissement : conseilLocalEtablissementManager.getExistingConseilEtablissements()) {
+				List<String> existingConseilEtablissements = conseilLocalEtablissementManager.getExistingConseilEtablissements();
+				for(String conseilLocalEtablissementName : existingConseilEtablissements) {
 					
-					MenuItem menuItem = new MenuItem(conseilLocalEtablissement);
-					menuItem.setUserData(conseilLocalEtablissement);
+					MenuItem menuItem = new MenuItem(conseilLocalEtablissementName);
+					menuItem.setUserData(conseilLocalEtablissementName);
 					
-					EventHandler<ActionEvent> value = null;
-					//menuItem.setOnAction(value);
-					menuItem.setDisable(conseilLocalEtablissement.equals(selectedConseilLocalEtablissement));
+					
+					menuItem.setOnAction(createOpenHandler());
+					menuItem.setDisable(conseilLocalEtablissementName.equals(selectedConseilLocalEtablissement.getEtablissement().getNom()));
 					menu.getItems().add(menuItem);
+				
 				}
+				//menu.setDisable(existingConseilEtablissements.isEmpty());
 			} catch (DataException e) {
 
 			}
@@ -63,6 +69,15 @@ public class MenuValidator implements ConseilLocalEtablissementManagerListener, 
 			
 		
 		return true;
+	}
+
+	private EventHandler<ActionEvent> createOpenHandler() {
+		return new EventHandler<ActionEvent>() {
+
+            public void handle(ActionEvent event) {
+            		menuController.handleOpen(event);
+            }
+        };
 	}
 
 }

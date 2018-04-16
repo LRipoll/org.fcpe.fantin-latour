@@ -15,7 +15,6 @@ import org.fcpe.fantinlatour.view.AlertDialog;
 import org.fcpe.fantinlatour.view.ViewFactory;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -37,6 +36,10 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 	private static final String ABOUT_TITLE = "about";
 	private static final String APP_PROJECT_VERSION = "org.fcpe.fantinlatour.app.project.version";
 	private static final String ABOUT_HEADER_TEXT = "org.fcpe.fantinlatour.view.about.headerText";
+	
+	private static final String UNIMPLEMENTED_FUNCTION_TITLE = "unimplemented";
+	private static final String UNIMPLEMENTED_HEADER_TEXT = "org.fcpe.fantinlatour.view.unimplemented.headerText";
+	private static final String UNIMPLEMENTED_TEXT = "org.fcpe.fantinlatour.view.unimplemented.text";
 	@FXML
 	private MenuBar menuBar;
 	private ViewFactory viewFactory;
@@ -55,10 +58,50 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 		
 	}
 
+	
+	@FXML
+	private void handleManageMailinglist(final ActionEvent event) {
+		provideUnsupportedFunction();
+	}
+	
+	@FXML
+	private void handleRenameConseilLocal(final ActionEvent event) {
+		provideUnsupportedFunction();
+	}
+	
+	@FXML
+	private void handleDeleteConseilLocal(final ActionEvent event) {
+		provideUnsupportedFunction();
+	}
+	
+	@FXML
+	private void handleSetDefaultConseilLocal(final ActionEvent event) {
+		provideUnsupportedFunction();
+	}
+	
+	@FXML
+	private void handleImportConseilLocal(final ActionEvent event) {
+		provideUnsupportedFunction();
+	}
+	@FXML
+	private void handleExportConseilLocal(final ActionEvent event) {
+		provideUnsupportedFunction();
+	}
+	
 	@FXML
 	private void handleSetMailinglist(final ActionEvent event) {
-		viewFactory.createStage("initMailinglist", Modality.APPLICATION_MODAL).show();
+		provideUnsupportedFunction();
 	}
+	
+	private void provideUnsupportedFunction() {
+		AlertDialog alert = new AlertDialog(new Alert(AlertType.ERROR), UNIMPLEMENTED_FUNCTION_TITLE, UNIMPLEMENTED_HEADER_TEXT,
+				SpringFactory.getMessage(UNIMPLEMENTED_TEXT));
+
+		alert.showAndWait();
+		
+	}
+
+	
 
 	/**
 	 * Handle action related to "Sortir" menu item.
