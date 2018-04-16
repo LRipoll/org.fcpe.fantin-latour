@@ -23,7 +23,7 @@ public class ConseilLocalApp extends Application {
 	 * 
 	 */
 	public ConseilLocalApp() {
-		
+
 	}
 
 	/**
@@ -45,14 +45,11 @@ public class ConseilLocalApp extends Application {
 
 		viewFactory = SpringFactory.getService(ViewFactory.ID);
 		viewFactory.createScene(stage, "main");
-		ConseilLocalEtablissementManager conseilLocalEtablissementManager = SpringFactory.getService(ConseilLocalEtablissementManager.ID);
+		ConseilLocalEtablissementManager conseilLocalEtablissementManager = SpringFactory
+				.getService(ConseilLocalEtablissementManager.ID);
 		conseilLocalEtablissementManager.init();
 		stage.show();
 
-		
-
 	}
-
-	
 
 }
