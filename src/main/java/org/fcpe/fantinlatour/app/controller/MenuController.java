@@ -32,6 +32,10 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 
 	private static final String DELETECONSEILLOCAL_HEADER_TEXT = "org.fcpe.fantinlatour.view.deleteconseillocal.headerText";
 	private static final String DELETECONSEILLOCAL_TEXT = "org.fcpe.fantinlatour.view.deleteconseillocal.text";
+	
+	private static final String SET_DEFAULT_CONSEILLOCAL_HEADER_TEXT = "org.fcpe.fantinlatour.view.setdefaultconseillocal.headerText";
+	private static final String SET_DEFAULT_CONSEILLOCAL_TEXT = "org.fcpe.fantinlatour.view.setdefaultconseillocal.text";
+	
 	private static final String APP_PROJECT_TIMESTAMP = "org.fcpe.fantinlatour.app.project.timestamp";
 	private static final String APP_PROJECT_GROUP_ID = "org.fcpe.fantinlatour.app.project.groupId";
 	private static final String ABOUT_VERSION_TEXT = "org.fcpe.fantinlatour.view.about.versionText";
@@ -44,6 +48,7 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 	private static final String UNIMPLEMENTED_FUNCTION_TITLE = "unimplemented";
 	private static final String UNIMPLEMENTED_HEADER_TEXT = "org.fcpe.fantinlatour.view.unimplemented.headerText";
 	private static final String UNIMPLEMENTED_TEXT = "org.fcpe.fantinlatour.view.unimplemented.text";
+	
 	@FXML
 	private MenuBar menuBar;
 	private ViewFactory viewFactory;
@@ -99,7 +104,6 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 
 	@FXML
 	private void handleDeleteConseilLocal(final ActionEvent event) {
-		
 
 		ConfirmationAlertDialog confirmationAlertDialog = new ConfirmationAlertDialog(new Alert(AlertType.CONFIRMATION),
 				SpringFactory.getMessage(DELETECONSEILLOCAL_HEADER_TEXT),
@@ -120,16 +124,35 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 			}
 		}
 	}
+	
+	@FXML
+	private void handleSetDefaultConseilLocal(final ActionEvent event) {
+		ConfirmationAlertDialog confirmationAlertDialog = new ConfirmationAlertDialog(new Alert(AlertType.CONFIRMATION),
+				SpringFactory.getMessage(SET_DEFAULT_CONSEILLOCAL_HEADER_TEXT),
+				SpringFactory.getMessage(SET_DEFAULT_CONSEILLOCAL_TEXT,
+						new Object[] {
+								conseilLocalEtablissementManager.getCurrentConseilLocalEtablissement()
+										.getEtablissement().getTypeEtablissement(),
+								conseilLocalEtablissementManager.getCurrentConseilLocalEtablissement()
+										.getEtablissement().getNom() }));
+
+		Optional<ButtonType> result = confirmationAlertDialog.showAndWait();
+		if (result.get() == ButtonType.OK) {
+			try {
+				conseilLocalEtablissementManager.setAsDefault();
+			} catch (DataException e) {
+				ExceptionAlertDialog exceptionAlertDialog = new ExceptionAlertDialog(new Alert(AlertType.ERROR), e);
+				exceptionAlertDialog.showAndWait();
+			}
+		}
+	}
 
 	@FXML
 	private void handleManageMailinglist(final ActionEvent event) {
 		provideUnsupportedFunction();
 	}
 
-	@FXML
-	private void handleSetDefaultConseilLocal(final ActionEvent event) {
-		provideUnsupportedFunction();
-	}
+	
 
 	@FXML
 	private void handleImportConseilLocal(final ActionEvent event) {

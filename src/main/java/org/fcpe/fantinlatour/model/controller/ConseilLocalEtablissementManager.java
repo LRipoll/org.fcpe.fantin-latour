@@ -80,7 +80,7 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 	}
 
 	public void init() throws DataException {
-		
+
 		open(userPreferencesDAO.getDefaultConseilLocalName());
 
 	}
@@ -95,28 +95,42 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 			result = conseilLocalEtablissementDAO.load(conseiLocalName);
 		}
 		notifyListeners(result);
-		
+
 	}
 
-	public void rename(String newName)  throws DataException {
+	public void rename(String newName) throws DataException {
 		String oldName = currentConseilLocalEtablissement.getEtablissement().getNom();
-		currentConseilLocalEtablissement = conseilLocalEtablissementDAO.rename(oldName,newName);
-		
+		currentConseilLocalEtablissement = conseilLocalEtablissementDAO.rename(oldName, newName);
+
 		if (oldName.equals(userPreferencesDAO.getDefaultConseilLocalName())) {
 			userPreferencesDAO.setDefaultConseilLocalName(newName);
 			userPreferencesDAO.store();
 		}
 		notifyListeners(currentConseilLocalEtablissement);
-		
+
 	}
 
-	public void delete()  throws DataException {
+	public void delete() throws DataException {
 		String oldName = currentConseilLocalEtablissement.getEtablissement().getNom();
 		conseilLocalEtablissementDAO.delete(oldName);
 		if (oldName.equals(userPreferencesDAO.getDefaultConseilLocalName())) {
 			userPreferencesDAO.setDefaultConseilLocalName(null);
+			userPreferencesDAO.store();
 		}
 		notifyListeners(null);
+
+	}
+
+	public boolean isDefault() throws DataException {
+
+		return currentConseilLocalEtablissement != null && currentConseilLocalEtablissement.getEtablissement().getNom()
+				.equals(userPreferencesDAO.getDefaultConseilLocalName());
+	}
+
+	public void setAsDefault() throws DataException {
+		userPreferencesDAO.setDefaultConseilLocalName(currentConseilLocalEtablissement.getEtablissement().getNom());
+		userPreferencesDAO.store();
+		notifyListeners(currentConseilLocalEtablissement);
 		
 	}
 

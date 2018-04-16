@@ -28,11 +28,13 @@ public class MenuValidator implements ConseilLocalEtablissementManagerListener, 
 	static final String MENUITEM_MAILING_LIST_SETTINGS = "MENUITEM_MAILING_LIST_SETTINGS";
 	static final String MENUITEM_FINANCIAL_IMPORT = "MENUITEM_FINANCIAL_IMPORT";
 	static final String MENUITEM_FINANCIAL_EXPORT = "MENUITEM_FINANCIAL_EXPORT";
-	
+	static final String MENUITEM_CONSEILLOCAL_SET_ASDEFAULT = "MENUITEM_CONSEILLOCAL_SET_ASDEFAULT";
+
 	private static final List<String> OPENED_CONSEIL_LOCAL_DEPENDANTS = new ArrayList<String>(
-		    Arrays.asList( 
-		MENUITEM_CONSEILLOCAL_EXPORT,MENUITEM_CONSEILLOCAL_RENAME,MENUITEM_CONSEILLOCAL_DELETE,MENUITEM_YEAR_CURRENT_IMPORT,MENUITEM_MAILING_LIST_SETTINGS,MENUITEM_FINANCIAL_IMPORT,MENUITEM_FINANCIAL_EXPORT));
-	
+			Arrays.asList(MENUITEM_CONSEILLOCAL_EXPORT, MENUITEM_CONSEILLOCAL_RENAME, MENUITEM_CONSEILLOCAL_DELETE,
+					MENUITEM_YEAR_CURRENT_IMPORT, MENUITEM_MAILING_LIST_SETTINGS, MENUITEM_FINANCIAL_IMPORT,
+					MENUITEM_FINANCIAL_EXPORT));
+
 	private MenuBar menuBar;
 	private ConseilLocalEtablissement selectedConseilLocalEtablissement;
 	private ConseilLocalEtablissementManager conseilLocalEtablissementManager;
@@ -58,6 +60,10 @@ public class MenuValidator implements ConseilLocalEtablissementManagerListener, 
 	@Override
 	public boolean visit(NodeAdapter nodeAdapter) {
 
+		String selectedConseilLocalEtablissementName = null;
+		if (selectedConseilLocalEtablissement != null) {
+			selectedConseilLocalEtablissementName = selectedConseilLocalEtablissement.getEtablissement().getNom();
+		}
 		String nodeID = nodeAdapter.idProperty().getValue();
 		if (MENU_CONSEILLOCAL_OPEN.equals(nodeID)) {
 			Menu menu = (Menu) nodeAdapter.getFXObject();
@@ -65,11 +71,6 @@ public class MenuValidator implements ConseilLocalEtablissementManagerListener, 
 				menu.getItems().clear();
 				List<String> existingConseilEtablissements = conseilLocalEtablissementManager
 						.getExistingConseilEtablissements();
-				String selectedConseilLocalEtablissementName = null;
-				if (selectedConseilLocalEtablissement != null) {
-					selectedConseilLocalEtablissementName = selectedConseilLocalEtablissement.getEtablissement()
-							.getNom();
-				}
 
 				for (String conseilLocalEtablissementName : existingConseilEtablissements) {
 
@@ -89,9 +90,17 @@ public class MenuValidator implements ConseilLocalEtablissementManagerListener, 
 
 			}
 
+		} else if (MENUITEM_CONSEILLOCAL_SET_ASDEFAULT.equals(nodeID)) {
+			MenuItem menu = (MenuItem) nodeAdapter.getFXObject();
+			try {
+				menu.setDisable(
+						(selectedConseilLocalEtablissement == null || conseilLocalEtablissementManager.isDefault()));
+			} catch (DataException e) {
+				
+			}
 		} else if (OPENED_CONSEIL_LOCAL_DEPENDANTS.contains(nodeID)) {
 			MenuItem menu = (MenuItem) nodeAdapter.getFXObject();
-			menu.setDisable(selectedConseilLocalEtablissement==null);
+			menu.setDisable(selectedConseilLocalEtablissement == null);
 		}
 
 		return true;

@@ -55,6 +55,8 @@ public class MenuValidatorTest {
 	private Menu menuOpen;
 
 	private MenuItem menuItemConseilLocalExportMenuItem;
+
+	private MenuItem menuItemConseilLocalSetAsDefaultMenuItem;
 	@Before
 	public void setup() throws InterruptedException {
 
@@ -88,6 +90,8 @@ public class MenuValidatorTest {
 		menuValidator.onSelected(null);
 		assertTrue(menuOpen.isDisable());
 		assertTrue(menuItemConseilLocalExportMenuItem.isDisable());
+		
+		assertTrue(menuItemConseilLocalSetAsDefaultMenuItem.isDisable());
 		assertEquals(0,menuOpen.getItems().size());
 		support.verifyAll();
 		
@@ -101,6 +105,7 @@ public class MenuValidatorTest {
 		support.replayAll();
 		menuValidator.onSelected(null);
 		assertFalse(menuOpen.isDisable());
+		assertTrue(menuItemConseilLocalSetAsDefaultMenuItem.isDisable());
 		assertEquals("ConseilLocal1",menuOpen.getItems().get(0).getUserData());
 		
 		assertFalse(menuOpen.isDisable());
@@ -109,7 +114,7 @@ public class MenuValidatorTest {
 	}
 	
 	@Test
-	public void testMenuValidationAfterSelectedConseil() throws DataException {
+	public void testMenuValidationAfterDefaultSelectedConseil() throws DataException {
 		
 		List<String> list = new ArrayList<String>();
 		list.add("ConseilLocal1");
@@ -119,8 +124,10 @@ public class MenuValidatorTest {
 		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
 		Etablissement etablissement = ctrl.createMock(Etablissement.class);
 		
-		EasyMock.expect(conseilLocalEtablissement.getEtablissement()).andReturn(etablissement);
-		EasyMock.expect(etablissement.getNom()).andReturn("ConseilLocal2");
+		EasyMock.expect(conseilLocalEtablissement.getEtablissement()).andReturn(etablissement).anyTimes();
+		EasyMock.expect(etablissement.getNom()).andReturn("ConseilLocal2").anyTimes();
+		
+		EasyMock.expect(conseilLocalEtablissementManager.isDefault()).andReturn(true);
 		support.replayAll();
 		
 		
@@ -131,6 +138,39 @@ public class MenuValidatorTest {
 		assertEquals("ConseilLocal2",menuOpen.getItems().get(1).getUserData());
 		assertTrue(menuOpen.getItems().get(1).isDisable());
 		assertFalse(menuItemConseilLocalExportMenuItem.isDisable());
+		
+		assertTrue(menuItemConseilLocalSetAsDefaultMenuItem.isDisable());
+		support.verifyAll();
+		
+	}
+	
+	@Test
+	public void testMenuValidationAfterNitDefaultSelectedConseil() throws DataException {
+		
+		List<String> list = new ArrayList<String>();
+		list.add("ConseilLocal1");
+		list.add("ConseilLocal2");
+		EasyMock.expect(conseilLocalEtablissementManager.getExistingConseilEtablissements()).andReturn(list);
+		
+		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
+		Etablissement etablissement = ctrl.createMock(Etablissement.class);
+		
+		EasyMock.expect(conseilLocalEtablissement.getEtablissement()).andReturn(etablissement).anyTimes();
+		EasyMock.expect(etablissement.getNom()).andReturn("ConseilLocal2").anyTimes();
+		
+		EasyMock.expect(conseilLocalEtablissementManager.isDefault()).andReturn(false);
+		support.replayAll();
+		
+		
+		menuValidator.onSelected(conseilLocalEtablissement);
+		assertFalse(menuOpen.isDisable());
+		assertEquals("ConseilLocal1",menuOpen.getItems().get(0).getUserData());
+		assertFalse(menuOpen.getItems().get(0).isDisable());
+		assertEquals("ConseilLocal2",menuOpen.getItems().get(1).getUserData());
+		assertTrue(menuOpen.getItems().get(1).isDisable());
+		assertFalse(menuItemConseilLocalExportMenuItem.isDisable());
+		
+		assertFalse(menuItemConseilLocalSetAsDefaultMenuItem.isDisable());
 		support.verifyAll();
 		
 	}
@@ -174,15 +214,16 @@ public class MenuValidatorTest {
 		menuElement.children.add(subMenuElement);
 		populateSubMenu(subMenu, subMenuElement);
 		
-		 menuItemConseilLocalExportMenuItem = new MenuItem("MenuItem 01"); 
+		menuItemConseilLocalExportMenuItem = new MenuItem("MenuItem 01"); 
 		menuItemConseilLocalExportMenuItem.setId(MenuValidator.MENUITEM_CONSEILLOCAL_EXPORT);
 		
 		menu.getItems().add(menuItemConseilLocalExportMenuItem);
 		menuElement.children.add(new TestModelElement<>(menuItemConseilLocalExportMenuItem));
 		
-		MenuItem item02 = new MenuItem("MenuItem 02"); 
-		menu.getItems().add(item02);
-		menuElement.children.add(new TestModelElement<>(item02));
+		menuItemConseilLocalSetAsDefaultMenuItem = new MenuItem("MenuItem 02"); 
+		menuItemConseilLocalSetAsDefaultMenuItem.setId(MenuValidator.MENUITEM_CONSEILLOCAL_SET_ASDEFAULT);
+		menu.getItems().add(menuItemConseilLocalSetAsDefaultMenuItem);
+		menuElement.children.add(new TestModelElement<>(menuItemConseilLocalSetAsDefaultMenuItem));
 		
 		SeparatorMenuItem separator = new SeparatorMenuItem();
 		menu.getItems().add(separator);
