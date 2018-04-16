@@ -1,0 +1,52 @@
+#windows
+{
+	-fx-background-color: white;
+	 -fx-padding: 20 20 10 20;
+ 
+}
+
+#titre
+{
+
+-fx-font-size : 24px; 
+-fx-font-family: "Arial"; 
+-fx-base: rgb(132, 145, 47); 
+-fx-effect: dropshadow( gaussian , gray , 7 , 0.0 ,  4.0 ,4.0 );
+
+}
+
+.button { 
+        -fx-background-radius: 5,5,5,5; 
+    -fx-padding: 3px 10px 3px 10px;
+    -fx-background-color:       linear-gradient(lavender , lightblue );
+    -fx-border-width: 1 1 1 1;
+     -fx-border-color: blue;
+        -fx-border-radius: 5;
+        -fx-padding: 5 10 5 10;
+       -fx-background-radius: 10; 
+
+}
+
+.button:hover {
+     -fx-background-color:       linear-gradient(orange, snow );
+ 
+}
+
+.gridPane {
+	-fx-background-color: white;
+	 -fx-padding: 40 10 10 10;
+}
+
+.combo-box {
+     -fx-background-radius: 5,5,5,5; 
+    -fx-background-color:       linear-gradient(lavender , lightblue );
+    -fx-border-width: 1 1 1 1;
+     -fx-border-color: blue;
+        -fx-border-radius: 5;
+       -fx-background-radius: 10; 
+
+}
+
+.textFieldError {
+  -fx-control-inner-background: orange;
+}

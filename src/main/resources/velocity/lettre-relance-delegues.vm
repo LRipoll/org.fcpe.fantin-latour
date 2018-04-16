@@ -1,0 +1,53 @@
+#parse("velocity/macros.vm")
+<html>
+	<head>
+		<meta charset="utf-8">
+		#include("velocity/style.vm")
+	</head>
+	<body>
+	
+		Bonjour à toutes et à tous,<br/>
+		<br/>
+		Vous trouverez ci-dessous, un récaptitulatif des personnes qui se sont portées volontaires pour être :
+		 <li><a href="delegues">Candidat en tant que parent délégué au niveau de chaque classe</a></li>
+		 <li><a href="bureau">Au bureau local FCPE</a></li>
+		 <li><a href="ca">Candidat aux élections du conseil d'administration</a></li>
+		 <li><a href="ce">Membre de la commission éducative</a></li>
+		 <br/>
+		 <br/>Un appel à candidature est lancé pour la classe de <B>$anneeScolaire.classesSansCandidat</B> où il n'y a pas de parents délégués mais également dans les classes suivantes : $anneeScolaire.classesAvecUnSeulCandidat
+		 <br/>Volontaire ? merci de renseigner ce <a href="https://goo.gl/forms/VGriyPjoY8mxrsy33">formulaire</a>
+		 <br/>
+		 Par ailleurs un courriel va être envoyé aux candidats des classes où ils sont trop nombreux, à savoir : $anneeScolaire.classesAvecTropDeCandidats
+		<br/>
+		A tous, merci de vérifier, que vos demandes ont bien été prises en compte,<br/>
+		<br/>
+		Cordialement,<br/>
+		Pour le bureau, <br/>
+		Laurent Ripoll, secrétaire du bureau local<br/>
+		
+		<div class="section" id="delegues">
+		<h3>Délégués Parents $anneeScolaire.anneeScolaire</h3>
+		<p>Les parents délégués par classe*</p>
+		#parse("velocity/tableau-delegues.vm")
+      <p>* A noter qu'il peut y avoir jusqu'à 4 parents délégués par classe (2 titulaires et 2 suppléants), la tradition au collège Fantin-Latour voulant qu'il n'y ait en réalité aucune distinction entre les titulaires et les suppléants, ceux-ci faisant en sorte qu'ils ne soient que deux pour assister à chaque conseil de classe.</p>	
+      <p>** Indique quel(s) rôle(s) joue(nt) par ailleurs le délégué; à savoir <B>BU</B> : Membre du Bureau; <B>CA</B> : Candidat au Conseil d'Administration; <B>CE</B> : Membre de la Commission éducative.</p>  
+      <p>Ainsi que vous pouvez le constater :</p>
+	  <li>Il n' y a aucun candidat dans les classes suivantes : $anneeScolaire.classesSansCandidat</li>
+	  <li>Il y a seulement un candidat dans les classes suivantes : $anneeScolaire.classesAvecUnSeulCandidat</li>
+	  <li>Il y a trop de candidats dans les classes suivantes : $anneeScolaire.classesAvecTropDeCandidats.</li> 
+	  A noter que dans ce cas là, dans la mesure où vous ne parvenez pas à vous mettre d'accord entre vous, nous priviligierons les délégués qui se sont engagés par ailleurs afin de les en remercier
+	  </div>
+	  <div class="section" id="bureau">
+	  	<h3>Bureau du conseil local $anneeScolaire.anneeScolaire</h3>
+	  	#parse("velocity/tableau-membres-bureau.vm")
+	  </div>
+	  <div class="section" id="ca">
+	  	<h3>Candidats aux élections du conseil d'administration</h3>
+		#parse("velocity/tableau-membres-conseil-administration.vm")
+      </div>
+      <div class="section" id="ce">
+	  	<h3>Membres de la commission éducative</h3>
+		#parse("velocity/tableau-membres-commission-educative.vm")
+       </div>
+	</body>
+</html>

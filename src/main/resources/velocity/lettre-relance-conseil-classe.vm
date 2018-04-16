@@ -1,0 +1,75 @@
+#parse("velocity/macros.vm")
+<html>
+	<head>
+		<meta charset="utf-8">
+		#include("velocity/style.vm")
+	</head>
+	<body>
+	Bonjour à toutes et à tous,<br/><br/>
+	Les conseils de classes approchent.<br/><br/>
+	Afin de préparer au mieux ces derniers, nous:<br/> 
+	<li>Vous convions à une réunion le lundi 20/11 de 20h00 à 22h30 organisée dans la salle polyvalente du collège</li>
+	<li>Vous fournissons un <a href="https://drive.google.com/file/d/1SWS-c7thOaDONfi9PxedgMWmqgioErqI/view?usp=sharing">modèle de compte rendu de conseil de classes</li>
+	<li>Vous fournissons un <a href="https://drive.google.com/file/d/1SdO5U6f9sWUbOs9KAQY1QZRdLn8dR4u3/view?usp=sharing">modèle de questionnaire</a> à faire remplir par les parents des classes de 3ème</li>
+	<li>Vous fournissons un <a href="https://drive.google.com/file/d/1wH1v5n3TjjvRv0UPEZ-ym-jeTaf14Hst/view?usp=sharing">modèle de questionnaire</a> à faire remplir par les parents des autres classes</li>
+	<li>Vous proposons un <a href="https://doodle.com/poll/736rhmm5advhbsyh">doodle</a> afin de savoir si vous désirez récupérer 30 copies des questionnaires (merci de précisez votre classe)</li>
+	<li>Vous faisons parvenir à nouveau le mail des autres <a href="delegues">parents délégués</a></li>
+	<li>Vous faisons parvenir à nouveau <a href="eleves">la liste des élèves de votre classe</a> avec leurs responsables légaux respectifs ainsi qu'un lien pour envoyer un courriel à ceux qui ont bien voulu nous donner leur adresse électroniqueparents délégués </li>
+	<br/>
+	A noter qu'il vous appartient de décider qui d'entre-vous se rendra au conseil de classe.<br/>
+	<br/>PS : Contrairement aux années précédentes, l'ensemble des élèves de 3ème ne sont pas invités aux conseils de classe, seuls les délégués seront présents.<br/>
+	<br/>	  
+	
+		Cordialement,<br/>
+		Pour le bureau, <br/>
+		Laurent Ripoll, secrétaire du bureau local<br/>
+		
+		<h3>Classe ${classe.niveau}ème${classe.section}</h3>
+		<div class="delegues">
+		<h4>Les parents délégués</h4>
+		<TABLE class="bodyTable" border="0">
+          <TR>
+          	<TH>Nom</TH>
+            <TH>Prénom</TH>
+          </TR>
+        	#foreach( $delegue in $classe.DeleguesVolontaires )
+          <TR class="#isOdd( $foreach.count "a" "b")">
+            <TD>$delegue.responsableLegal.nom</TD>
+            <TD>$delegue.responsableLegal.prenom</TD>
+          </TR>
+         #end
+      </TABLE>
+      Pour écrire aux parents délégués cliquez <a href="mailto:#foreach($courriel in $classe.CourrielsDesDelegues)#if( $foreach.count > 1 ),#end$courriel#end?subject=[fantinlatour][délégués][${classe.niveau}ème${classe.section}]">ici</a>
+		</div>
+		<div class="eleves">
+		<h4>Les élèves et leurs responsables légaux</h4>
+      	<TABLE class="bodyTable" border="0">
+			<TR>
+            		<TH colspan = "2">Elève</TH>
+            		<TH colspan = "2">Responsable légal 1</TH>
+            		<TH colspan = "2">Responsable légal 2</TH>
+          	</TR>
+	        <TR>
+	          	<TH>Nom</TH>
+	            <TH>Prénom</TH>
+	            <TH>Nom</TH>
+	            <TH>Prénom</TH>
+	            <TH>Nom</TH>
+	            <TH>Prénom</TH>
+	          </TR>
+        	#foreach( $eleve in $classe.Eleves )
+          <TR class="#isOdd( $foreach.count "a" "b")">
+            <TD>$eleve.nom</TD>
+            <TD>$eleve.prenom</TD>
+            <TD>$eleve.responsableLegal1.nom</TD>
+            <TD>$eleve.responsableLegal1.prenom</TD>
+            <TD>$eleve.responsableLegal2.nom</TD>
+            <TD>$eleve.responsableLegal2.prenom</TD>
+          </TR>
+         #end
+      </TABLE>
+      Pour écrire à l'ensemble des parents cliquez <a href="mailto:#foreach($courriel in $classe.CourrielsDesDelegues)#if( $foreach.count > 1 ),#end$courriel#end?bcc=#foreach($courriel in $classe.CourrielsDesResponsablesLegaux)#if( $foreach.count > 1 ),#end$courriel#end&subject=[fantinlatour][délégués][${classe.niveau}ème${classe.section}]">ici</a>
+      </div>
+	</body>
+
+</html>

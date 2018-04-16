@@ -1,0 +1,68 @@
+#parse("velocity/macros.vm")
+<html>
+	<head>
+		<meta charset="utf-8">
+		#include("velocity/style.vm")
+	</head>
+	<body>
+	Bonjour à toutes et à tous,<br/>
+		<br/>
+		Nous avons reçu dernièrement la candidature de Sophie Bikoe.
+		Aussi, vous trouverez ci-dessous :
+		 <li><a href="delegues">La liste des parents délégués de votre classe avec un lien pour vous envoyer un courriel</a></li>
+		 <li><a href="eleves">La liste des élèves de votre classe avec leurs responsables légaux respectifs ainsi qu'un lien pour envoyer un courriel à ceux qui ont bien voulu nous donner leur adresse électronique</a></li>
+		 
+		 <br/>
+		Cordialement,<br/>
+		Pour le bureau, <br/>
+		Laurent Ripoll, secrétaire du bureau local<br/>
+		
+		<h3>Classe ${classe.niveau}ème${classe.section}</h3>
+		<div class="delegues">
+		<h4>Les parents délégués</h4>
+		<TABLE class="bodyTable" border="0">
+          <TR>
+          	<TH>Nom</TH>
+            <TH>Prénom</TH>
+          </TR>
+        	#foreach( $delegue in $classe.DeleguesVolontaires )
+          <TR class="#isOdd( $foreach.count "a" "b")">
+            <TD>$delegue.responsableLegal.nom</TD>
+            <TD>$delegue.responsableLegal.prenom</TD>
+          </TR>
+         #end
+      </TABLE>
+      Pour écrire aux parents délégués cliquez <a href="mailto:#foreach($courriel in $classe.CourrielsDesDelegues)#if( $foreach.count > 1 ),#end$courriel#end?subject=[fantinlatour][délégués][${classe.niveau}ème${classe.section}]">ici</a>
+		</div>
+		<div class="eleves">
+		<h4>Les élèves et leurs responsables légaux</h4>
+      	<TABLE class="bodyTable" border="0">
+			<TR>
+            		<TH colspan = "2">Elève</TH>
+            		<TH colspan = "2">Responsable légal 1</TH>
+            		<TH colspan = "2">Responsable légal 2</TH>
+          	</TR>
+	        <TR>
+	          	<TH>Nom</TH>
+	            <TH>Prénom</TH>
+	            <TH>Nom</TH>
+	            <TH>Prénom</TH>
+	            <TH>Nom</TH>
+	            <TH>Prénom</TH>
+	          </TR>
+        	#foreach( $eleve in $classe.Eleves )
+          <TR class="#isOdd( $foreach.count "a" "b")">
+            <TD>$eleve.nom</TD>
+            <TD>$eleve.prenom</TD>
+            <TD>$eleve.responsableLegal1.nom</TD>
+            <TD>$eleve.responsableLegal1.prenom</TD>
+            <TD>$eleve.responsableLegal2.nom</TD>
+            <TD>$eleve.responsableLegal2.prenom</TD>
+          </TR>
+         #end
+      </TABLE>
+      Pour écrire à l'ensemble des parents cliquez <a href="mailto:#foreach($courriel in $classe.CourrielsDesDelegues)#if( $foreach.count > 1 ),#end$courriel#end?bcc=#foreach($courriel in $classe.CourrielsDesResponsablesLegaux)#if( $foreach.count > 1 ),#end$courriel#end&subject=[fantinlatour][délégués][${classe.niveau}ème${classe.section}]">ici</a>
+      </div>
+	</body>
+
+</html>

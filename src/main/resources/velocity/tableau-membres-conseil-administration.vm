@@ -1,0 +1,10 @@
+<TABLE class="bodyTable" border="0">
+	<TR>
+    		<TH>Nom</TH>
+    </TR>
+	#foreach( $membre in $anneeScolaire.conseilLocal.membresConseilAdministration )
+		<TR class="#isOdd( $foreach.count "a" "b")">
+     		<TD>$membre.nom $membre.prenom</TD>
+      	</TR>
+	#end
+</TABLE>

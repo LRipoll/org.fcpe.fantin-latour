@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/util
+      http://www.springframework.org/schema/util/spring-util.xsd
+			http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context.xsd">
+			
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:messages" />
+		<property name="fallbackToSystemLocale" value="false" />
+	</bean>
+	
+	<bean id="propertyPlaceholderConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:app.properties</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="externalPropertyPlaceholderConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations">
+			<list>
+				<value>file:${sys:user.home}/${org.fcpe.fantinlatour.app.context.files.dir.root}/assistant.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	
+	<bean id="viewFactory" class="org.fcpe.fantinlatour.view.ViewFactory"
+		scope="singleton">
+	</bean>
+	
+	<!--  Manager -->
+	<bean id="conseilLocalEtablissementManager" class="org.fcpe.fantinlatour.model.controller.ConseilLocalEtablissementManager"
+		scope="singleton">
+		<constructor-arg ref="conseilLocalEtablissementDAO"/>
+		<constructor-arg ref="userPreferencesDAO"/>
+	</bean>
+	
+	<!--  DAO Files -->
+	<bean id="conseilLocalEtablissementDAO" class="org.fcpe.fantinlatour.dao.files.ConseilLocalEtablissementDAOImpl"
+		scope="singleton">
+		<constructor-arg ref="conseilLocalEtablissementFactory"/>
+		<constructor-arg ref="appDirManager"/>
+		<constructor-arg value="${org.fcpe.fantinlatour.app.context.files.ext}"/>
+		<constructor-arg ref="fileFactory"/>
+		<constructor-arg ref="xmlFileManager"/>
+	</bean>
+	
+	<bean id="conseilLocalEtablissementFactory" class="org.fcpe.fantinlatour.model.ConseilLocalEtablissementFactory"
+		scope="singleton">
+		<constructor-arg ref="etablissementFactory"/>
+	</bean>
+	
+	<bean id="etablissementFactory" class="org.fcpe.fantinlatour.model.EtablissementFactory"
+		scope="singleton">
+	</bean>
+	
+	<bean id="xmlFileManager"  class="org.fcpe.fantinlatour.dao.files.XMLFileManager" scope="singleton">
+		<constructor-arg ref="xstreamMarshaller"/>
+		<constructor-arg ref="xstreamUnmarshaller"/>
+		<constructor-arg ref="fileFactory"/>
+	</bean>
+	<bean id="xstreamMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">  
+	    <!-- -property name="annotatedClasses" value="com.javatpoint.Employee"></property-->  
+	</bean> 
+	<bean id="xstreamUnmarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">    
+	</bean>  
+	
+	<bean id="userPreferencesDAO" class="org.fcpe.fantinlatour.dao.files.UserPreferencesDAOImpl"
+		scope="singleton">
+		<constructor-arg ref="appDirManager"/>
+		<constructor-arg value="${org.fcpe.fantinlatour.app.context.files.default.properties.filename}"/>
+		<constructor-arg ref="fileFactory"/>
+		<constructor-arg ref="persistentPropertiesManager"/>
+	</bean>
+	
+	<bean id="persistentPropertiesManager" class="org.fcpe.fantinlatour.dao.files.PersistentPropertiesManager"
+		scope="singleton">
+		<constructor-arg ref="fileFactory"/>
+		<constructor-arg ref="propertiesPersister"/>
+		<constructor-arg ref="propertiesFactory"/>
+	</bean>
+	
+	<bean id="propertiesPersister" class="org.springframework.util.DefaultPropertiesPersister"
+		scope="singleton">
+	</bean>
+	
+	<bean id="propertiesFactory" class="org.fcpe.fantinlatour.dao.files.PropertiesFactory"
+		scope="singleton">
+	</bean>
+	
+	<bean id="appDirManager" class="org.fcpe.fantinlatour.dao.files.AppDirManager"
+		scope="singleton">
+		<constructor-arg value="${user.home}"/>
+		<constructor-arg value="${org.fcpe.fantinlatour.app.context.files.dir.root}"/>
+		<constructor-arg ref="fileFactory"/>
+	</bean>
+	
+	
+	<bean id="fileFactory" class="org.fcpe.fantinlatour.dao.files.FileFactory"
+		scope="singleton">
+	</bean>
+	<!--  DAO Instances -->
+	
+	<bean id="groupeDeResponsablesLegauxFactoryProvider" class="org.fcpe.fantinlatour.dao.instance.GroupeDeResponsablesLegauxFactoryProvider"
+		scope="singleton">
+	</bean>
+	<bean id="entitesRacineFactoryProvider" class="org.fcpe.fantinlatour.dao.instance.EntitesRacineFactoryProviderImpl"
+		scope="singleton">
+		<constructor-arg ref="groupeDeResponsablesLegauxFactoryProvider" />
+	</bean>
+	<bean id="entitesRacineDAO" class="org.fcpe.fantinlatour.dao.instance.EntitesRacineDAOImpl"
+		scope="singleton">
+		<constructor-arg ref="entitesRacineFactoryProvider" />
+	</bean>
+	
+	<bean id="conseilLocalConfig" class="org.fcpe.fantinlatour.model.ConseilLocalConfigImpl"
+		scope="singleton">
+		<property name="nombreMaximumDeleguesParClasse"
+			value="${college.conseilLocal.classe.nbMaxDeleguesParClasse:2}" />
+		<property name="sigleCommissionEducative"
+			value="${college.conseilLocal.commissionEducative.sigle:CE}" />
+		<property name="sigleConseilAdministration"
+			value="${college.conseilLocal.conseilAdministration.sigle:CA}" />
+		<property name="sigleBureau" value="${college.conseilLocal.bureau.sigle:BU}" />
+		<property name="encodage" value="${college.fichiers.encodage:UTF-8}" />
+	</bean>
+
+	<bean id="velocityEngine"
+		class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+		<property name="velocityProperties">
+			<value>
+				resource.loader=class
+				class.resource.loader.class=org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+			</value>
+		</property>
+	</bean>
+	<bean id="appContext" class="org.fcpe.fantinlatour.app.context.AppContext"
+		scope="singleton">
+	</bean>
+
+	<bean id="eleveFactory" class="org.fcpe.fantinlatour.model.EleveFactory"
+		scope="singleton">
+	</bean>
+	<bean id="calendar"
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="staticMethod">
+			<value>java.util.Calendar.getInstance</value>
+		</property>
+	</bean>
+
+	<bean id="classeFactory" class="org.fcpe.fantinlatour.model.ClasseFactory"
+		scope="singleton">
+		<constructor-arg ref="eleveFactory" />
+
+	</bean>
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:velocity/velocity.properties</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.free.fr" />
+		<property name="port" value="25" />
+		<property name="username" value="fcpe.fantinlatour@free.fr" />
+		<property name="password" value="" />
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.debug">false</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

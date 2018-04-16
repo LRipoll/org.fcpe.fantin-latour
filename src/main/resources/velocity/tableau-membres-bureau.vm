@@ -1,0 +1,34 @@
+<TABLE class="bodyTable" border="0">
+	<TR>
+  		<TH>Noms</TH>
+  		<TH>Fonction</TH>
+  	</TR>
+  	<TR class="a">
+  		<TD>$anneeScolaire.conseilLocal.president.nom $anneeScolaire.conseilLocal.president.prenom</TD>
+  	  	<TD>Président</TD>
+  	</TR>
+  	<TR class="b">
+  		<TD>
+    		#foreach($membre in $anneeScolaire.conseilLocal.secretaires) 
+    	 		#if( $foreach.count > 1 ), #end$membre.nom $membre.prenom
+    		#end
+    		</TD>
+    		<TD>Secrétaire</TD>
+  	</TR>
+  	<TR class="a">
+    		<TD>
+    		#foreach($membre in $anneeScolaire.conseilLocal.tresoriers) 
+    	 		#if( $foreach.count > 1 ), #end$membre.nom $membre.prenom
+    		#end
+    		</TD>
+    		<TD>Trésorier</TD>
+  	</TR>
+  	<TR class="b">
+    		<TD>
+    		#foreach($membre in $anneeScolaire.conseilLocal.membresBureau) 
+    	 		#if( $foreach.count > 1 ), #end$membre.nom $membre.prenom
+    		#end
+    		</TD>
+    		<TD>Membres</TD>
+  	</TR>
+</TABLE>

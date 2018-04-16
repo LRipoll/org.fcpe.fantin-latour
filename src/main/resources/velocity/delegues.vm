@@ -1,0 +1,13 @@
+#parse("velocity/macros.vm")
+<html>
+	<head>
+		<meta charset="utf-8">
+		#include("velocity/style.vm")
+	</head>
+	<body>
+		<div class="section" id="delegues">
+		<h3>Candidats délégués Parents $anneeScolaire.anneeScolaire</h3>
+		<p>Les parents délégués par classe</p>
+		#parse("velocity/tableau-delegues.vm")
+	</body>
+</html>

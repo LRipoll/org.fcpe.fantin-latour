@@ -1,0 +1,27 @@
+<TABLE class="bodyTable" border="0">
+	<TR>
+ 		<TH></TH>
+		#set($start = 1)
+		#set($end = $anneeScolaire.conseilLocal.nbMaximumCandidatsDeleguesParClasse)
+		#set($range = [$start..$end])
+		#foreach($i in $range)
+	 		<TH>$i</TH>
+		#end
+		<TH></TH>
+  	</TR>
+    #foreach( $classe in $anneeScolaire.classes)
+    		#set($Integer = 0)
+        	<TR class="#isOdd( $Integer.parseInt($classe.niveau) "a" "b")">
+        		<TD><B>$classe.nomComplet</B></TD>
+           	#foreach($delegue in $classe.deleguesRetenus)
+            		<TD>$delegue.responsableLegal.nom $delegue.responsableLegal.prenom</TD>
+            	#end
+            	#set($start = $classe.nbMinimumCandidatsDelegues)
+			#set($end = $anneeScolaire.conseilLocal.nbMaximumCandidatsDeleguesParClasse)
+			#set($range = [$start..$end])
+			#foreach($i in $range)
+   				<TD></TD>
+			#end
+         </TR>
+	#end
+</TABLE>
