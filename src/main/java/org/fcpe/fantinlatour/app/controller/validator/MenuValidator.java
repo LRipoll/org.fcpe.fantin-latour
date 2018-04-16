@@ -47,19 +47,19 @@ public class MenuValidator implements ConseilLocalEtablissementManagerListener, 
 		if (MENU_CONSEILLOCAL_OPEN.equals(nodeAdapter.idProperty().getValue())) {
 			Menu menu = (Menu) nodeAdapter.getFXObject();
 			try {
+				menu.getItems().clear();
 				List<String> existingConseilEtablissements = conseilLocalEtablissementManager.getExistingConseilEtablissements();
 				for(String conseilLocalEtablissementName : existingConseilEtablissements) {
 					
 					MenuItem menuItem = new MenuItem(conseilLocalEtablissementName);
 					menuItem.setUserData(conseilLocalEtablissementName);
 					
-					
 					menuItem.setOnAction(createOpenHandler());
 					menuItem.setDisable(conseilLocalEtablissementName.equals(selectedConseilLocalEtablissement.getEtablissement().getNom()));
 					menu.getItems().add(menuItem);
 				
 				}
-				//menu.setDisable(existingConseilEtablissements.isEmpty());
+				menu.setDisable(existingConseilEtablissements.isEmpty());
 			} catch (DataException e) {
 
 			}

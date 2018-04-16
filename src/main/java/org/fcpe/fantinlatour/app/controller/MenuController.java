@@ -4,6 +4,7 @@ import java.util.ResourceBundle;
 
 import org.fcpe.fantinlatour.app.context.AppContext;
 import org.fcpe.fantinlatour.app.controller.validator.MenuValidator;
+import org.fcpe.fantinlatour.dao.DataException;
 import org.fcpe.fantinlatour.model.AnneeScolaire;
 import org.fcpe.fantinlatour.model.ClasseFactory;
 import org.fcpe.fantinlatour.model.ConseilLocalConfig;
@@ -12,6 +13,7 @@ import org.fcpe.fantinlatour.model.controller.ConseilLocalEtablissementManager;
 import org.fcpe.fantinlatour.model.controller.ConseilLocalEtablissementManagerListener;
 import org.fcpe.fantinlatour.service.SpringFactory;
 import org.fcpe.fantinlatour.view.AlertDialog;
+import org.fcpe.fantinlatour.view.ExceptionAlertDialog;
 import org.fcpe.fantinlatour.view.ViewFactory;
 
 import javafx.event.ActionEvent;
@@ -20,6 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -44,6 +47,7 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 	private MenuBar menuBar;
 	private ViewFactory viewFactory;
 	private AppContext appContext;
+	private ConseilLocalEtablissementManager conseilLocalEtablissementManager;
 
 	@FXML
 	private void handleNew(final ActionEvent event) {
@@ -55,7 +59,14 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 	}
 	
 	public void handleOpen(final ActionEvent event) {
-		
+		MenuItem source = (MenuItem) event.getSource();
+		String conseiLocalName = (String) source.getUserData();
+		try {
+			conseilLocalEtablissementManager.open(conseiLocalName);
+		} catch (DataException e) {
+			ExceptionAlertDialog exceptionAlertDialog = new ExceptionAlertDialog(new Alert(AlertType.ERROR), e);
+			exceptionAlertDialog.showAndWait();
+		}
 	}
 
 	
@@ -161,7 +172,7 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 	public void initialize(java.net.URL arg0, ResourceBundle arg1) {
 		viewFactory = SpringFactory.getService(ViewFactory.ID);
 		appContext = SpringFactory.getService(AppContext.ID);
-		ConseilLocalEtablissementManager conseilLocalEtablissementManager = SpringFactory
+		conseilLocalEtablissementManager = SpringFactory
 				.getService(ConseilLocalEtablissementManager.ID);
 		
 		MenuValidator menuValidator = new MenuValidator(this,menuBar,conseilLocalEtablissementManager);

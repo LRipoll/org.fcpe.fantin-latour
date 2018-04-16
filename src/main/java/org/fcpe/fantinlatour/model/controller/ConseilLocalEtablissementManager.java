@@ -80,17 +80,22 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 	}
 
 	public void init() throws DataException {
-		ConseilLocalEtablissement result = null;
-		String defaultName = userPreferencesDAO.getDefaultConseilLocalName();
-		if (defaultName != null) {
-			result = conseilLocalEtablissementDAO.load(defaultName);
-		}
-		notifyListeners(result);
+		
+		open(userPreferencesDAO.getDefaultConseilLocalName());
 
 	}
 
 	public List<String> getExistingConseilEtablissements() throws DataException {
 		return conseilLocalEtablissementDAO.getExistingConseilEtablissements();
+	}
+
+	public void open(String conseiLocalName) throws DataException {
+		ConseilLocalEtablissement result = null;
+		if (conseiLocalName != null) {
+			result = conseilLocalEtablissementDAO.load(conseiLocalName);
+		}
+		notifyListeners(result);
+		
 	}
 
 }
