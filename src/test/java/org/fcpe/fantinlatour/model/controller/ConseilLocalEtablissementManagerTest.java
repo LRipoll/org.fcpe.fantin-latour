@@ -192,8 +192,6 @@ public class ConseilLocalEtablissementManagerTest {
 		conseilLocalEtablissementDAO.rename("opened","newName");
 		EasyMock.expectLastCall().once();
 		
-		etablissement.setNom("newName");
-		EasyMock.expectLastCall().once();
 		
 		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
 		EasyMock.expectLastCall().once();
@@ -290,8 +288,7 @@ public class ConseilLocalEtablissementManagerTest {
 		conseilLocalEtablissementDAO.rename("opened","newName");
 		EasyMock.expectLastCall().once();
 		
-		etablissement.setNom("newName");
-		EasyMock.expectLastCall().once();
+		
 		
 		userPreferencesDAO.setDefaultConseilLocalName("newName");
 		EasyMock.expectLastCall().once();

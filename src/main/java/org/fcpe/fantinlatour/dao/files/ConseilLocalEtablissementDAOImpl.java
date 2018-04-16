@@ -22,15 +22,13 @@ public class ConseilLocalEtablissementDAOImpl extends AbstractFileManager implem
 	private XMLFileManager xmlFileManager;
 
 	public ConseilLocalEtablissementDAOImpl(ConseilLocalEtablissementFactory conseilLocalEtablissementFactory,
-			AppDirManager appDirManager, String appFileExt, FileFactory fileFactory,
-			XMLFileManager xmlFileManager) {
+			AppDirManager appDirManager, String appFileExt, FileFactory fileFactory, XMLFileManager xmlFileManager) {
 		super(fileFactory);
 
 		this.appDirManager = appDirManager;
 		this.appFileExt = appFileExt;
 		this.conseilLocalEtablissementFactory = conseilLocalEtablissementFactory;
 		this.xmlFileManager = xmlFileManager;
-		
 
 	}
 
@@ -66,7 +64,7 @@ public class ConseilLocalEtablissementDAOImpl extends AbstractFileManager implem
 
 		appDirManager.create();
 		File file = getFile(name);
-		
+
 		ConseilLocalEtablissement result = conseilLocalEtablissementFactory.create(name, typeEtablissement);
 
 		xmlFileManager.store(result, file);
@@ -88,21 +86,25 @@ public class ConseilLocalEtablissementDAOImpl extends AbstractFileManager implem
 	@Override
 	public ConseilLocalEtablissement load(String name) throws DataException {
 		File file = getFile(name);
-		return (ConseilLocalEtablissement)xmlFileManager.load(file);
+		return load(file);
+	}
+
+	protected ConseilLocalEtablissement load(File file) throws DataException {
+		return (ConseilLocalEtablissement) xmlFileManager.load(file);
 	}
 
 	@Override
 	public List<String> getExistingConseilEtablissements() throws DataException {
 		List<String> result = new ArrayList<String>();
 		if (appDirManager.exists()) {
-			
+
 			File appDir = getFileFactory().create(appDirManager.getAbsolutePath());
-			
-			FilenameFilter filter =getFileFactory().createExtentionFilenameFilter(appFileExt);
-			
-			File[] files = appDir.listFiles( filter);
-			for (int i=0;i<files.length;i++) {
-				result.add(FilenameUtils.getBaseName( files[i].getAbsolutePath()));
+
+			FilenameFilter filter = getFileFactory().createExtentionFilenameFilter(appFileExt);
+
+			File[] files = appDir.listFiles(filter);
+			for (int i = 0; i < files.length; i++) {
+				result.add(FilenameUtils.getBaseName(files[i].getAbsolutePath()));
 			}
 		}
 		return result;
@@ -111,19 +113,31 @@ public class ConseilLocalEtablissementDAOImpl extends AbstractFileManager implem
 	@Override
 	public void rename(String oldName, String newName) throws DataException {
 		File file = getFile(oldName);
-		if (!file.renameTo(getFile(newName)))  {
-			throw new DataException(SpringFactory.getMessage("org.fcpe.fantinlatour.dao.files.ConseilLocalEtablissementDAOImpl.rename.failed"), new IOException("Rename failed"));
+		ConseilLocalEtablissement conseilLocalEtablissement = load(file);
+		conseilLocalEtablissement.getEtablissement().setNom(newName);
+
+		if (!xmlFileManager.store(conseilLocalEtablissement, file) || !file.renameTo(getFile(newName))) {
+
+			conseilLocalEtablissement.getEtablissement().setNom(oldName);
+
+			throw new DataException(
+					SpringFactory.getMessage(
+							"org.fcpe.fantinlatour.dao.files.ConseilLocalEtablissementDAOImpl.rename.failed"),
+					new IOException("Rename failed"));
 		}
-		
+
 	}
 
 	@Override
 	public void delete(String name) throws DataException {
 		File file = getFile(name);
-		if (!file.delete())  {
-			throw new DataException(SpringFactory.getMessage("org.fcpe.fantinlatour.dao.files.ConseilLocalEtablissementDAOImpl.delete.failed"), new IOException("Delete failed"));
+		if (!file.delete()) {
+			throw new DataException(
+					SpringFactory.getMessage(
+							"org.fcpe.fantinlatour.dao.files.ConseilLocalEtablissementDAOImpl.delete.failed"),
+					new IOException("Delete failed"));
 		}
-		
+
 	}
 
 }

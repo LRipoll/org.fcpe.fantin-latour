@@ -19,7 +19,7 @@ public class RenameConseilLocalEtablissementController extends AbstractConseilLo
 	public void initialize(URL location, ResourceBundle resources) {
 
 		super.initialize(location, resources);
-		
+		nameTextField.setText(conseilLocalEtablissementManager.getCurrentConseilLocalEtablissement().getEtablissement().getNom());
 
 	}
 
