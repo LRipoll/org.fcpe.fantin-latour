@@ -3,6 +3,10 @@ package org.fcpe.fantinlatour.app.controller.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.Test;
+
 import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
@@ -37,10 +41,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
 
 
 

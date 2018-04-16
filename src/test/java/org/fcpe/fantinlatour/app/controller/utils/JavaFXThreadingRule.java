@@ -2,15 +2,15 @@ package org.fcpe.fantinlatour.app.controller.utils;
 
 import java.util.concurrent.CountDownLatch;
 
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+
 import javax.swing.SwingUtilities;
 
 import org.junit.Rule;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
-
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
 
 /**
  * A JUnit {@link Rule} for running tests on the JavaFX thread and performing
