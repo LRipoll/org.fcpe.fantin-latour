@@ -46,7 +46,7 @@ public class ConseilLocalEtablissementManagerTest {
 	@Test
 	public void testGetExistingConseilEtablissements() throws DataException {
 
-		List<ConseilLocalEtablissement> list = new ArrayList<ConseilLocalEtablissement>();
+		List<String> list = new ArrayList<String>();
 		EasyMock.expect(conseilLocalEtablissementDAO.getExistingConseilEtablissements()).andReturn(list);
 
 		support.replayAll();
@@ -130,7 +130,8 @@ public class ConseilLocalEtablissementManagerTest {
 
 		EasyMock.expect(userPreferencesDAO.getDefaultConseilLocalName()).andReturn(null);
 
-
+		conseilLocalEtablissementManagerListener.onSelected(null);
+		EasyMock.expectLastCall().once();
 		support.replayAll();
 		conseilLocalEtablissementManager.init();
 		assertNull(conseilLocalEtablissementManager.getCurrentConseilLocalEtablissement());

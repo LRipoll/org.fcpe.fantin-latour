@@ -16,10 +16,13 @@
                <MenuItem text="%org.fcpe.fantinlatour.view.menu.conseillocal.new" onAction="#handleNew" id="MENUITEM_CONSEILLOCAL_NEW"/>
                 <Menu text="%org.fcpe.fantinlatour.view.menu.conseillocal.open" id="MENU_CONSEILLOCAL_OPEN"/>
                 <SeparatorMenuItem  />
+                <MenuItem text="%org.fcpe.fantinlatour.view.menu.conseillocal.import" disable="true" id="MENUITEM_CONSEILLOCAL_IMPORT"/>
+                <MenuItem text="%org.fcpe.fantinlatour.view.menu.conseillocal.export" disable="true" id="MENUITEM_CONSEILLOCAL_EXPORT"/>
+                <SeparatorMenuItem  />
                 <MenuItem text="%org.fcpe.fantinlatour.view.menu.conseillocal.rename" disable="true" id="MENUITEM_CONSEILLOCAL_RENAME"/>
-                <MenuItem text="%org.fcpe.fantinlatour.view.menu.conseillocal.delete" disable="true" id="MENUITEM_CONSEILLOCAL_RENAME"/>
+                <MenuItem text="%org.fcpe.fantinlatour.view.menu.conseillocal.delete" disable="true" id="MENUITEM_CONSEILLOCAL_DELETE"/>
                 <MenuItem text="%org.fcpe.fantinlatour.view.menu.conseillocal.setAsDefault" disable="true" id="MENUITEM_CONSEILLOCAL_SET_ASDEFAULT"/>
-               <SeparatorMenuItem  />
+               <SeparatorMenuItem />
                <MenuItem text="%org.fcpe.fantinlatour.view.menu.conseillocal.quit" onAction="#handleQuit" id="MENUITEM_CONSEILLOCAL_QUIT"/>
             </items>
          </Menu>
@@ -37,6 +40,14 @@
                 <MenuItem text="%org.fcpe.fantinlatour.view.menu.mailinglist.manage" id="MENUITEM_MAILING_LIST_MANAGE" disable="true" />
                 <SeparatorMenuItem  />
                 <MenuItem text="%org.fcpe.fantinlatour.view.menu.mailinglist.settings" id="MENUITEM_MAILING_LIST_SETTINGS" onAction="#handleSetMailinglist" />
+            </items>
+         </Menu>
+         <Menu text="%org.fcpe.fantinlatour.view.menu.financial" id="MENU_FINANCIAL">
+             <items>
+               <MenuItem text="%org.fcpe.fantinlatour.view.menu.financial.update" id="MENU_FINANCIAL_UPDATE"/>
+                <SeparatorMenuItem  />
+                <MenuItem text="%org.fcpe.fantinlatour.view.menu.financial.import" disable="true" id="MENUITEM_FINANCIAL_IMPORT"/>
+                <MenuItem text="%org.fcpe.fantinlatour.view.menu.financial.export" disable="true" id="MENUITEM_FINANCIAL_EXPORT"/>
             </items>
          </Menu>
          <Menu text="%org.fcpe.fantinlatour.view.menu.mails" id="MENU_MAILS" disable="true">

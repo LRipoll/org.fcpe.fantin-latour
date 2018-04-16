@@ -89,7 +89,7 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 
 	}
 
-	public List<ConseilLocalEtablissement> getExistingConseilEtablissements() throws DataException {
+	public List<String> getExistingConseilEtablissements() throws DataException {
 		return conseilLocalEtablissementDAO.getExistingConseilEtablissements();
 	}
 

@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 
+import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.apache.log4j.Logger;
 import org.fcpe.fantinlatour.dao.DataException;
 import org.fcpe.fantinlatour.service.SpringFactory;
@@ -96,15 +97,9 @@ public class FileFactory {
 	
 
 	public FilenameFilter createExtentionFilenameFilter(String appFileExt) {
-		return new FilenameFilter() {
+		return new SuffixFileFilter(appFileExt);
 
-			@Override
-			public boolean accept(File dir, String name) {
-				
-				return name.endsWith(appFileExt);
-			}
-			
-		};
+	
 		
 	}
 

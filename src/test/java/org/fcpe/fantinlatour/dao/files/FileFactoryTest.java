@@ -2,17 +2,20 @@ package org.fcpe.fantinlatour.dao.files;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
+import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.easymock.IMocksControl;
@@ -268,6 +271,15 @@ public class FileFactoryTest {
 		} finally {
 			file.delete();
 		}
+	}
+
+	@Test
+	public void testCreateExtentionFilenameFilter() {
+		FileFactory fileFactory = new FileFactory();
+		FilenameFilter filter = fileFactory.createExtentionFilenameFilter("test");
+
+		assertTrue(filter instanceof SuffixFileFilter);
+
 	}
 
 }

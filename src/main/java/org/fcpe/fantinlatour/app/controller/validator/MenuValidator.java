@@ -44,9 +44,9 @@ public class MenuValidator implements ConseilLocalEtablissementManagerListener, 
 		if (MENU_CONSEILLOCAL_OPEN.equals(nodeAdapter.idProperty().getValue())) {
 			Menu menu = (Menu) nodeAdapter.getFXObject();
 			try {
-				for(ConseilLocalEtablissement conseilLocalEtablissement : conseilLocalEtablissementManager.getExistingConseilEtablissements()) {
+				for(String conseilLocalEtablissement : conseilLocalEtablissementManager.getExistingConseilEtablissements()) {
 					
-					MenuItem menuItem = new MenuItem(conseilLocalEtablissement.getEtablissement().getNom());
+					MenuItem menuItem = new MenuItem(conseilLocalEtablissement);
 					menuItem.setUserData(conseilLocalEtablissement);
 					
 					EventHandler<ActionEvent> value = null;

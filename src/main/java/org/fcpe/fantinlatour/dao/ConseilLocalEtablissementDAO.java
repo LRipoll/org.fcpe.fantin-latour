@@ -13,6 +13,6 @@ public interface ConseilLocalEtablissementDAO {
 	boolean isValidName(String name);
 	ConseilLocalEtablissement create(String name, TypeEtablissement typeEtablissement) throws DataException;
 	ConseilLocalEtablissement load(String defaultName) throws DataException;
-	List<ConseilLocalEtablissement> getExistingConseilEtablissements() throws DataException;
+	List<String> getExistingConseilEtablissements() throws DataException;
 	
 }

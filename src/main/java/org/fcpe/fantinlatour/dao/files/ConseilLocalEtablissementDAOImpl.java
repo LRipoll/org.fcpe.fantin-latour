@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FilenameUtils;
 import org.fcpe.fantinlatour.dao.ConseilLocalEtablissementDAO;
 import org.fcpe.fantinlatour.dao.DataException;
 import org.fcpe.fantinlatour.model.ConseilLocalEtablissement;
@@ -90,8 +91,8 @@ public class ConseilLocalEtablissementDAOImpl extends AbstractFileManager implem
 	}
 
 	@Override
-	public List<ConseilLocalEtablissement> getExistingConseilEtablissements() throws DataException {
-		List<ConseilLocalEtablissement> result = new ArrayList<ConseilLocalEtablissement>();
+	public List<String> getExistingConseilEtablissements() throws DataException {
+		List<String> result = new ArrayList<String>();
 		if (appDirManager.exists()) {
 			
 			File appDir = getFileFactory().create(appDirManager.getAbsolutePath());
@@ -100,7 +101,7 @@ public class ConseilLocalEtablissementDAOImpl extends AbstractFileManager implem
 			
 			File[] files = appDir.listFiles( filter);
 			for (int i=0;i<files.length;i++) {
-				result.add((ConseilLocalEtablissement)xmlFileManager.load(files[i]));
+				result.add(FilenameUtils.getBaseName( files[i].getAbsolutePath()));
 			}
 		}
 		return result;

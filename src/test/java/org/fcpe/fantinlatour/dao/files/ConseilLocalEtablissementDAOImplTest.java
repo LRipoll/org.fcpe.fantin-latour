@@ -1,11 +1,14 @@
 package org.fcpe.fantinlatour.dao.files;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.List;
 
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
@@ -185,6 +188,54 @@ public class ConseilLocalEtablissementDAOImplTest {
 		assertSame(conseilLocalEtablissement,
 				conseilLocalEtablissementDAOImpl.load(name));
 
+		support.verifyAll();
+	}
+	
+	@Test
+	public void testGetExistingConseilEtablissementsWhenAppdirDoesNotExist() throws DataException {
+		EasyMock.expect(appDirManager.exists())
+		.andReturn(false);
+		
+		support.replayAll();
+		
+		assertEquals(0,conseilLocalEtablissementDAOImpl.getExistingConseilEtablissements().size());
+		
+		support.verifyAll();
+	}
+	
+	@Test
+	public void testGetExistingConseilEtablissementsWhenAppdirExists() throws DataException {
+		EasyMock.expect(appDirManager.exists())
+		.andReturn(true);
+		EasyMock.expect(appDirManager.getAbsolutePath())
+		.andReturn(FileUtils.getAbsolutePath("userhome", "appRoot/Dir"));
+		
+		File file = ctrl.createMock(File.class);
+
+		EasyMock.expect(
+				fileFactory.create("userhome" + File.separator + "appRoot/Dir"))
+				.andReturn(file);
+		
+		FilenameFilter fileFilter =  ctrl.createMock(FilenameFilter.class);
+		EasyMock.expect(
+				fileFactory.createExtentionFilenameFilter("ext")).andReturn(fileFilter);
+		
+		File[] files = new File[2];
+		files[0] =  ctrl.createMock(File.class);
+		EasyMock.expect(files[0].getAbsolutePath()).andReturn("userhome" + File.separator + "appRoot/Dir/ConseilLocal1.ext");
+		files[1] =  ctrl.createMock(File.class);
+		EasyMock.expect(files[1].getAbsolutePath()).andReturn("userhome" + File.separator + "appRoot/Dir/ConseilLocal2.ext");
+		
+		EasyMock.expect(
+				file.listFiles(fileFilter)).andReturn(files);
+		
+		support.replayAll();
+		
+		List<String> existingConseilEtablissements = conseilLocalEtablissementDAOImpl.getExistingConseilEtablissements();
+		assertEquals(2,existingConseilEtablissements.size());
+		assertEquals("ConseilLocal1",existingConseilEtablissements.get(0));
+		assertEquals("ConseilLocal2",existingConseilEtablissements.get(1));
+		
 		support.verifyAll();
 	}
 
