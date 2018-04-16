@@ -10,6 +10,9 @@ Les principales fonctionnalités offertes par ce projet seront :
 # Choix techniques
 Java, JavaFX, Spring, Maven
 
+### Status
+[![Build Status](https://travis-ci.org/LRipoll/org.fcpe.fantin-latour.png)](https://travis-ci.org/LRipoll/org.fcpe.fantin-latour
+
 ### Markdown
 
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
