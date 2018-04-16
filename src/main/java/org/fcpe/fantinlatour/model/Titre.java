@@ -1,23 +1,23 @@
 package org.fcpe.fantinlatour.model;
 
 public enum Titre {
-	PrÃ©sident, TrÃ©sorier, SecrÃ©taire, Membre, Vice_PrÃ©sident;
+	Président, Trésorier, Secrétaire, Membre, Vice_Président;
 
-	private static final String VICE_PRESIDENT = "vice-prÃ©sident";
+	private static final String VICE_PRESIDENT = "vice-président";
 
 	public static Titre parse(String titre) {
 		Titre result = null;
-		if (titre.equalsIgnoreCase(Titre.PrÃ©sident.toString())) {
-			result = Titre.PrÃ©sident;
-		} else if (titre.equalsIgnoreCase(Titre.TrÃ©sorier.toString())) {
-			result = Titre.TrÃ©sorier;
-		} else if (titre.equalsIgnoreCase(Titre.SecrÃ©taire.toString())) {
-			result = Titre.SecrÃ©taire;
+		if (titre.equalsIgnoreCase(Titre.Président.toString())) {
+			result = Titre.Président;
+		} else if (titre.equalsIgnoreCase(Titre.Trésorier.toString())) {
+			result = Titre.Trésorier;
+		} else if (titre.equalsIgnoreCase(Titre.Secrétaire.toString())) {
+			result = Titre.Secrétaire;
 		} else if (titre.equalsIgnoreCase(Titre.Membre.toString())) {
 			result = Titre.Membre;
 		}
 		else if (titre.equalsIgnoreCase(VICE_PRESIDENT.toString())) {
-			result = Titre.Vice_PrÃ©sident;
+			result = Titre.Vice_Président;
 		}
 		return result;
 	}

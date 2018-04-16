@@ -33,7 +33,7 @@ public class Classe {
 	}
 
 	public String getNomComplet() {
-		return getNiveau() + "Ã¨me" + getSection();
+		return getNiveau() + "ème" + getSection();
 	}
 
 	public String getNiveau() {
@@ -132,7 +132,7 @@ public class Classe {
 		return getFilteredDeleguesVolontaires().size();
 	}
 	
-	public int getNbCandidatsDeleguesAffirmÃ©s() {
+	public int getNbCandidatsDeleguesAffirmés() {
 		List<Delegue> delegues = getDeleguesFromConseilLocal();
 		int result = delegues.size();
 		for (Delegue delegue : delegues) {

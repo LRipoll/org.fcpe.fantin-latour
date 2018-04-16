@@ -67,7 +67,7 @@ public class ClasseTest {
 
 		Eleve eleve = ctrl.createMock(Eleve.class);
 		String nom = "Nom";
-		String prenom = "PrÃ©nom";
+		String prenom = "Prénom";
 		EasyMock.expect(eleveFactory.createEleve(classe, nom, prenom)).andReturn(eleve);
 
 		support.replayAll();
@@ -83,7 +83,7 @@ public class ClasseTest {
 
 		Eleve eleve = ctrl.createMock(Eleve.class);
 		String nom = "Nom";
-		String prenom = "PrÃ©nom";
+		String prenom = "Prénom";
 		EasyMock.expect(eleveFactory.createEleve(classe, nom, prenom)).andReturn(eleve);
 
 		support.replayAll();
@@ -110,12 +110,12 @@ public class ClasseTest {
 
 		Eleve eleve = ctrl.createMock(Eleve.class);
 		String nom = "Nom";
-		String prenom = "PrÃ©nom";
+		String prenom = "Prénom";
 		EasyMock.expect(eleveFactory.createEleve(classe, nom, prenom)).andReturn(eleve);
 
 		ResponsableLegal responsableLegal = ctrl.createMock(ResponsableLegal.class);
 		String nom2 = "Nom2";
-		String prenom2 = "PrÃ©nom2";
+		String prenom2 = "Prénom2";
 		EasyMock.expect(eleve.getResponsableLegal(nom2, prenom2)).andReturn(responsableLegal);
 		support.replayAll();
 
@@ -146,12 +146,12 @@ public class ClasseTest {
 
 		Eleve eleve1 = ctrl.createMock(Eleve.class);
 		String nom = "Nom";
-		String prenom = "PrÃ©nom";
+		String prenom = "Prénom";
 		EasyMock.expect(eleveFactory.createEleve(classe, nom, prenom)).andReturn(eleve1);
 
 		Eleve eleve2 = ctrl.createMock(Eleve.class);
 		String nom2 = "Nom2";
-		String prenom2 = "PrÃ©nom2";
+		String prenom2 = "Prénom2";
 		EasyMock.expect(eleveFactory.createEleve(classe, nom2, prenom2)).andReturn(eleve2);
 
 		ResponsableLegal responsableLegal1 = ctrl.createMock(ResponsableLegal.class);
@@ -180,12 +180,12 @@ public class ClasseTest {
 
 		Eleve eleve1 = ctrl.createMock(Eleve.class);
 		String nom = "Nom";
-		String prenom = "PrÃ©nom";
+		String prenom = "Prénom";
 		EasyMock.expect(eleveFactory.createEleve(classe, nom, prenom)).andReturn(eleve1);
 
 		Eleve eleve2 = ctrl.createMock(Eleve.class);
 		String nom2 = "Nom2";
-		String prenom2 = "PrÃ©nom2";
+		String prenom2 = "Prénom2";
 		EasyMock.expect(eleveFactory.createEleve(classe, nom2, prenom2)).andReturn(eleve2);
 
 		ResponsableLegal responsableLegal1 = ctrl.createMock(ResponsableLegal.class);
@@ -274,7 +274,7 @@ public class ClasseTest {
 	}
 	
 	@Test
-	public void testGetNbCandidatsDeleguesAffirmÃ©sWhenOnly1SiBesoinShouldReturn0() {
+	public void testGetNbCandidatsDeleguesAffirmésWhenOnly1SiBesoinShouldReturn0() {
 		ConseilLocal conseilLocal = ctrl.createMock(ConseilLocal.class);
 		EasyMock.expect(anneeScolaire.getConseilLocal()).andReturn(conseilLocal).anyTimes();
 
@@ -285,13 +285,13 @@ public class ClasseTest {
 		EasyMock.expect(conseilLocal.getDelegues(classe)).andReturn(expectedDelegues).anyTimes();
 
 		support.replayAll();
-		assertEquals(0, classe.getNbCandidatsDeleguesAffirmÃ©s());
+		assertEquals(0, classe.getNbCandidatsDeleguesAffirmés());
 
 		support.verifyAll();
 	}
 	
 	@Test
-	public void testGetNbCandidatsDeleguesAffirmÃ©sOnly4OuiAnd1SiBesoinShouldReturn4() {
+	public void testGetNbCandidatsDeleguesAffirmésOnly4OuiAnd1SiBesoinShouldReturn4() {
 		ConseilLocal conseilLocal = ctrl.createMock(ConseilLocal.class);
 		EasyMock.expect(anneeScolaire.getConseilLocal()).andReturn(conseilLocal).anyTimes();
 
@@ -314,7 +314,7 @@ public class ClasseTest {
 		EasyMock.expect(conseilLocal.getDelegues(classe)).andReturn(expectedDelegues).anyTimes();
 
 		support.replayAll();
-		assertEquals(4, classe.getNbCandidatsDeleguesAffirmÃ©s());
+		assertEquals(4, classe.getNbCandidatsDeleguesAffirmés());
 
 		support.verifyAll();
 	}

@@ -68,15 +68,15 @@ public class ConseilLocal {
 	}
 
 	public ResponsableLegal getPresident() {
-		return getMembresBureau(Titre.PrÃ©sident).get(0);
+		return getMembresBureau(Titre.Président).get(0);
 	}
 
 	public List<ResponsableLegal> getSecretaires() {
-		return getMembresBureau(Titre.SecrÃ©taire);
+		return getMembresBureau(Titre.Secrétaire);
 	}
 
 	public List<ResponsableLegal> getTresoriers() {
-		return getMembresBureau(Titre.TrÃ©sorier);
+		return getMembresBureau(Titre.Trésorier);
 	}
 
 	public List<ResponsableLegal> getMembresBureau() {

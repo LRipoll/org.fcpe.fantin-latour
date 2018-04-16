@@ -265,7 +265,7 @@ public class CollegeTest {
 		Classe classe = ctrl.createMock(Classe.class);
 		String section = "6Ã¨me4";
 		EasyMock.expect(classeFactory.createClasse(anneeScolaire, section, config)).andReturn(classe);
-		EasyMock.expect(classe.getNbCandidatsDeleguesAffirmÃ©s()).andReturn(nbDeleguesVolontaires);
+		EasyMock.expect(classe.getNbCandidatsDeleguesAffirmés()).andReturn(nbDeleguesVolontaires);
 		support.replayAll();
 		anneeScolaire.getClasse(section);
 	}
@@ -275,7 +275,7 @@ public class CollegeTest {
 		String section = "6Ã¨me4";
 		EasyMock.expect(classeFactory.createClasse(anneeScolaire, section, config)).andReturn(classe);
 
-		EasyMock.expect(classe.getNbCandidatsDeleguesAffirmÃ©s()).andReturn(nbDeleguesVolontaires);
+		EasyMock.expect(classe.getNbCandidatsDeleguesAffirmés()).andReturn(nbDeleguesVolontaires);
 		EasyMock.expect(classe.getNomComplet()).andReturn(section);
 		support.replayAll();
 		anneeScolaire.getClasse(section);
@@ -293,13 +293,13 @@ public class CollegeTest {
 		EasyMock.expect(uneClasse.getNiveau()).andReturn("6").anyTimes();
 		EasyMock.expect(uneClasse.getSection()).andReturn("4").anyTimes();
 
-		EasyMock.expect(uneClasse.getNbCandidatsDeleguesAffirmÃ©s()).andReturn(nbDeleguesVolontaires);
+		EasyMock.expect(uneClasse.getNbCandidatsDeleguesAffirmés()).andReturn(nbDeleguesVolontaires);
 		EasyMock.expect(uneClasse.getNomComplet()).andReturn(uneSection);
 
 		EasyMock.expect(classeFactory.createClasse(anneeScolaire, uneAutreSection, config)).andReturn(uneAutreClasse);
 		EasyMock.expect(uneAutreClasse.getNiveau()).andReturn("6").anyTimes();
 		EasyMock.expect(uneAutreClasse.getSection()).andReturn("1").anyTimes();
-		EasyMock.expect(uneAutreClasse.getNbCandidatsDeleguesAffirmÃ©s()).andReturn(nbDeleguesVolontaires);
+		EasyMock.expect(uneAutreClasse.getNbCandidatsDeleguesAffirmés()).andReturn(nbDeleguesVolontaires);
 		EasyMock.expect(uneAutreClasse.getNomComplet()).andReturn(uneAutreSection);
 
 		support.replayAll();

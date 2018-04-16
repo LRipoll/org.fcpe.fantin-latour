@@ -25,7 +25,7 @@ import org.junit.Test;
 
 public class ResponsablesLegauxParserTest {
 	
-	private static final String HEADER = "Timestamp;Votre nom;Votre prÃ©nom;Dans quelle(s) classe(s) sont inscrits vos enfants ?;Souhaitez vous adhÃ©rez au conseil local FCPE ?;Souhaitez vous participer au conseil d'administration du collÃ¨ge ?;Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [6Ã¨me1];Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [6Ã¨me2];Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [6Ã¨me3];Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [6Ã¨me4];Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [6Ã¨me5];Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [6Ã¨me6];Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [5Ã¨me1];Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [5Ã¨me2];Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [5Ã¨me3];Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [5Ã¨me4];Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [5Ã¨me5];Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [5Ã¨me6];Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [4Ã¨me1];Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [4Ã¨me2];Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [4Ã¨me3];Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [4Ã¨me4];Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [4Ã¨me5];Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [4Ã¨me6];Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [3Ã¨me1];Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [3Ã¨me2];Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [3Ã¨me3];Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [3Ã¨me4];Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [3Ã¨me5];Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [3Ã¨me dÃ©rog];Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [UPE2A];Souhaitez vous participer Ã  la commission Ã©ducative ?;Commentaires\n";  
+	private static final String HEADER = "Timestamp;Votre nom;Votre prénom;Dans quelle(s) classe(s) sont inscrits vos enfants ?;Souhaitez vous adhérez au conseil local FCPE ?;Souhaitez vous participer au conseil d'administration du collège ?;Souhaitez vous être parent délégué des classes suivantes ? * [6ème1];Souhaitez vous être parent délégué des classes suivantes ? * [6ème2];Souhaitez vous être parent délégué des classes suivantes ? * [6ème3];Souhaitez vous être parent délégué des classes suivantes ? * [6ème4];Souhaitez vous être parent délégué des classes suivantes ? * [6ème5];Souhaitez vous être parent délégué des classes suivantes ? * [6ème6];Souhaitez vous être parent délégué des classes suivantes ? * [5ème1];Souhaitez vous être parent délégué des classes suivantes ? * [5ème2];Souhaitez vous être parent délégué des classes suivantes ? * [5ème3];Souhaitez vous être parent délégué des classes suivantes ? * [5ème4];Souhaitez vous être parent délégué des classes suivantes ? * [5ème5];Souhaitez vous être parent délégué des classes suivantes ? * [5ème6];Souhaitez vous être parent délégué des classes suivantes ? * [4ème1];Souhaitez vous être parent délégué des classes suivantes ? * [4ème2];Souhaitez vous être parent délégué des classes suivantes ? * [4ème3];Souhaitez vous être parent délégué des classes suivantes ? * [4ème4];Souhaitez vous être parent délégué des classes suivantes ? * [4ème5];Souhaitez vous être parent délégué des classes suivantes ? * [4ème6];Souhaitez vous être parent délégué des classes suivantes ? * [3ème1];Souhaitez vous être parent délégué des classes suivantes ? * [3ème2];Souhaitez vous être parent délégué des classes suivantes ? * [3ème3];Souhaitez vous être parent délégué des classes suivantes ? * [3ème4];Souhaitez vous être parent délégué des classes suivantes ? * [3ème5];Souhaitez vous être parent délégué des classes suivantes ? * [3ème dérog];Souhaitez vous être parent délégué des classes suivantes ? * [UPE2A];Souhaitez vous participer à la commission éducative ?;Commentaires\n";  
 			
 	private EasyMockSupport support = new EasyMockSupport();
 	private IMocksControl ctrl;
@@ -77,12 +77,12 @@ public class ResponsablesLegauxParserTest {
 	@Test
 	public void testParseWhenTheResponsableLegalIsUnknownShouldCallListener() throws IOException {
 		String input = HEADER+"\n"+
-				"08/09/17 08:47;Doe;John;6Ã¨me4;Oui d'ailleurs notre famille a dÃ©jÃ  transmis le bulletin d'adhÃ©sion et a rÃ©glÃ© sa cotisation;Oui;;;;Oui;;;;;;;;;;;;;;;;;;;;;;Oui;";
+				"08/09/17 08:47;Doe;John;6ème4;Oui d'ailleurs notre famille a déjà  transmis le bulletin d'adhésion et a réglé sa cotisation;Oui;;;;Oui;;;;;;;;;;;;;;;;;;;;;;Oui;";
 
 		Reader reader = new StringReader(input);
 		
-		EasyMock.expect(anneeScolaire.getResponsableLegal("6Ã¨me4", "Doe", "John")).andReturn(null);
-		responsablesLegauxParserListener.responsableLegalInconnu("John", "Doe", "6Ã¨me4");
+		EasyMock.expect(anneeScolaire.getResponsableLegal("6ème4", "Doe", "John")).andReturn(null);
+		responsablesLegauxParserListener.responsableLegalInconnu("John", "Doe", "6ème4");
 		support.replayAll();
 			
 		List<ResponsableLegal> responsablesLegaux = responsablesLegauxParser.parse(reader);
@@ -94,13 +94,13 @@ public class ResponsablesLegauxParserTest {
 	@Test
 	public void testParseWhenTheResponsableLegalIsKnownButNotCourrielShouldCallListener() throws IOException {
 		String input = HEADER+"\n"+
-				"08/09/17 08:47;Doe;John;6Ã¨me4;Oui d'ailleurs notre famille a dÃ©jÃ  transmis le bulletin d'adhÃ©sion et a rÃ©glÃ© sa cotisation;;;;;;;;;;;;;;;;;;;;;;;;;;;;";
+				"08/09/17 08:47;Doe;John;6ème4;Oui d'ailleurs notre famille a déjà  transmis le bulletin d'adhésion et a réglé sa cotisation;;;;;;;;;;;;;;;;;;;;;;;;;;;;";
 
 		Reader reader = new StringReader(input);
 		ResponsableLegal responsableLegal = ctrl.createMock(ResponsableLegal.class);
 		
 		
-		EasyMock.expect(anneeScolaire.getResponsableLegal("6Ã¨me4", "Doe", "John")).andReturn(responsableLegal);
+		EasyMock.expect(anneeScolaire.getResponsableLegal("6ème4", "Doe", "John")).andReturn(responsableLegal);
 		EasyMock.expect(responsableLegal.getCourriel()).andReturn("");
 		
 		EasyMock.expect(anneeScolaire.getClasses()).andReturn(Collections.emptyList());
@@ -117,13 +117,13 @@ public class ResponsablesLegauxParserTest {
 	@Test
 	public void testParseWhenTheResponsableLegalHasMailShouldBeAddedAsNouveauAdherent() throws IOException {
 		String input = HEADER+"\n"+
-				"08/09/17 08:47;Doe;John;6Ã¨me4;Oui d'ailleurs notre famille a dÃ©jÃ  transmis le bulletin d'adhÃ©sion et a rÃ©glÃ© sa cotisation;;;;;;;;;;;;;;;;;;;;;;;;;;;;";
+				"08/09/17 08:47;Doe;John;6ème4;Oui d'ailleurs notre famille a déjà  transmis le bulletin d'adhésion et a réglé sa cotisation;;;;;;;;;;;;;;;;;;;;;;;;;;;;";
 
 		Reader reader = new StringReader(input);
 		ResponsableLegal responsableLegal = ctrl.createMock(ResponsableLegal.class);
 		
 
-		EasyMock.expect(anneeScolaire.getResponsableLegal("6Ã¨me4", "Doe", "John")).andReturn(responsableLegal);
+		EasyMock.expect(anneeScolaire.getResponsableLegal("6ème4", "Doe", "John")).andReturn(responsableLegal);
 		EasyMock.expect(responsableLegal.getCourriel()).andReturn("courriel@mail");
 		
 		ConseilLocal conseilLocal = ctrl.createMock(ConseilLocal.class);
@@ -143,13 +143,13 @@ public class ResponsablesLegauxParserTest {
 	@Test
 	public void testParseWhenTheResponsableLegalWantToBeCAMemberShouldBeAddedAsCAMember() throws IOException {
 		String input = HEADER+"\n"+
-				"08/09/17 08:47;Doe;John;6Ã¨me4;Oui d'ailleurs notre famille a dÃ©jÃ  transmis le bulletin d'adhÃ©sion et a rÃ©glÃ© sa cotisation;Oui;;;;;;;;;;;;;;;;;;;;;;;;;;;";
+				"08/09/17 08:47;Doe;John;6ème4;Oui d'ailleurs notre famille a déjà  transmis le bulletin d'adhésion et a réglé sa cotisation;Oui;;;;;;;;;;;;;;;;;;;;;;;;;;;";
 
 		Reader reader = new StringReader(input);
 		ResponsableLegal responsableLegal = ctrl.createMock(ResponsableLegal.class);
 		
 
-		EasyMock.expect(anneeScolaire.getResponsableLegal("6Ã¨me4", "Doe", "John")).andReturn(responsableLegal);
+		EasyMock.expect(anneeScolaire.getResponsableLegal("6ème4", "Doe", "John")).andReturn(responsableLegal);
 		EasyMock.expect(responsableLegal.getCourriel()).andReturn("courriel@mail");
 		
 		ConseilLocal conseilLocal = ctrl.createMock(ConseilLocal.class);
@@ -170,13 +170,13 @@ public class ResponsablesLegauxParserTest {
 	@Test
 	public void testParseWhenTheResponsableLegalWantToBeCASiBesoinMemberShouldBeAddedAsCAMember() throws IOException {
 		String input = HEADER+"\n"+
-				"08/09/17 08:47;Doe;John;6Ã¨me4;Oui d'ailleurs notre famille a dÃ©jÃ  transmis le bulletin d'adhÃ©sion et a rÃ©glÃ© sa cotisation;Si besoin;;;;;;;;;;;;;;;;;;;;;;;;;;;";
+				"08/09/17 08:47;Doe;John;6ème4;Oui d'ailleurs notre famille a déjà  transmis le bulletin d'adhésion et a réglé sa cotisation;Si besoin;;;;;;;;;;;;;;;;;;;;;;;;;;;";
 
 		Reader reader = new StringReader(input);
 		ResponsableLegal responsableLegal = ctrl.createMock(ResponsableLegal.class);
 		
 
-		EasyMock.expect(anneeScolaire.getResponsableLegal("6Ã¨me4", "Doe", "John")).andReturn(responsableLegal);
+		EasyMock.expect(anneeScolaire.getResponsableLegal("6ème4", "Doe", "John")).andReturn(responsableLegal);
 		EasyMock.expect(responsableLegal.getCourriel()).andReturn("courriel@mail");
 		
 		ConseilLocal conseilLocal = ctrl.createMock(ConseilLocal.class);
@@ -197,13 +197,13 @@ public class ResponsablesLegauxParserTest {
 	@Test
 	public void testParseWhenTheResponsableLegalWantToBeCESiBesoinMemberShouldBeAddedAsCEMember() throws IOException {
 		String input = HEADER+"\n"+
-				"08/09/17 08:47;Doe;John;6Ã¨me4;Oui d'ailleurs notre famille a dÃ©jÃ  transmis le bulletin d'adhÃ©sion et a rÃ©glÃ© sa cotisation;;;;;;;;;;;;;;;;;;;;;;;;;;;Oui;";
+				"08/09/17 08:47;Doe;John;6ème4;Oui d'ailleurs notre famille a déjà  transmis le bulletin d'adhésion et a réglé sa cotisation;;;;;;;;;;;;;;;;;;;;;;;;;;;Oui;";
 
 		Reader reader = new StringReader(input);
 		ResponsableLegal responsableLegal = ctrl.createMock(ResponsableLegal.class);
 		
 
-		EasyMock.expect(anneeScolaire.getResponsableLegal("6Ã¨me4", "Doe", "John")).andReturn(responsableLegal);
+		EasyMock.expect(anneeScolaire.getResponsableLegal("6ème4", "Doe", "John")).andReturn(responsableLegal);
 		EasyMock.expect(responsableLegal.getCourriel()).andReturn("courriel@mail");
 		
 		ConseilLocal conseilLocal = ctrl.createMock(ConseilLocal.class);
@@ -224,20 +224,20 @@ public class ResponsablesLegauxParserTest {
 	@Test
 	public void testParseWhenTheResponsableLegalWantToBeMembreDuBureauSiBesoinMemberShouldBeAddedAsCEMembert() throws IOException {
 		String input = HEADER+"\n"+
-				"08/09/17 08:47;Doe;John;6Ã¨me4;PrÃ©sident;;;;;;;;;;;;;;;;;;;;;;;;;;;;";
+				"08/09/17 08:47;Doe;John;6ème4;Président;;;;;;;;;;;;;;;;;;;;;;;;;;;;";
 
 		Reader reader = new StringReader(input);
 		ResponsableLegal responsableLegal = ctrl.createMock(ResponsableLegal.class);
 		
 
-		EasyMock.expect(anneeScolaire.getResponsableLegal("6Ã¨me4", "Doe", "John")).andReturn(responsableLegal);
+		EasyMock.expect(anneeScolaire.getResponsableLegal("6ème4", "Doe", "John")).andReturn(responsableLegal);
 		EasyMock.expect(responsableLegal.getCourriel()).andReturn("courriel@mail");
 		
 		ConseilLocal conseilLocal = ctrl.createMock(ConseilLocal.class);
 		EasyMock.expect(anneeScolaire.getConseilLocal()).andReturn(conseilLocal).anyTimes();
 		conseilLocal.addNouveauAdherent(responsableLegal);
 		
-		conseilLocal.addMembreBureau(responsableLegal, Titre.PrÃ©sident);
+		conseilLocal.addMembreBureau(responsableLegal, Titre.Président);
 		EasyMock.expect(anneeScolaire.getClasses()).andReturn(Collections.emptyList());
 		
 		support.replayAll();
@@ -251,13 +251,13 @@ public class ResponsablesLegauxParserTest {
 	@Test
 	public void testParseWhenTheResponsableLegalWantToBeDelegueOfAClasseShouldBeAddedAsDelegue() throws IOException {
 		String input = HEADER+"\n"+
-				"08/09/17 08:47;Doe;John;6Ã¨me6;Oui mais nous n'avons pas encore fait de dÃ©marche en ce sens cette annÃ©e;;;;;;;Oui;;;;;;;;;;;;;;;;;;;;Non;";
+				"08/09/17 08:47;Doe;John;6ème6;Oui mais nous n'avons pas encore fait de démarche en ce sens cette année;;;;;;;Oui;;;;;;;;;;;;;;;;;;;;Non;";
 
 		Reader reader = new StringReader(input);
 		ResponsableLegal responsableLegal = ctrl.createMock(ResponsableLegal.class);
 		
 
-		EasyMock.expect(anneeScolaire.getResponsableLegal("6Ã¨me6", "Doe", "John")).andReturn(responsableLegal);
+		EasyMock.expect(anneeScolaire.getResponsableLegal("6ème6", "Doe", "John")).andReturn(responsableLegal);
 		EasyMock.expect(responsableLegal.getCourriel()).andReturn("courriel@mail");
 		
 		ConseilLocal conseilLocal = ctrl.createMock(ConseilLocal.class);

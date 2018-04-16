@@ -92,7 +92,7 @@ public class AnneeScolaire {
 	public String getClassesAvecTropDeCandidats() {
 		List<Classe> classes = new ArrayList<Classe>();
 		for (Classe classe : getClasses()) {
-			if (classe.getNbCandidatsDeleguesAffirmÃ©s() > config.getNombreMaximumDeleguesParClasse()) {
+			if (classe.getNbCandidatsDeleguesAffirmés() > config.getNombreMaximumDeleguesParClasse()) {
 				classes.add(classe);
 			}
 		}
@@ -104,7 +104,7 @@ public class AnneeScolaire {
 
 		List<Classe> classes = new ArrayList<Classe>();
 		for (Classe classe : getClasses()) {
-			if (classe.getNbCandidatsDeleguesAffirmÃ©s() == i) {
+			if (classe.getNbCandidatsDeleguesAffirmés() == i) {
 				classes.add(classe);
 			}
 		}
