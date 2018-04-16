@@ -1,8 +1,11 @@
 package org.fcpe.fantinlatour.view;
 
+import java.util.Optional;
+
 import org.fcpe.fantinlatour.service.SpringFactory;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 public class AlertDialog {
 
@@ -15,8 +18,8 @@ public class AlertDialog {
 		alert.setContentText(contentText);
 	}
 
-	public void showAndWait() {
-		alert.showAndWait();
+	public Optional<ButtonType> showAndWait() {
+		return alert.showAndWait();
 		
 	}
 }

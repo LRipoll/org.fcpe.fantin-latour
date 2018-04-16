@@ -109,4 +109,14 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 		
 	}
 
+	public void delete()  throws DataException {
+		String oldName = currentConseilLocalEtablissement.getEtablissement().getNom();
+		conseilLocalEtablissementDAO.delete(oldName);
+		if (oldName.equals(userPreferencesDAO.getDefaultConseilLocalName())) {
+			userPreferencesDAO.setDefaultConseilLocalName(null);
+		}
+		notifyListeners(null);
+		
+	}
+
 }

@@ -117,4 +117,13 @@ public class ConseilLocalEtablissementDAOImpl extends AbstractFileManager implem
 		
 	}
 
+	@Override
+	public void delete(String name) throws DataException {
+		File file = getFile(name);
+		if (!file.delete())  {
+			throw new DataException(SpringFactory.getMessage("org.fcpe.fantinlatour.dao.files.ConseilLocalEtablissementDAOImpl.delete.failed"), new IOException("Delete failed"));
+		}
+		
+	}
+
 }

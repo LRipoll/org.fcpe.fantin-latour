@@ -146,13 +146,11 @@ public class ConseilLocalEtablissementDAOImplTest {
 				.andReturn(FileUtils.getAbsolutePath("userhome", "appRoot/Dir"));
 		File file = ctrl.createMock(File.class);
 
-		EasyMock.expect(appDirManager.create())
-				.andReturn(true);
-		
+		EasyMock.expect(appDirManager.create()).andReturn(true);
+
 		EasyMock.expect(
 				fileFactory.create("userhome" + File.separator + "appRoot/Dir" + File.separator + name + ".ext"))
 				.andReturn(file);
-
 
 		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
 		EasyMock.expect(conseilLocalEtablissementFactory.create(name, TypeEtablissement.ELEMENTAIRE))
@@ -167,134 +165,124 @@ public class ConseilLocalEtablissementDAOImplTest {
 
 		support.verifyAll();
 	}
-	
+
 	@Test
 	public void testLoad() throws DataException {
 		String name = "test";
 		EasyMock.expect(appDirManager.getAbsolutePath())
-		.andReturn(FileUtils.getAbsolutePath("userhome", "appRoot/Dir"));
-		
+				.andReturn(FileUtils.getAbsolutePath("userhome", "appRoot/Dir"));
+
 		File file = ctrl.createMock(File.class);
 
 		EasyMock.expect(
 				fileFactory.create("userhome" + File.separator + "appRoot/Dir" + File.separator + name + ".ext"))
 				.andReturn(file);
-		
+
 		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
-		
+
 		EasyMock.expect(xmlFileManager.load(file)).andReturn(conseilLocalEtablissement);
-		
+
 		support.replayAll();
 
-		assertSame(conseilLocalEtablissement,
-				conseilLocalEtablissementDAOImpl.load(name));
+		assertSame(conseilLocalEtablissement, conseilLocalEtablissementDAOImpl.load(name));
 
 		support.verifyAll();
 	}
-	
+
 	@Test
 	public void testGetExistingConseilEtablissementsWhenAppdirDoesNotExist() throws DataException {
-		EasyMock.expect(appDirManager.exists())
-		.andReturn(false);
-		
+		EasyMock.expect(appDirManager.exists()).andReturn(false);
+
 		support.replayAll();
-		
-		assertEquals(0,conseilLocalEtablissementDAOImpl.getExistingConseilEtablissements().size());
-		
+
+		assertEquals(0, conseilLocalEtablissementDAOImpl.getExistingConseilEtablissements().size());
+
 		support.verifyAll();
 	}
-	
+
 	@Test
 	public void testGetExistingConseilEtablissementsWhenAppdirExists() throws DataException {
-		EasyMock.expect(appDirManager.exists())
-		.andReturn(true);
+		EasyMock.expect(appDirManager.exists()).andReturn(true);
 		EasyMock.expect(appDirManager.getAbsolutePath())
-		.andReturn(FileUtils.getAbsolutePath("userhome", "appRoot/Dir"));
-		
+				.andReturn(FileUtils.getAbsolutePath("userhome", "appRoot/Dir"));
+
 		File file = ctrl.createMock(File.class);
 
-		EasyMock.expect(
-				fileFactory.create("userhome" + File.separator + "appRoot/Dir"))
-				.andReturn(file);
-		
-		FilenameFilter fileFilter =  ctrl.createMock(FilenameFilter.class);
-		EasyMock.expect(
-				fileFactory.createExtentionFilenameFilter("ext")).andReturn(fileFilter);
-		
+		EasyMock.expect(fileFactory.create("userhome" + File.separator + "appRoot/Dir")).andReturn(file);
+
+		FilenameFilter fileFilter = ctrl.createMock(FilenameFilter.class);
+		EasyMock.expect(fileFactory.createExtentionFilenameFilter("ext")).andReturn(fileFilter);
+
 		File[] files = new File[2];
-		files[0] =  ctrl.createMock(File.class);
-		EasyMock.expect(files[0].getAbsolutePath()).andReturn("userhome" + File.separator + "appRoot/Dir/ConseilLocal1.ext");
-		files[1] =  ctrl.createMock(File.class);
-		EasyMock.expect(files[1].getAbsolutePath()).andReturn("userhome" + File.separator + "appRoot/Dir/ConseilLocal2.ext");
-		
-		EasyMock.expect(
-				file.listFiles(fileFilter)).andReturn(files);
-		
+		files[0] = ctrl.createMock(File.class);
+		EasyMock.expect(files[0].getAbsolutePath())
+				.andReturn("userhome" + File.separator + "appRoot/Dir/ConseilLocal1.ext");
+		files[1] = ctrl.createMock(File.class);
+		EasyMock.expect(files[1].getAbsolutePath())
+				.andReturn("userhome" + File.separator + "appRoot/Dir/ConseilLocal2.ext");
+
+		EasyMock.expect(file.listFiles(fileFilter)).andReturn(files);
+
 		support.replayAll();
-		
-		List<String> existingConseilEtablissements = conseilLocalEtablissementDAOImpl.getExistingConseilEtablissements();
-		assertEquals(2,existingConseilEtablissements.size());
-		assertEquals("ConseilLocal1",existingConseilEtablissements.get(0));
-		assertEquals("ConseilLocal2",existingConseilEtablissements.get(1));
-		
+
+		List<String> existingConseilEtablissements = conseilLocalEtablissementDAOImpl
+				.getExistingConseilEtablissements();
+		assertEquals(2, existingConseilEtablissements.size());
+		assertEquals("ConseilLocal1", existingConseilEtablissements.get(0));
+		assertEquals("ConseilLocal2", existingConseilEtablissements.get(1));
+
 		support.verifyAll();
 	}
-	
+
 	@Test
 	public void testRenameWhenRenameIsOK() throws DataException {
-		
-		EasyMock.expect(appDirManager.exists())
-		.andReturn(true).anyTimes();
-		EasyMock.expect(appDirManager.getAbsolutePath())
-		.andReturn(FileUtils.getAbsolutePath("userhome", "appRoot/Dir")).anyTimes();
+
+		EasyMock.expect(appDirManager.exists()).andReturn(true).anyTimes();
+		EasyMock.expect(appDirManager.getAbsolutePath()).andReturn(FileUtils.getAbsolutePath("userhome", "appRoot/Dir"))
+				.anyTimes();
 		File oldFile = ctrl.createMock(File.class);
 
 		EasyMock.expect(
-				fileFactory.create("userhome" + File.separator + "appRoot/Dir" + File.separator  + "oldName.ext"))
+				fileFactory.create("userhome" + File.separator + "appRoot/Dir" + File.separator + "oldName.ext"))
 				.andReturn(oldFile);
-		
+
 		File newFile = ctrl.createMock(File.class);
 
 		EasyMock.expect(
-				fileFactory.create("userhome" + File.separator + "appRoot/Dir" + File.separator  + "newName.ext"))
+				fileFactory.create("userhome" + File.separator + "appRoot/Dir" + File.separator + "newName.ext"))
 				.andReturn(newFile);
-		
-		EasyMock.expect(oldFile.renameTo(newFile))
-				.andReturn(true);
-		
-		
+
+		EasyMock.expect(oldFile.renameTo(newFile)).andReturn(true);
+
 		support.replayAll();
-		
+
 		conseilLocalEtablissementDAOImpl.rename("oldName", "newName");
-		
+
 		support.verifyAll();
 	}
-	
+
 	@Test
-	public void testRenameWhenRenameOperationFailed()  {
-		
-		EasyMock.expect(appDirManager.exists())
-		.andReturn(true).anyTimes();
-		EasyMock.expect(appDirManager.getAbsolutePath())
-		.andReturn(FileUtils.getAbsolutePath("userhome", "appRoot/Dir")).anyTimes();
+	public void testRenameWhenRenameOperationFailed() {
+
+		EasyMock.expect(appDirManager.exists()).andReturn(true).anyTimes();
+		EasyMock.expect(appDirManager.getAbsolutePath()).andReturn(FileUtils.getAbsolutePath("userhome", "appRoot/Dir"))
+				.anyTimes();
 		File oldFile = ctrl.createMock(File.class);
 
 		EasyMock.expect(
-				fileFactory.create("userhome" + File.separator + "appRoot/Dir" + File.separator  + "oldName.ext"))
+				fileFactory.create("userhome" + File.separator + "appRoot/Dir" + File.separator + "oldName.ext"))
 				.andReturn(oldFile);
-		
+
 		File newFile = ctrl.createMock(File.class);
 
 		EasyMock.expect(
-				fileFactory.create("userhome" + File.separator + "appRoot/Dir" + File.separator  + "newName.ext"))
+				fileFactory.create("userhome" + File.separator + "appRoot/Dir" + File.separator + "newName.ext"))
 				.andReturn(newFile);
-		
-		EasyMock.expect(oldFile.renameTo(newFile))
-				.andReturn(false);
-		
-		
+
+		EasyMock.expect(oldFile.renameTo(newFile)).andReturn(false);
+
 		support.replayAll();
-		
+
 		try {
 			conseilLocalEtablissementDAOImpl.rename("oldName", "newName");
 			fail("Should throw DataException");
@@ -303,8 +291,56 @@ public class ConseilLocalEtablissementDAOImplTest {
 					aExp.getMessage());
 
 		}
-		
-		
+
+		support.verifyAll();
+	}
+
+	@Test
+	public void testDeleteWhenDeleteIsOK() throws DataException {
+
+		EasyMock.expect(appDirManager.getAbsolutePath())
+				.andReturn(FileUtils.getAbsolutePath("userhome", "appRoot/Dir"));
+		;
+		File oldFile = ctrl.createMock(File.class);
+
+		EasyMock.expect(
+				fileFactory.create("userhome" + File.separator + "appRoot/Dir" + File.separator + "oldName.ext"))
+				.andReturn(oldFile);
+
+		EasyMock.expect(oldFile.delete()).andReturn(true);
+
+		support.replayAll();
+
+		conseilLocalEtablissementDAOImpl.delete("oldName");
+
+		support.verifyAll();
+	}
+
+	@Test
+	public void testDeleteWhenDeleteOperationFailed() {
+
+		EasyMock.expect(appDirManager.getAbsolutePath())
+				.andReturn(FileUtils.getAbsolutePath("userhome", "appRoot/Dir"));
+		;
+		File oldFile = ctrl.createMock(File.class);
+
+		EasyMock.expect(
+				fileFactory.create("userhome" + File.separator + "appRoot/Dir" + File.separator + "oldName.ext"))
+				.andReturn(oldFile);
+
+		EasyMock.expect(oldFile.delete()).andReturn(false);
+
+		support.replayAll();
+
+		try {
+			conseilLocalEtablissementDAOImpl.delete("oldName");
+			fail("Should throw DataException");
+		} catch (DataException aExp) {
+			assertEquals("org.fcpe.fantinlatour.dao.files.ConseilLocalEtablissementDAOImpl.delete.failed",
+					aExp.getMessage());
+
+		}
+
 		support.verifyAll();
 	}
 

@@ -58,7 +58,7 @@ public class ClasseTest {
 		assertEquals(0, classe.getEleves().size(), 0);
 		assertEquals("5", classe.getNiveau());
 		assertEquals("4", classe.getSection());
-		assertEquals("5Ã¨me4", classe.getNomComplet());
+		assertEquals("5ème4", classe.getNomComplet());
 		support.verifyAll();
 	}
 

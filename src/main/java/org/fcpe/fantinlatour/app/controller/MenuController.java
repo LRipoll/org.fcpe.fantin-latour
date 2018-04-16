@@ -1,5 +1,6 @@
 package org.fcpe.fantinlatour.app.controller;
 
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import org.fcpe.fantinlatour.app.controller.validator.MenuValidator;
@@ -9,6 +10,7 @@ import org.fcpe.fantinlatour.model.controller.ConseilLocalEtablissementManager;
 import org.fcpe.fantinlatour.model.controller.ConseilLocalEtablissementManagerListener;
 import org.fcpe.fantinlatour.service.SpringFactory;
 import org.fcpe.fantinlatour.view.AlertDialog;
+import org.fcpe.fantinlatour.view.ConfirmationAlertDialog;
 import org.fcpe.fantinlatour.view.ExceptionAlertDialog;
 import org.fcpe.fantinlatour.view.ViewFactory;
 
@@ -17,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.InputEvent;
@@ -27,6 +30,8 @@ import javafx.stage.Stage;
 
 public class MenuController implements Initializable, ConseilLocalEtablissementManagerListener {
 
+	private static final String DELETECONSEILLOCAL_HEADER_TEXT = "org.fcpe.fantinlatour.view.deleteconseillocal.headerText";
+	private static final String DELETECONSEILLOCAL_TEXT = "org.fcpe.fantinlatour.view.deleteconseillocal.text";
 	private static final String APP_PROJECT_TIMESTAMP = "org.fcpe.fantinlatour.app.project.timestamp";
 	private static final String APP_PROJECT_GROUP_ID = "org.fcpe.fantinlatour.app.project.groupId";
 	private static final String ABOUT_VERSION_TEXT = "org.fcpe.fantinlatour.view.about.versionText";
@@ -35,7 +40,7 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 	private static final String ABOUT_TITLE = "about";
 	private static final String APP_PROJECT_VERSION = "org.fcpe.fantinlatour.app.project.version";
 	private static final String ABOUT_HEADER_TEXT = "org.fcpe.fantinlatour.view.about.headerText";
-	
+
 	private static final String UNIMPLEMENTED_FUNCTION_TITLE = "unimplemented";
 	private static final String UNIMPLEMENTED_HEADER_TEXT = "org.fcpe.fantinlatour.view.unimplemented.headerText";
 	private static final String UNIMPLEMENTED_TEXT = "org.fcpe.fantinlatour.view.unimplemented.text";
@@ -47,11 +52,11 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 
 	@FXML
 	private void handleNew(final ActionEvent event) {
-		
+
 		viewFactory.createStage("newconseillocal", Modality.APPLICATION_MODAL).show();
 
 	}
-	
+
 	public void handleOpen(final ActionEvent event) {
 		MenuItem source = (MenuItem) event.getSource();
 		String conseiLocalName = (String) source.getUserData();
@@ -62,7 +67,7 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 			exceptionAlertDialog.showAndWait();
 		}
 	}
-	
+
 	/**
 	 * Handle action related to "Sortir" menu item.
 	 * 
@@ -88,52 +93,66 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 
 	@FXML
 	private void handleRenameConseilLocal(final ActionEvent event) {
-		
+
 		viewFactory.createStage("renameconseillocal", Modality.APPLICATION_MODAL).show();
 	}
-	
+
+	@FXML
+	private void handleDeleteConseilLocal(final ActionEvent event) {
+		
+
+		ConfirmationAlertDialog confirmationAlertDialog = new ConfirmationAlertDialog(new Alert(AlertType.CONFIRMATION),
+				SpringFactory.getMessage(DELETECONSEILLOCAL_HEADER_TEXT),
+				SpringFactory.getMessage(DELETECONSEILLOCAL_TEXT,
+						new Object[] {
+								conseilLocalEtablissementManager.getCurrentConseilLocalEtablissement()
+										.getEtablissement().getTypeEtablissement(),
+								conseilLocalEtablissementManager.getCurrentConseilLocalEtablissement()
+										.getEtablissement().getNom() }));
+
+		Optional<ButtonType> result = confirmationAlertDialog.showAndWait();
+		if (result.get() == ButtonType.OK) {
+			try {
+				conseilLocalEtablissementManager.delete();
+			} catch (DataException e) {
+				ExceptionAlertDialog exceptionAlertDialog = new ExceptionAlertDialog(new Alert(AlertType.ERROR), e);
+				exceptionAlertDialog.showAndWait();
+			}
+		}
+	}
+
 	@FXML
 	private void handleManageMailinglist(final ActionEvent event) {
 		provideUnsupportedFunction();
 	}
-	
-	
-	
-	@FXML
-	private void handleDeleteConseilLocal(final ActionEvent event) {
-		provideUnsupportedFunction();
-	}
-	
+
 	@FXML
 	private void handleSetDefaultConseilLocal(final ActionEvent event) {
 		provideUnsupportedFunction();
 	}
-	
+
 	@FXML
 	private void handleImportConseilLocal(final ActionEvent event) {
 		provideUnsupportedFunction();
 	}
+
 	@FXML
 	private void handleExportConseilLocal(final ActionEvent event) {
 		provideUnsupportedFunction();
 	}
-	
+
 	@FXML
 	private void handleSetMailinglist(final ActionEvent event) {
 		provideUnsupportedFunction();
 	}
-	
+
 	private void provideUnsupportedFunction() {
-		AlertDialog alert = new AlertDialog(new Alert(AlertType.ERROR), UNIMPLEMENTED_FUNCTION_TITLE, UNIMPLEMENTED_HEADER_TEXT,
-				SpringFactory.getMessage(UNIMPLEMENTED_TEXT));
+		AlertDialog alert = new AlertDialog(new Alert(AlertType.ERROR), UNIMPLEMENTED_FUNCTION_TITLE,
+				UNIMPLEMENTED_HEADER_TEXT, SpringFactory.getMessage(UNIMPLEMENTED_TEXT));
 
 		alert.showAndWait();
-		
+
 	}
-
-	
-
-	
 
 	/**
 	 * Handle action related to input (in this case specifically only responds to
@@ -169,13 +188,11 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 	@Override
 	public void initialize(java.net.URL arg0, ResourceBundle arg1) {
 		viewFactory = SpringFactory.getService(ViewFactory.ID);
-		conseilLocalEtablissementManager = SpringFactory
-				.getService(ConseilLocalEtablissementManager.ID);
-		
-		MenuValidator menuValidator = new MenuValidator(this,menuBar,conseilLocalEtablissementManager);
+		conseilLocalEtablissementManager = SpringFactory.getService(ConseilLocalEtablissementManager.ID);
+
+		MenuValidator menuValidator = new MenuValidator(this, menuBar, conseilLocalEtablissementManager);
 		conseilLocalEtablissementManager.addListener(menuValidator);
 
-		
 		conseilLocalEtablissementManager.addListener(this);
 		menuBar.setFocusTraversable(true);
 

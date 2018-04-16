@@ -118,9 +118,15 @@ public class FileFactoryTest {
 		EasyMock.expect(ioException.getLocalizedMessage()).andReturn("Error");
 
 		OutputStream fileOutputStream = ctrl.createMock(OutputStream.class);
+		
+		ioException.printStackTrace();
+		EasyMock.expectLastCall().once();
+		
 		fileOutputStream.close();
 		EasyMock.expectLastCall().andThrow(ioException);
-
+		
+		
+		
 		support.replayAll();
 		fileFactory.close(fileOutputStream);
 		support.verifyAll();
