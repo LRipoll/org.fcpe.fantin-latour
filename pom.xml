@@ -7,12 +7,12 @@
 	<name>Conseil-Local</name>
 	<description>Outil d'aide à la gestion des conseils locaux des associations de parents d'élèves</description>
 	<url>https://github.com/lripoll/org.fcpe.fantin-latour</url>
-	
+
 	<issueManagement>
 		<url>https://github.com/lripoll/org.fcpe.fantin-latour/issues</url>
 		<system>GitHub Issues</system>
 	</issueManagement>
-	
+
 	<licenses>
 		<license>
 			<name>GNU General Public License v3.0</name>
@@ -26,7 +26,7 @@
 		<connection>scm:git:git://github.com/lripoll/org.fcpe.fantin-latour.git</connection>
 		<developerConnection>scm:git:git@github.com:lripoll/org.fcpe.fantin-latour.git</developerConnection>
 	</scm>
-	
+
 	<developers>
 		<developer>
 			<email>laurent.ripoll.dev@free.fr</email>
@@ -35,7 +35,7 @@
 			<id>lripoll</id>
 		</developer>
 	</developers>
-	
+
 	<build>
 		<resources>
 			<resource>
@@ -56,16 +56,29 @@
 		<testSourceDirectory>src/test</testSourceDirectory>
 		<plugins>
 			<plugin>
-		      <groupId>com.github.ferstl</groupId>
-		      <artifactId>depgraph-maven-plugin</artifactId>
-		      <version>3.0.1</version>
-		    </plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+					<formats>
+						<format>html</format>
+						<format>xml</format>
+					</formats>
+					<check />
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.github.ferstl</groupId>
+				<artifactId>depgraph-maven-plugin</artifactId>
+				<version>3.0.1</version>
+			</plugin>
 			<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>downloads-maven-plugin</artifactId>
 				<version>0.6</version>
 				<configuration>
-					<description>Official ${project.name} build of the ${project.version} release</description>
+					<description>Official ${project.name} build of the
+						${project.version} release</description>
 					<override>true</override>
 					<includeAttached>true</includeAttached>
 					<server>github</server>
@@ -129,7 +142,7 @@
 					</reportPlugins>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -299,11 +312,11 @@
 			<version>8.40.13</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
-<dependency>
-    <groupId>commons-io</groupId>
-    <artifactId>commons-io</artifactId>
-    <version>2.5</version>
-</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.5</version>
+		</dependency>
 
 	</dependencies>
 
