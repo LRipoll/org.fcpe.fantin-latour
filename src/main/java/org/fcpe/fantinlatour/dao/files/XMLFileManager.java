@@ -27,6 +27,7 @@ public class XMLFileManager {
 		this.marshaller = marshaller;
 		this.unmarshaller = unmarshaller;
 		this.filefactory = filefactory;
+		
 		if (marshaller instanceof XStreamMarshaller) {
 			XStreamMarshaller xstream = (XStreamMarshaller) marshaller;
 			XStream.setupDefaultSecurity(xstream.getXStream());

@@ -49,6 +49,8 @@
 		<constructor-arg ref="userPreferencesDAO"/>
 	</bean>
 	
+	<bean id="encryptHelper" class="org.fcpe.fantinlatour.dao.security.EncryptHelper"
+		scope="singleton"/>
 	<!--  DAO Files -->
 	<bean id="conseilLocalEtablissementDAO" class="org.fcpe.fantinlatour.dao.files.ConseilLocalEtablissementDAOImpl"
 		scope="singleton">
@@ -70,14 +72,13 @@
 	
 	<bean id="xmlFileManager"  class="org.fcpe.fantinlatour.dao.files.XMLFileManager" scope="singleton">
 		<constructor-arg ref="xstreamMarshaller"/>
-		<constructor-arg ref="xstreamUnmarshaller"/>
+		<constructor-arg ref="xstreamMarshaller"/>
 		<constructor-arg ref="fileFactory"/>
 	</bean>
 	<bean id="xstreamMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">  
-	    <!-- -property name="annotatedClasses" value="com.javatpoint.Employee"></property-->  
+	    <property name="annotatedClasses" value="org.fcpe.fantinlatour.model.ConseilLocalEtablissement,org.fcpe.fantinlatour.model.Etablissement"></property>  
 	</bean> 
-	<bean id="xstreamUnmarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">    
-	</bean>  
+	 
 	
 	<bean id="userPreferencesDAO" class="org.fcpe.fantinlatour.dao.files.UserPreferencesDAOImpl"
 		scope="singleton">
