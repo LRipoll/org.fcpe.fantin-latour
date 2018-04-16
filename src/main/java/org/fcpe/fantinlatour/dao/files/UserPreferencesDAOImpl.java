@@ -54,7 +54,13 @@ public class UserPreferencesDAOImpl extends AbstractAbsoluteFileManager implemen
 				properties = persistentPropertiesManager.create();
 			}
 		}
-		properties.setProperty(key, value);
+		if (value==null)  {
+			properties.remove(key);
+		}
+		else  {
+			properties.setProperty(key, value);
+		}
+		
 	}
 
 	protected String getProperty(String key) throws DataException {

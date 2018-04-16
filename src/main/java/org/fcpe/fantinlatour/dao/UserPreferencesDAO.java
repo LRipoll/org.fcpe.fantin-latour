@@ -16,4 +16,5 @@ public interface UserPreferencesDAO {
 	
 	String getDefaultConseilLocalName() throws DataException;
 
+
 }
