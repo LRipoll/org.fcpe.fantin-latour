@@ -14,7 +14,7 @@ public interface ConseilLocalEtablissementDAO {
 	ConseilLocalEtablissement create(String name, TypeEtablissement typeEtablissement) throws DataException;
 	ConseilLocalEtablissement load(String defaultName) throws DataException;
 	List<String> getExistingConseilEtablissements() throws DataException;
-	void rename(String oldName, String newName) throws DataException;
+	ConseilLocalEtablissement rename(String oldName, String newName) throws DataException;
 	void delete(String string) throws DataException;
 	
 }

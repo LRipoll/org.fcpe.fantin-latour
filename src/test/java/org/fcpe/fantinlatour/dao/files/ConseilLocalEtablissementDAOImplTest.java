@@ -267,7 +267,7 @@ public class ConseilLocalEtablissementDAOImplTest {
 
 		support.replayAll();
 
-		conseilLocalEtablissementDAOImpl.rename("oldName", "newName");
+		assertSame(conseilLocalEtablissement, conseilLocalEtablissementDAOImpl.rename("oldName", "newName"));
 
 		support.verifyAll();
 	}

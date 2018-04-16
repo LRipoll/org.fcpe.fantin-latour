@@ -288,11 +288,11 @@ public class ConseilLocalEtablissementManagerTest {
 		conseilLocalEtablissementDAO.rename("opened","newName");
 		EasyMock.expectLastCall().once();
 		
-		
-		
+	
 		userPreferencesDAO.setDefaultConseilLocalName("newName");
 		EasyMock.expectLastCall().once();
 		
+		EasyMock.expect(userPreferencesDAO.store()).andReturn(true);
 		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
 		EasyMock.expectLastCall().once();
 		

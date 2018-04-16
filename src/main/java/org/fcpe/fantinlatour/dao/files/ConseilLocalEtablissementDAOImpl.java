@@ -111,21 +111,21 @@ public class ConseilLocalEtablissementDAOImpl extends AbstractFileManager implem
 	}
 
 	@Override
-	public void rename(String oldName, String newName) throws DataException {
+	public ConseilLocalEtablissement rename(String oldName, String newName) throws DataException {
 		File file = getFile(oldName);
-		ConseilLocalEtablissement conseilLocalEtablissement = load(file);
-		conseilLocalEtablissement.getEtablissement().setNom(newName);
+		ConseilLocalEtablissement result = load(file);
+		result.getEtablissement().setNom(newName);
 
-		if (!xmlFileManager.store(conseilLocalEtablissement, file) || !file.renameTo(getFile(newName))) {
+		if (!xmlFileManager.store(result, file) || !file.renameTo(getFile(newName))) {
 
-			conseilLocalEtablissement.getEtablissement().setNom(oldName);
+			result.getEtablissement().setNom(oldName);
 
 			throw new DataException(
 					SpringFactory.getMessage(
 							"org.fcpe.fantinlatour.dao.files.ConseilLocalEtablissementDAOImpl.rename.failed"),
 					new IOException("Rename failed"));
 		}
-
+		return result;
 	}
 
 	@Override

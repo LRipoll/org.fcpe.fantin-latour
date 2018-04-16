@@ -100,10 +100,11 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 
 	public void rename(String newName)  throws DataException {
 		String oldName = currentConseilLocalEtablissement.getEtablissement().getNom();
-		conseilLocalEtablissementDAO.rename(oldName,newName);
+		currentConseilLocalEtablissement = conseilLocalEtablissementDAO.rename(oldName,newName);
 		
 		if (oldName.equals(userPreferencesDAO.getDefaultConseilLocalName())) {
 			userPreferencesDAO.setDefaultConseilLocalName(newName);
+			userPreferencesDAO.store();
 		}
 		notifyListeners(currentConseilLocalEtablissement);
 		
