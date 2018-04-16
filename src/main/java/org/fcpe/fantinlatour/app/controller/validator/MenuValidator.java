@@ -18,7 +18,7 @@ import javafx.scene.control.MenuItem;
 
 public class MenuValidator implements ConseilLocalEtablissementManagerListener, INodeVisitor {
 
-	private static final String MENU_CONSEILLOCAL_OPEN = "MENU_CONSEILLOCAL_OPEN";
+	static final String MENU_CONSEILLOCAL_OPEN = "MENU_CONSEILLOCAL_OPEN";
 	private MenuBar menuBar;
 	private ConseilLocalEtablissement selectedConseilLocalEtablissement;
 	private ConseilLocalEtablissementManager conseilLocalEtablissementManager;
@@ -44,18 +44,26 @@ public class MenuValidator implements ConseilLocalEtablissementManagerListener, 
 	public boolean visit(NodeAdapter nodeAdapter) {
 		
 		
-		if (MENU_CONSEILLOCAL_OPEN.equals(nodeAdapter.idProperty().getValue())) {
+		String nodeID = nodeAdapter.idProperty().getValue();
+		if (MENU_CONSEILLOCAL_OPEN.equals(nodeID)) {
 			Menu menu = (Menu) nodeAdapter.getFXObject();
 			try {
 				menu.getItems().clear();
 				List<String> existingConseilEtablissements = conseilLocalEtablissementManager.getExistingConseilEtablissements();
+				String selectedConseilLocalEtablissementName = null;
+				if (selectedConseilLocalEtablissement!=null) {
+					selectedConseilLocalEtablissementName = selectedConseilLocalEtablissement.getEtablissement().getNom();
+				}
+					
 				for(String conseilLocalEtablissementName : existingConseilEtablissements) {
 					
 					MenuItem menuItem = new MenuItem(conseilLocalEtablissementName);
 					menuItem.setUserData(conseilLocalEtablissementName);
 					
 					menuItem.setOnAction(createOpenHandler());
-					menuItem.setDisable(conseilLocalEtablissementName.equals(selectedConseilLocalEtablissement.getEtablissement().getNom()));
+					if(selectedConseilLocalEtablissement!=null ) {
+						menuItem.setDisable(conseilLocalEtablissementName.equals(selectedConseilLocalEtablissementName));
+					}
 					menu.getItems().add(menuItem);
 				
 				}
