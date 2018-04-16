@@ -53,6 +53,8 @@ public class MenuValidatorTest {
 	private MenuBar menuBar;
 
 	private Menu menuOpen;
+
+	private MenuItem menuItemConseilLocalExportMenuItem;
 	@Before
 	public void setup() throws InterruptedException {
 
@@ -82,8 +84,10 @@ public class MenuValidatorTest {
 		
 		EasyMock.expect(conseilLocalEtablissementManager.getExistingConseilEtablissements()).andReturn(list);
 		support.replayAll();
+		
 		menuValidator.onSelected(null);
 		assertTrue(menuOpen.isDisable());
+		assertTrue(menuItemConseilLocalExportMenuItem.isDisable());
 		assertEquals(0,menuOpen.getItems().size());
 		support.verifyAll();
 		
@@ -98,6 +102,8 @@ public class MenuValidatorTest {
 		menuValidator.onSelected(null);
 		assertFalse(menuOpen.isDisable());
 		assertEquals("ConseilLocal1",menuOpen.getItems().get(0).getUserData());
+		
+		assertFalse(menuOpen.isDisable());
 		support.verifyAll();
 		
 	}
@@ -124,6 +130,7 @@ public class MenuValidatorTest {
 		assertFalse(menuOpen.getItems().get(0).isDisable());
 		assertEquals("ConseilLocal2",menuOpen.getItems().get(1).getUserData());
 		assertTrue(menuOpen.getItems().get(1).isDisable());
+		assertFalse(menuItemConseilLocalExportMenuItem.isDisable());
 		support.verifyAll();
 		
 	}
@@ -167,9 +174,11 @@ public class MenuValidatorTest {
 		menuElement.children.add(subMenuElement);
 		populateSubMenu(subMenu, subMenuElement);
 		
-		MenuItem item01 = new MenuItem("MenuItem 01"); 
-		menu.getItems().add(item01);
-		menuElement.children.add(new TestModelElement<>(item01));
+		 menuItemConseilLocalExportMenuItem = new MenuItem("MenuItem 01"); 
+		menuItemConseilLocalExportMenuItem.setId(MenuValidator.MENUITEM_CONSEILLOCAL_EXPORT);
+		
+		menu.getItems().add(menuItemConseilLocalExportMenuItem);
+		menuElement.children.add(new TestModelElement<>(menuItemConseilLocalExportMenuItem));
 		
 		MenuItem item02 = new MenuItem("MenuItem 02"); 
 		menu.getItems().add(item02);

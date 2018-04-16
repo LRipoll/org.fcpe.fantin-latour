@@ -16,7 +16,7 @@
                <MenuItem text="%org.fcpe.fantinlatour.view.menu.conseillocal.new" onAction="#handleNew" id="MENUITEM_CONSEILLOCAL_NEW"/>
                 <Menu text="%org.fcpe.fantinlatour.view.menu.conseillocal.open" id="MENU_CONSEILLOCAL_OPEN"/>
                 <SeparatorMenuItem  />
-                <MenuItem text="%org.fcpe.fantinlatour.view.menu.conseillocal.import" disable="true" id="MENUITEM_CONSEILLOCAL_IMPORT" onAction="#handleImportConseilLocal"/>
+                <MenuItem text="%org.fcpe.fantinlatour.view.menu.conseillocal.import" id="MENUITEM_CONSEILLOCAL_IMPORT" onAction="#handleImportConseilLocal"/>
                 <MenuItem text="%org.fcpe.fantinlatour.view.menu.conseillocal.export" disable="true" id="MENUITEM_CONSEILLOCAL_EXPORT" onAction="#handleExportConseilLocal"/>
                 <SeparatorMenuItem  />
                 <MenuItem text="%org.fcpe.fantinlatour.view.menu.conseillocal.rename" disable="true" id="MENUITEM_CONSEILLOCAL_RENAME" onAction="#handleRenameConseilLocal"/>
