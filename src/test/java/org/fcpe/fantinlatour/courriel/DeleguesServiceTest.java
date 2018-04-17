@@ -61,7 +61,7 @@ public class DeleguesServiceTest {
 		
 		Classe classe1 = ctrl.createMock(Classe.class);
 		EasyMock.expect(classe1.getNiveau()).andReturn("6");
-		EasyMock.expect(classe1.getNomComplet()).andReturn("6Ã¨me2");
+		EasyMock.expect(classe1.getNomComplet()).andReturn("6ème2");
 	
 		Delegue delegue1 = ctrl.createMock(Delegue.class);
 		EasyMock.expect(classe1.getDeleguesRetenus()).andReturn(Arrays.asList(delegue1));
@@ -70,11 +70,11 @@ public class DeleguesServiceTest {
 		ResponsableLegal responsableLegal1 = ctrl.createMock(ResponsableLegal.class);
 		EasyMock.expect(delegue1.getResponsableLegal()).andReturn(responsableLegal1).anyTimes();
 		EasyMock.expect(responsableLegal1.getNom()).andReturn("Nom1");
-		EasyMock.expect(responsableLegal1.getPrenom()).andReturn("PrÃ©nom1");
+		EasyMock.expect(responsableLegal1.getPrenom()).andReturn("Prénom1");
 		
 		
 		Classe classe2 = ctrl.createMock(Classe.class);
-		EasyMock.expect(classe2.getNomComplet()).andReturn("5Ã¨me5");
+		EasyMock.expect(classe2.getNomComplet()).andReturn("5ème5");
 		EasyMock.expect(classe2.getNiveau()).andReturn("5");
 		EasyMock.expect(anneeScolaire.getClasses()).andReturn(Arrays.asList(classe1, classe2));
 		EasyMock.expect(classe2.getNbMinimumCandidatsDelegues()).andReturn(2);
@@ -82,14 +82,14 @@ public class DeleguesServiceTest {
 		ResponsableLegal responsableLegal2 = ctrl.createMock(ResponsableLegal.class);
 		EasyMock.expect(delegue2.getResponsableLegal()).andReturn(responsableLegal2).anyTimes();;
 		EasyMock.expect(responsableLegal2.getNom()).andReturn("Nom2");
-		EasyMock.expect(responsableLegal2.getPrenom()).andReturn("PrÃ©nom2");
+		EasyMock.expect(responsableLegal2.getPrenom()).andReturn("Prénom2");
 		
 		Delegue delegue3 = ctrl.createMock(Delegue.class);
 		EasyMock.expect(classe2.getDeleguesRetenus()).andReturn(Arrays.asList(delegue2,delegue3));
 		ResponsableLegal responsableLegal3 = ctrl.createMock(ResponsableLegal.class);
 		EasyMock.expect(delegue3.getResponsableLegal()).andReturn(responsableLegal3).anyTimes();;
 		EasyMock.expect(responsableLegal3.getNom()).andReturn("Nom3");
-		EasyMock.expect(responsableLegal3.getPrenom()).andReturn("PrÃ©nom3");
+		EasyMock.expect(responsableLegal3.getPrenom()).andReturn("Prénom3");
 		String expectedFileName = "/DeleguesServicesTest.html";
 		StringBuffer expectedResult = AnneeScolaireVelocityServiceTest.readFile(expectedFileName);
 		anneeScolaireServiceListener.process(expectedResult.toString());

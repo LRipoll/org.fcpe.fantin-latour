@@ -71,18 +71,6 @@ public class MandatoryLisListenerTest {
 		support.verifyAll();
 	}
 	
-	@Test
-	public void testWhenNameIsInvalidShouldSetAccordingToolTipAndStyle() {
 	
-		comboBox.setValue(null);
-		EasyMock.reset(sceneValidator);
-		support.replayAll();
-
-		assertEquals("okTooltip", comboBox.getTooltip().getText());
-		assertFalse(comboBox.getStyleClass().contains(MandatoryListListener.TEXT_FIELD_ERROR));
-		assertTrue(mandatoryListListener.isValid());
-
-		support.verifyAll();
-	}
 
 }

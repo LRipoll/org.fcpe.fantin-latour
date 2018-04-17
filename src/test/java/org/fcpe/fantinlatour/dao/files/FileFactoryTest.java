@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 
 import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.easymock.EasyMock;
@@ -119,7 +120,7 @@ public class FileFactoryTest {
 
 		OutputStream fileOutputStream = ctrl.createMock(OutputStream.class);
 		
-		ioException.printStackTrace();
+		ioException.printStackTrace(EasyMock.anyObject(PrintWriter.class));
 		EasyMock.expectLastCall().once();
 		
 		fileOutputStream.close();
@@ -169,6 +170,9 @@ public class FileFactoryTest {
 		IOException ioException = ctrl.createMock(IOException.class);
 		EasyMock.expect(ioException.getLocalizedMessage()).andReturn("Error");
 
+		ioException.printStackTrace(EasyMock.anyObject(PrintWriter.class));
+		EasyMock.expectLastCall().once();
+		
 		InputStream fileInputStream = ctrl.createMock(InputStream.class);
 		fileInputStream.close();
 		EasyMock.expectLastCall().andThrow(ioException);
@@ -183,7 +187,7 @@ public class FileFactoryTest {
 	public void testCreateInputStreamFile() throws IOException, DataException {
 
 		FileFactory fileFactory = new FileFactory();
-
+		
 		File file = File.createTempFile("test", "input");
 
 		FileInputStream createdtedInputStream = fileFactory.createInputStream(file);
