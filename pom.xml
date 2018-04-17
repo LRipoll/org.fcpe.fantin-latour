@@ -221,11 +221,6 @@
 	</reporting>
 	<dependencies>
 		<dependency>
-			<groupId>org.controlsfx</groupId>
-			<artifactId>controlsfx</artifactId>
-			<version>8.40.14</version>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-csv</artifactId>
 			<version>1.4</version>
@@ -322,9 +317,7 @@
 			<version>4.9</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.controlsfx/controlsfx > <dependency> 
-			<groupId>org.controlsfx</groupId> <artifactId>controlsfx</artifactId> <version>8.40.13</version> 
-			</dependency -->
+		
 
 
 	</dependencies>
