@@ -4,8 +4,10 @@ install: true
 
 sudo: false # faster builds
 
-script: mvn clean install
-script: "mvn cobertura:cobertura"
-mvn test -B
+script:
+  - mvn clean install
+  - mvn cobertura:cobertura
+  - mvn test -B
+
 after_success:
   - bash <(curl -s https://codecov.io/bash)
