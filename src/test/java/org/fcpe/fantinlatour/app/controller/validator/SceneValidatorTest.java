@@ -3,21 +3,20 @@ package org.fcpe.fantinlatour.app.controller.validator;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.concurrent.CountDownLatch;
-
-import javax.swing.SwingUtilities;
-
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.easymock.IMocksControl;
+import org.fcpe.fantinlatour.app.controller.utils.JavaFXThreadingRule;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
-import javafx.embed.swing.JFXPanel;
 import javafx.scene.control.Button;
 
 public class SceneValidatorTest {
 
+	@Rule public JavaFXThreadingRule javafxRule = new JavaFXThreadingRule();
+	
 	private EasyMockSupport support = new EasyMockSupport();
 
 	private IMocksControl ctrl;
@@ -29,14 +28,7 @@ public class SceneValidatorTest {
 	@Before
 	public void setup() throws InterruptedException {
 
-		final CountDownLatch latch = new CountDownLatch(1);
-		SwingUtilities.invokeLater(() -> {
-			new JFXPanel();
-			latch.countDown();
-		});
-
-		latch.await();
-
+		
 		ctrl = support.createControl();
 
 		okButton = new Button();
