@@ -11,7 +11,7 @@ Les principales fonctionnalités offertes par ce projet seront :
 Java, JavaFX, Spring, Maven
 
 ### Status
-Travis status (https://travis-ci.org/LRipoll/org.fcpe.fantin-latour) [![Build Status](https://travis-ci.org/LRipoll/org.fcpe.fantin-latour.svg?branch=master)] 
+[Travis status](https://travis-ci.org/LRipoll/org.fcpe.fantin-latour) [![Build Status](https://travis-ci.org/LRipoll/org.fcpe.fantin-latour.svg?branch=master)] 
 
 ### Markdown
 
