@@ -9,9 +9,9 @@ public class EncryptHelperTest {
 	@Test
 	public void testEncryption() {
 		EncryptHelper encryptHelper= new EncryptHelper();
-		encryptHelper.setPassword("PssWOrd");
-		String encryptedText = encryptHelper.encrypt("MyPlainTest");
-		assertEquals("MyPlainTest", encryptHelper.decrypt(encryptedText));
+		encryptHelper.setPassword("PassWOrd");
+		String encryptedText = encryptHelper.encrypt("MyPlainTest to be encrypted");
+		assertEquals("MyPlainTest to be encrypted", encryptHelper.decrypt(encryptedText));
 	}
 	
 }

@@ -29,7 +29,7 @@ public class UniqueNameListener extends AbstractControlValidatorListener impleme
 		updateControl();
 	}
 
-	protected void updateTooltipText(String newValue) {
+	private void updateTooltipText(String newValue) {
 		tooltipText = validTootipText;
 		if (uniqueNameManager.exists(newValue)) {
 

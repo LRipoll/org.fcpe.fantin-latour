@@ -12,7 +12,7 @@
 		<ColumnConstraints fillWidth="true" percentWidth="100"/>
 	</columnConstraints>
 	<HBox alignment="BOTTOM_LEFT" GridPane.rowIndex="0">
-		<Label fx:id="nameLabel" text="%org.fcpe.fantinlatour.view.newconseillocal.name.label" GridPane.columnIndex="0" GridPane.rowIndex="0">
+		<Label text="%org.fcpe.fantinlatour.view.newconseillocal.name.label" GridPane.columnIndex="0" GridPane.rowIndex="0">
 			<HBox.margin>
 				<Insets bottom="10.0" right="15"/>
 			</HBox.margin>
@@ -24,7 +24,7 @@
 		</TextField>
 	</HBox>
 	<HBox alignment="BOTTOM_LEFT" GridPane.rowIndex="1">
-		<Label fx:id="typeLabel" text="%org.fcpe.fantinlatour.view.newconseillocal.type.label" GridPane.columnIndex="0" >
+		<Label  text="%org.fcpe.fantinlatour.view.newconseillocal.type.label" GridPane.columnIndex="0" >
 			<HBox.margin>
 				<Insets bottom="10.0" right="15"/>
 			</HBox.margin>
@@ -36,7 +36,7 @@
 		</ComboBox>
 	</HBox>
 	<HBox alignment="BOTTOM_LEFT" GridPane.rowIndex="2">
-		<Label fx:id="typeLabel" text="%org.fcpe.fantinlatour.view.newconseillocal.default.label" GridPane.columnIndex="0" >
+		<Label  text="%org.fcpe.fantinlatour.view.newconseillocal.default.label" GridPane.columnIndex="0" >
 			<HBox.margin>
 				<Insets bottom="10.0" right="15"/>
 			</HBox.margin>
@@ -47,10 +47,35 @@
 			</HBox.margin>
 		</CheckBox>
 	</HBox>
-	<HBox alignment="BOTTOM_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="3">
+	<HBox alignment="BOTTOM_LEFT" GridPane.rowIndex="3">
+		<Label text="%org.fcpe.fantinlatour.view.newconseillocal.password.label" GridPane.columnIndex="0" GridPane.rowIndex="0">
+			<HBox.margin>
+				<Insets bottom="10.0" right="15"/>
+			</HBox.margin>
+		</Label>
+		<PasswordField fx:id="passwordTextField" text="%org.fcpe.fantinlatour.view.newconseillocal.password.text" GridPane.columnIndex="1">
+			<HBox.margin>
+				<Insets bottom="10.0" />
+			</HBox.margin>
+		</PasswordField>
+	</HBox>
+<HBox alignment="BOTTOM_LEFT" GridPane.rowIndex="4">
+		<Label text="%org.fcpe.fantinlatour.view.newconseillocal.confirmpassword.label" GridPane.columnIndex="0" GridPane.rowIndex="0">
+			<HBox.margin>
+				<Insets bottom="10.0" right="15"/>
+			</HBox.margin>
+		</Label>
+		<PasswordField fx:id="confirmpasswordTextField" text="%org.fcpe.fantinlatour.view.newconseillocal.confirmpassword.text" GridPane.columnIndex="1">
+			<HBox.margin>
+				<Insets bottom="10.0" />
+			</HBox.margin>
+		</PasswordField>
+	</HBox>
+	
+	<HBox alignment="BOTTOM_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="5">
 		<ButtonBar prefHeight="40.0">
 			<buttons>
-				<Button fx:id="cancelButton" onAction="#cancel" text="%org.fcpe.fantinlatour.view.newconseillocal.cancelButton.text" prefWidth="90">
+				<Button  onAction="#cancel" text="%org.fcpe.fantinlatour.view.newconseillocal.cancelButton.text" prefWidth="90">
 					<HBox.margin>
 						<Insets right="20" left="40"/>
 					</HBox.margin>
