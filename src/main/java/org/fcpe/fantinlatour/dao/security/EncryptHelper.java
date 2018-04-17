@@ -29,7 +29,7 @@ public class EncryptHelper {
 
 	public EncryptHelper() {
 		super();
-		
+		setPassword("test");
 		try {
 			cipher = Cipher.getInstance(ALGORITHM);
 		} catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
