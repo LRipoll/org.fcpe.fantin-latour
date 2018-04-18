@@ -136,6 +136,7 @@
 						</goals>
 						<configuration>
 							<additionalparam>${javadoc.opts}</additionalparam>
+							<additionalparam>-Xdoclint:none</additionalparam>
 						</configuration>
 					</execution>
 				</executions>
@@ -198,6 +199,7 @@
 							<artifactId>maven-javadoc-plugin</artifactId>
 							<configuration>
 								<additionalparam>${javadoc.opts}</additionalparam>
+								<additionalparam>-Xdoclint:none</additionalparam>
 							</configuration>
 						</plugin>
 						<plugin>
