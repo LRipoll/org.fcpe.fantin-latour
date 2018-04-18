@@ -4,6 +4,8 @@ install: true
 
 sudo: false # faster builds
 
+before_script:
+  - echo "MAVEN_OPTS='-Dheadless=true'" > ~/.mavenrc
 script:
   - mvn clean install
   - mvn cobertura:cobertura
