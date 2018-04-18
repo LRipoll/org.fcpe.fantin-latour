@@ -36,8 +36,8 @@ public class CombinedPasswordValidator extends AbstractValidatorListener impleme
 			validatePassword.getStyleClass().add(TEXT_FIELD_ERROR);
 			validateConfirmPassword.getStyleClass().add(TEXT_FIELD_ERROR);
 		} else {
-			validatePassword.getStyleClass().remove(TEXT_FIELD_ERROR);
-			validateConfirmPassword.getStyleClass().remove(TEXT_FIELD_ERROR);
+			validatePassword.getStyleClass().clear();
+			validateConfirmPassword.getStyleClass().clear();
 		}
 
 	}
