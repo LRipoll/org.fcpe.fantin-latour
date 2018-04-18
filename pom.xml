@@ -177,7 +177,7 @@
 	</build>
 
 	<properties>
-		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>dd/MM/yyyy</maven.build.timestamp.format>
 		<spring.version>4.1.6.RELEASE</spring.version>
