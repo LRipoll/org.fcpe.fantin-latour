@@ -49,8 +49,7 @@ public class ConseilLocalApp extends Application {
 				.getService(ConseilLocalEtablissementManager.ID);
 		conseilLocalEtablissementManager.init();
 		stage.show();
-		// TODO Afficher la fenêtre du mot de passe en fonction du fait qu'il y ait ou non conseil par défaut
-		// TODO Ajouter un test sur les CombinedPasswordValidator.
+		// TODO Afficher la feÃªtre du mot de passe en fonction du fait qu'il y ait ou non conseil par dÃ©faut
 	}
 
 }
