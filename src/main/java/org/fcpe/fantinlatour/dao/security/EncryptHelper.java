@@ -75,4 +75,9 @@ public class EncryptHelper {
 		return result;
 	}
 
+	public boolean isValid(String password) {
+		
+		return password != null && password.trim().length() > 0;
+	}
+
 }

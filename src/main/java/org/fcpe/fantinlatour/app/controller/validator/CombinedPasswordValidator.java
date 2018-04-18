@@ -1,5 +1,7 @@
 package org.fcpe.fantinlatour.app.controller.validator;
 
+import org.fcpe.fantinlatour.dao.security.EncryptHelper;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.PasswordField;
@@ -10,12 +12,16 @@ public class CombinedPasswordValidator extends AbstractValidatorListener impleme
 	private PasswordField validatePassword;
 	private PasswordField validateConfirmPassword;
 	private String tooltipText;
+	private String incoherentTooltipTest;
+	private EncryptHelper encryptHelper;
 
-	public CombinedPasswordValidator(SceneValidator sceneValidator, PasswordField validatePassword,
-			PasswordField validateConfirmPassword, String validTootipText, String invalidTootipText) {
-		super(sceneValidator, validTootipText, invalidTootipText);
+	public CombinedPasswordValidator(SceneValidator sceneValidator, EncryptHelper encryptHelper, PasswordField validatePassword,
+			PasswordField validateConfirmPassword, String validTooltipText, String invalidTooltipText, String incoherentTooltipTest) {
+		super(sceneValidator, validTooltipText, invalidTooltipText);
 		this.validatePassword = validatePassword;
 		this.validateConfirmPassword = validateConfirmPassword;
+		this.incoherentTooltipTest = incoherentTooltipTest;
+		this.encryptHelper = encryptHelper;
 	}
 
 	@Override
@@ -46,10 +52,10 @@ public class CombinedPasswordValidator extends AbstractValidatorListener impleme
 	
 	private void updateTooltipText(String newValue) {
 		tooltipText = validTootipText;
-		if (validatePassword.getText() == null || validatePassword.getText().trim().length() == 0
-				|| !validatePassword.getText().equals(validateConfirmPassword.getText())) {
+		if (!encryptHelper.isValid(newValue)) {
 			tooltipText = invalidTootipText;
-
+		} else if (!validatePassword.getText().equals(validateConfirmPassword.getText())) {
+			tooltipText = incoherentTooltipTest;
 		}
 
 	}

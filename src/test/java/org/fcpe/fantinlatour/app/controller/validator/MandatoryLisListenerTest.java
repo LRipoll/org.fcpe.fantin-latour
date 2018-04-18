@@ -14,8 +14,6 @@ import org.easymock.IMocksControl;
 import org.junit.Before;
 import org.junit.Test;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.control.ComboBox;
 
@@ -27,7 +25,7 @@ public class MandatoryLisListenerTest {
 
 	private ComboBox<String> comboBox;
 	private SceneValidator sceneValidator;
-	private ObservableList<String> listObjects;
+
 	private MandatoryListListener<String> mandatoryListListener;
 
 	@Before
@@ -49,7 +47,6 @@ public class MandatoryLisListenerTest {
 
 		mandatoryListListener = new MandatoryListListener<String>(sceneValidator, comboBox, "okTooltip",
 				"unselectedTooltip");
-		listObjects = FXCollections.observableArrayList( "A", "B",null);
 
 		comboBox.valueProperty().addListener(mandatoryListListener);
 		EasyMock.reset(sceneValidator);

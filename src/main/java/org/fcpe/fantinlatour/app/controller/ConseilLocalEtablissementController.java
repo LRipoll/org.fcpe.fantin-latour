@@ -24,13 +24,13 @@ import javafx.scene.control.PasswordField;
 
 public class ConseilLocalEtablissementController extends AbstractConseilLocalController {
 
-
 	private static final String TYPE_ETABLISSEMENT_UNSELECTED = "org.fcpe.fantinlatour.view.newconseillocal.type.tooltip.unselected";
 	private static final String PASSWORD_INVALID = "org.fcpe.fantinlatour.view.newconseillocal.password.tooltip.invalid";
+	private static final String PASSWORD_INCOHERENT = "org.fcpe.fantinlatour.view.newconseillocal.password.tooltip.incoherent";
 
-	@FXML 
+	@FXML
 	private PasswordField passwordTextField;
-	@FXML 
+	@FXML
 	private PasswordField confirmpasswordTextField;
 	@FXML
 	private ComboBox<TypeEtablissement> typeComboBox;
@@ -50,11 +50,16 @@ public class ConseilLocalEtablissementController extends AbstractConseilLocalCon
 		typeComboBox.setItems(listType);
 
 		defaultCheckBox.setSelected(true);
-		MandatoryListListener<TypeEtablissement> mandatoryListListener = new MandatoryListListener<TypeEtablissement>(sceneValidator, typeComboBox, "",
-				resources.getString(TYPE_ETABLISSEMENT_UNSELECTED));
+		
+		MandatoryListListener<TypeEtablissement> mandatoryListListener = new MandatoryListListener<TypeEtablissement>(
+				sceneValidator, typeComboBox, "", resources.getString(TYPE_ETABLISSEMENT_UNSELECTED));
 		typeComboBox.valueProperty().addListener((ChangeListener<? super TypeEtablissement>) mandatoryListListener);
 		
-		CombinedPasswordValidator combinedPasswordValidator = new CombinedPasswordValidator(sceneValidator, passwordTextField, confirmpasswordTextField, "", resources.getString(PASSWORD_INVALID));
+		EncryptHelper encryptHelper = SpringFactory.getService(EncryptHelper.ID);
+		CombinedPasswordValidator combinedPasswordValidator = new CombinedPasswordValidator(sceneValidator,
+				encryptHelper, passwordTextField, confirmpasswordTextField, "", resources.getString(PASSWORD_INVALID),
+				resources.getString(PASSWORD_INCOHERENT));
+		
 		passwordTextField.textProperty().addListener(combinedPasswordValidator);
 		confirmpasswordTextField.textProperty().addListener(combinedPasswordValidator);
 	}
@@ -62,7 +67,7 @@ public class ConseilLocalEtablissementController extends AbstractConseilLocalCon
 	@Override
 	protected void execute(ActionEvent event) {
 		try {
-			
+
 			conseilLocalEtablissementManager.create(nameTextField.getText(), typeComboBox.getValue(),
 					defaultCheckBox.isSelected());
 			getEncryptHelper().setPassword(passwordTextField.getText());
@@ -79,7 +84,7 @@ public class ConseilLocalEtablissementController extends AbstractConseilLocalCon
 		}
 
 	}
-	
+
 	private EncryptHelper getEncryptHelper() {
 		EncryptHelper encryptHelper = SpringFactory.getService(EncryptHelper.ID);
 		return encryptHelper;
