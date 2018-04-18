@@ -3,7 +3,7 @@ package org.fcpe.fantinlatour.app.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import org.fcpe.fantinlatour.app.controller.validator.UniqueNameListener;
+import org.fcpe.fantinlatour.app.controller.validator.UniqueNameValidator;
 import org.fcpe.fantinlatour.model.controller.ConseilLocalEtablissementManager;
 import org.fcpe.fantinlatour.service.SpringFactory;
 
@@ -20,7 +20,7 @@ public abstract class AbstractConseilLocalController extends AbstractController 
 	@FXML
 	protected TextField nameTextField;
 
-	UniqueNameListener uniqueNameListener;
+	UniqueNameValidator uniqueNameValidator;
 	public AbstractConseilLocalController() {
 		conseilLocalEtablissementManager = SpringFactory.getService(ConseilLocalEtablissementManager.ID);
 	}
@@ -29,9 +29,9 @@ public abstract class AbstractConseilLocalController extends AbstractController 
 	public void initialize(URL location, ResourceBundle resources) {
 		super.initialize(location, resources);
 		
-		uniqueNameListener = new UniqueNameListener(sceneValidator, conseilLocalEtablissementManager, nameTextField, "",
+		uniqueNameValidator = new UniqueNameValidator(sceneValidator, conseilLocalEtablissementManager, nameTextField, "",
 				resources.getString(NAME_ALREADY_EXIST), resources.getString(NAME_INVALID));
-		nameTextField.textProperty().addListener(uniqueNameListener);
+		nameTextField.textProperty().addListener(uniqueNameValidator);
 	
 	}
 

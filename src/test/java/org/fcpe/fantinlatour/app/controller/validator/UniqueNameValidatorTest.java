@@ -18,7 +18,7 @@ import org.junit.Test;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.control.TextField;
 
-public class UniqueNameListenerTest {
+public class UniqueNameValidatorTest {
 
 	private EasyMockSupport support = new EasyMockSupport();
 
@@ -28,7 +28,7 @@ public class UniqueNameListenerTest {
 	private TextField nameTextField;
 	private SceneValidator sceneValidator;
 	
-	private UniqueNameListener uniqueNameListener;
+	private UniqueNameValidator uniqueNameValidator;
 
 	@Before
 	public void setup() throws InterruptedException {
@@ -47,7 +47,7 @@ public class UniqueNameListenerTest {
 		
 		nameTextField = new TextField();
 		sceneValidator = ctrl.createMock(SceneValidator.class);
-		uniqueNameListener = new UniqueNameListener(sceneValidator, uniqueNameManager, nameTextField, "okTooltip",
+		uniqueNameValidator = new UniqueNameValidator(sceneValidator, uniqueNameManager, nameTextField, "okTooltip",
 				"existTooltip", "invalidTooltip");
 		EasyMock.reset(sceneValidator);
 
@@ -65,11 +65,11 @@ public class UniqueNameListenerTest {
 		
 		
 		nameTextField.setText(name);
-		uniqueNameListener.changed(nameTextField.textProperty(), "", name);
+		uniqueNameValidator.changed(nameTextField.textProperty(), "", name);
 		
 		assertEquals("existTooltip",nameTextField.getTooltip().getText());
-		assertTrue(nameTextField.getStyleClass().contains(UniqueNameListener.TEXT_FIELD_ERROR));
-		assertFalse(uniqueNameListener.isValid());
+		assertTrue(nameTextField.getStyleClass().contains(UniqueNameValidator.TEXT_FIELD_ERROR));
+		assertFalse(uniqueNameValidator.isValid());
 
 		support.verifyAll();
 	}
@@ -86,11 +86,11 @@ public class UniqueNameListenerTest {
 		
 		support.replayAll();
 		nameTextField.setText(name);
-		uniqueNameListener.changed(nameTextField.textProperty(), "", name);
+		uniqueNameValidator.changed(nameTextField.textProperty(), "", name);
 
 		assertEquals("invalidTooltip",nameTextField.getTooltip().getText());
-		assertTrue(nameTextField.getStyleClass().contains(UniqueNameListener.TEXT_FIELD_ERROR));
-		assertFalse(uniqueNameListener.isValid());
+		assertTrue(nameTextField.getStyleClass().contains(UniqueNameValidator.TEXT_FIELD_ERROR));
+		assertFalse(uniqueNameValidator.isValid());
 		
 		
 		support.verifyAll();
@@ -105,16 +105,16 @@ public class UniqueNameListenerTest {
 		EasyMock.expect(uniqueNameManager.exists(name)).andReturn(false);
 		EasyMock.expect(uniqueNameManager.isValidName(name)).andReturn(true);
 		
-		sceneValidator.onStateChange(uniqueNameListener);
+		sceneValidator.onStateChange(uniqueNameValidator);
 		EasyMock.expectLastCall().once();
 		
 		support.replayAll();
 		nameTextField.setText(name);
-		uniqueNameListener.changed(nameTextField.textProperty(), "", name);
+		uniqueNameValidator.changed(nameTextField.textProperty(), "", name);
 
 		assertEquals("okTooltip",nameTextField.getTooltip().getText());
-		assertFalse(nameTextField.getStyleClass().contains(UniqueNameListener.TEXT_FIELD_ERROR));
-		assertTrue(uniqueNameListener.isValid());
+		assertFalse(nameTextField.getStyleClass().contains(UniqueNameValidator.TEXT_FIELD_ERROR));
+		assertTrue(uniqueNameValidator.isValid());
 		
 		support.verifyAll();
 	}

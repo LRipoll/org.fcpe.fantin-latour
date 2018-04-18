@@ -4,12 +4,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.ComboBox;
 
-public class MandatoryListListener<T> extends AbstractControlValidatorListener implements ChangeListener<T> {
+public class MandatoryListValidator<T> extends AbstractControlValidatorListener implements ChangeListener<T> {
 
 
 	private String tooltipText;
 
-	public MandatoryListListener(SceneValidator sceneValidator, ComboBox<T> typeComboBox, String validTootipText,
+	public MandatoryListValidator(SceneValidator sceneValidator, ComboBox<T> typeComboBox, String validTootipText,
 			String invalidTootipText) {
 		super(sceneValidator, typeComboBox, validTootipText, invalidTootipText);
 

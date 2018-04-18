@@ -17,7 +17,7 @@ import org.junit.Test;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.control.ComboBox;
 
-public class MandatoryLisListenerTest {
+public class MandatoryListValidatorTest {
 
 	private EasyMockSupport support = new EasyMockSupport();
 
@@ -26,7 +26,7 @@ public class MandatoryLisListenerTest {
 	private ComboBox<String> comboBox;
 	private SceneValidator sceneValidator;
 
-	private MandatoryListListener<String> mandatoryListListener;
+	private MandatoryListValidator<String> mandatoryListValidator;
 
 	@Before
 	public void setup() throws InterruptedException {
@@ -45,10 +45,10 @@ public class MandatoryLisListenerTest {
 
 		sceneValidator = ctrl.createMock(SceneValidator.class);
 
-		mandatoryListListener = new MandatoryListListener<String>(sceneValidator, comboBox, "okTooltip",
+		mandatoryListValidator = new MandatoryListValidator<String>(sceneValidator, comboBox, "okTooltip",
 				"unselectedTooltip");
 
-		comboBox.valueProperty().addListener(mandatoryListListener);
+		comboBox.valueProperty().addListener(mandatoryListValidator);
 		EasyMock.reset(sceneValidator);
 
 	}
@@ -62,8 +62,8 @@ public class MandatoryLisListenerTest {
 		support.replayAll();
 
 		assertEquals("okTooltip", comboBox.getTooltip().getText());
-		assertFalse(comboBox.getStyleClass().contains(MandatoryListListener.TEXT_FIELD_ERROR));
-		assertTrue(mandatoryListListener.isValid());
+		assertFalse(comboBox.getStyleClass().contains(MandatoryListValidator.TEXT_FIELD_ERROR));
+		assertTrue(mandatoryListValidator.isValid());
 
 		support.verifyAll();
 	}

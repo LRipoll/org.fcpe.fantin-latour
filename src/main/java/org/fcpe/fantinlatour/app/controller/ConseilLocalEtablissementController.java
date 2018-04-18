@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import org.fcpe.fantinlatour.app.controller.validator.CombinedPasswordValidator;
-import org.fcpe.fantinlatour.app.controller.validator.MandatoryListListener;
+import org.fcpe.fantinlatour.app.controller.validator.MandatoryListValidator;
 import org.fcpe.fantinlatour.dao.DataException;
 import org.fcpe.fantinlatour.dao.security.EncryptHelper;
 import org.fcpe.fantinlatour.model.TypeEtablissement;
@@ -51,9 +51,9 @@ public class ConseilLocalEtablissementController extends AbstractConseilLocalCon
 
 		defaultCheckBox.setSelected(true);
 		
-		MandatoryListListener<TypeEtablissement> mandatoryListListener = new MandatoryListListener<TypeEtablissement>(
+		MandatoryListValidator<TypeEtablissement> mandatoryListValidator = new MandatoryListValidator<TypeEtablissement>(
 				sceneValidator, typeComboBox, "", resources.getString(TYPE_ETABLISSEMENT_UNSELECTED));
-		typeComboBox.valueProperty().addListener((ChangeListener<? super TypeEtablissement>) mandatoryListListener);
+		typeComboBox.valueProperty().addListener((ChangeListener<? super TypeEtablissement>) mandatoryListValidator);
 		
 		EncryptHelper encryptHelper = SpringFactory.getService(EncryptHelper.ID);
 		CombinedPasswordValidator combinedPasswordValidator = new CombinedPasswordValidator(sceneValidator,

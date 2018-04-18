@@ -6,13 +6,13 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 
-public class UniqueNameListener extends AbstractControlValidatorListener implements ChangeListener<String> {
+public class UniqueNameValidator extends AbstractControlValidatorListener implements ChangeListener<String> {
 
 	private UniqueNameManager uniqueNameManager;
 	private String alreadyExistTootipText;
 	private String tooltipText;
 
-	public UniqueNameListener(SceneValidator sceneValidator,
+	public UniqueNameValidator(SceneValidator sceneValidator,
 			UniqueNameManager uniqueNameManager, TextField nameTextField,
 			String validTootipText, String alreadyExistTootipText, String invalidTootipText) {
 		super(sceneValidator, nameTextField, validTootipText, invalidTootipText);
