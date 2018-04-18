@@ -10,13 +10,13 @@ import org.fcpe.fantinlatour.model.Titre;
 
 public class ResponsablesLegauxParser extends AbstractCSVParser<ResponsableLegal> {
 
-	private static final String PRENOM_RESPONSABLE_LEGAL_COLUMN = "Votre prénom";
+	private static final String PRENOM_RESPONSABLE_LEGAL_COLUMN = "Votre prÃ©nom";
 	private static final String NOM_RESPONSABLE_LEGAL_COLUMN = "Votre nom";
 	private static final String CLASSE_COLUMN = "Dans quelle(s) classe(s) sont inscrits vos enfants ?";
-	private static final String DELEGUES_COLUMN = "Souhaitez vous être parent délégué des classes suivantes ? * [%sème%s]";
-	private static final String CA_COLUMN = "Souhaitez vous participer au conseil d'administration du collège ?";
-	private static final String COMMISSION_EDUCATIVE_COLUMN = "Souhaitez vous participer à la commission éducative ?";
-	private static final String MEMBRE_BUREAU_COLUMN = "Souhaitez vous adhérez au conseil local FCPE ?";
+	private static final String DELEGUES_COLUMN = "Souhaitez vous Ãªtre parent dÃ©lÃ©guÃ© des classes suivantes ? * [%sÃ¨me%s]";
+	private static final String CA_COLUMN = "Souhaitez vous participer au conseil d'administration du collÃ©ge ?";
+	private static final String COMMISSION_EDUCATIVE_COLUMN = "Souhaitez vous participer Ã© la commission Ã©ducative ?";
+	private static final String MEMBRE_BUREAU_COLUMN = "Souhaitez vous adhÃ©rez au conseil local FCPE ?";
 
 	private AnneeScolaire anneeScolaire;
 	private ResponsablesLegauxParserListener responsablesLegauxParserListener;

@@ -10,11 +10,11 @@ public class TitreTest {
 
 	@Test
 	public void test() {
-		assertSame(Titre.Président,Titre.parse("président"));
+		assertSame(Titre.PrÃ©sident,Titre.parse("prÃ©sident"));
 		assertSame(Titre.Membre,Titre.parse("membre"));
-		assertSame(Titre.Secrétaire,Titre.parse("secrétaire"));
-		assertSame(Titre.Trésorier,Titre.parse("trésorier"));
-		assertSame(Titre.Vice_Président,Titre.parse("vice-président"));
+		assertSame(Titre.SecrÃ©taire,Titre.parse("secrÃ©taire"));
+		assertSame(Titre.TrÃ©sorier,Titre.parse("trÃ©sorier"));
+		assertSame(Titre.Vice_PrÃ©sident,Titre.parse("vice-prÃ©sident"));
 		assertNull(Titre.parse(""));
 	}
 }

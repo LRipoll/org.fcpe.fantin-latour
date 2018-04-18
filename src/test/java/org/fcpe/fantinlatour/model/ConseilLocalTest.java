@@ -174,7 +174,7 @@ public class ConseilLocalTest {
 		responsableLegal.estMembreDe(sigle);
 		
 		support.replayAll();
-		conseilLocal.addMembreBureau(responsableLegal,Titre.Président);
+		conseilLocal.addMembreBureau(responsableLegal,Titre.PrÃ©sident);
 		assertSame(responsableLegal,conseilLocal.getPresident());
 		
 		support.verifyAll();
@@ -188,7 +188,7 @@ public class ConseilLocalTest {
 		responsableLegal.estMembreDe(sigle);
 		
 		support.replayAll();
-		conseilLocal.addMembreBureau(responsableLegal,Titre.Secrétaire);
+		conseilLocal.addMembreBureau(responsableLegal,Titre.SecrÃ©taire);
 		assertSame(responsableLegal,conseilLocal.getSecretaires().get(0));
 		
 		support.verifyAll();
@@ -202,7 +202,7 @@ public class ConseilLocalTest {
 		responsableLegal.estMembreDe(sigle);
 		
 		support.replayAll();
-		conseilLocal.addMembreBureau(responsableLegal,Titre.Trésorier);
+		conseilLocal.addMembreBureau(responsableLegal,Titre.TrÃ©sorier);
 		assertSame(responsableLegal,conseilLocal.getTresoriers().get(0));
 		
 		support.verifyAll();
@@ -236,7 +236,7 @@ public class ConseilLocalTest {
 		
 		support.replayAll();
 		conseilLocal.addMembreBureau(responsableLegal1,Titre.Membre);
-		conseilLocal.addMembreBureau(responsableLegal2,Titre.Président);
+		conseilLocal.addMembreBureau(responsableLegal2,Titre.PrÃ©sident);
 		Set<String> expectedCourriels = new HashSet<String>(Arrays.asList("responsable@1", "responsable@2"));
 		assertEquals(expectedCourriels,conseilLocal.getCourrielsDesMembresDuBureau());
 		
