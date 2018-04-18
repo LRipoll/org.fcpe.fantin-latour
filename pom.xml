@@ -72,7 +72,7 @@
 				<artifactId>depgraph-maven-plugin</artifactId>
 				<version>3.0.1</version>
 			</plugin>
-			<plugin>
+			<!--  plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>downloads-maven-plugin</artifactId>
 				<version>0.6</version>
@@ -91,11 +91,11 @@
 						<phase>install</phase>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin-->
 			<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>site-maven-plugin</artifactId>
-				<version>0.6</version>
+				<version>0.7</version>
 				<configuration>
 					<message>Building site for ${project.version}</message>
 					<server>github</server>
