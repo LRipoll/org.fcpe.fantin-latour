@@ -55,8 +55,8 @@ public class ClassesService extends AbstractVelocityService {
 					
 					message.setTo((String[]) classe.getCourrielsDesDelegues().toArray(new
 					String[0]));
-					message.setBcc("fcpe.fantinlatour@free.fr");
-					message.setFrom(new InternetAddress("fcpe.fantinlatour@free.fr"));
+					message.setBcc("adresse@operator.fr");
+					message.setFrom(new InternetAddress("adresse@operator.fr"));
 					message.setSubject(
 							String.format("[fantinlatour][délégués][%s] : Informations concernant votre classe",
 									classe.getNomComplet()));

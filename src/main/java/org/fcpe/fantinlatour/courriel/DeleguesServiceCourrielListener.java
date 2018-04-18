@@ -32,9 +32,9 @@ public class DeleguesServiceCourrielListener implements AnneeScolaireServiceList
 			@Override
 			public void prepare(MimeMessage mimeMessage) throws Exception {
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-				message.setTo("fcpe-fantin-info@googlegroups.com");
-				// message.setBcc("fcpe.fantinlatour@free.fr");
-				message.setFrom(new InternetAddress("fcpe.fantinlatour@free.fr"));
+				message.setTo("mailinglist@groupe.com");
+				// message.setBcc("adresse@operator.fr");
+				message.setFrom(new InternetAddress("adresse@operator.fr"));
 				message.setSubject("Point sur les délégués de classes du collège Fantin Latour et autres informations");
 				message.setSentDate(new Date());
 
