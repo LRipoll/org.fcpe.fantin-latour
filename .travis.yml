@@ -8,10 +8,25 @@ before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3 # give xvfb some time to start
+ 
+  
 script:
   - mvn clean install
   - mvn cobertura:cobertura
   - mvn test -B
 
+before_deploy:
+  - "mvn -DskipTests package"
+  - export DIST=$(ls target/*.jar)
+  
+deploy:
+  provider: releases
+  api_key: "GITHUB OAUTH TOKEN"
+  file: "${DIST}"
+  skip_cleanup: true
+  overwrite: true
+  on:
+    tags: true
+    
 after_success:
   - bash <(curl -s https://codecov.io/bash)
