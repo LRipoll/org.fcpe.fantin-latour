@@ -15,6 +15,7 @@ import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.easymock.IMocksControl;
 import org.fcpe.fantinlatour.dao.DataException;
+import org.fcpe.fantinlatour.dao.PasswordException;
 import org.fcpe.fantinlatour.model.ConseilLocalEtablissement;
 import org.fcpe.fantinlatour.model.ConseilLocalEtablissementFactory;
 import org.fcpe.fantinlatour.model.Etablissement;
@@ -182,10 +183,49 @@ public class ConseilLocalEtablissementDAOImplTest {
 		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
 
 		EasyMock.expect(xmlFileManager.load(file)).andReturn(conseilLocalEtablissement);
+		
+		Etablissement etablissement = ctrl.createMock(Etablissement.class);
+		EasyMock.expect(conseilLocalEtablissement.getEtablissement()).andReturn(etablissement);
+		EasyMock.expect(etablissement.getNom()).andReturn(name);
 
 		support.replayAll();
 
 		assertSame(conseilLocalEtablissement, conseilLocalEtablissementDAOImpl.load(name));
+
+		support.verifyAll();
+	}
+	
+	@Test
+	public void testLoadWithBadPassword() throws DataException {
+		String name = "test";
+		EasyMock.expect(appDirManager.getAbsolutePath())
+				.andReturn(FileUtils.getAbsolutePath("userhome", "appRoot/Dir"));
+
+		File file = ctrl.createMock(File.class);
+
+		EasyMock.expect(
+				fileFactory.create("userhome" + File.separator + "appRoot/Dir" + File.separator + name + ".ext"))
+				.andReturn(file);
+
+		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
+
+		EasyMock.expect(xmlFileManager.load(file)).andReturn(conseilLocalEtablissement);
+		
+		Etablissement etablissement = ctrl.createMock(Etablissement.class);
+		EasyMock.expect(conseilLocalEtablissement.getEtablissement()).andReturn(etablissement);
+		EasyMock.expect(etablissement.getNom()).andReturn("invalidPassword");
+
+		support.replayAll();
+
+		try {
+			conseilLocalEtablissementDAOImpl.load(name);
+			fail("Should throw PasswordException");
+		} catch (PasswordException aExp) {
+			assertEquals("org.fcpe.fantinlatour.dao.files.ConseilLocalEtablissementDAOImpl.password.failed",
+					aExp.getMessage());
+
+		}
+		
 
 		support.verifyAll();
 	}
