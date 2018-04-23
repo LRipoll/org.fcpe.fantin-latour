@@ -3,6 +3,7 @@ package org.fcpe.fantinlatour.app.controller;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import org.fcpe.fantinlatour.app.context.AppContext;
 import org.fcpe.fantinlatour.app.controller.validator.MenuValidator;
 import org.fcpe.fantinlatour.dao.DataException;
 import org.fcpe.fantinlatour.model.ConseilLocalEtablissement;
@@ -32,10 +33,10 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 
 	private static final String DELETECONSEILLOCAL_HEADER_TEXT = "org.fcpe.fantinlatour.view.deleteconseillocal.headerText";
 	private static final String DELETECONSEILLOCAL_TEXT = "org.fcpe.fantinlatour.view.deleteconseillocal.text";
-	
+
 	private static final String SET_DEFAULT_CONSEILLOCAL_HEADER_TEXT = "org.fcpe.fantinlatour.view.setdefaultconseillocal.headerText";
 	private static final String SET_DEFAULT_CONSEILLOCAL_TEXT = "org.fcpe.fantinlatour.view.setdefaultconseillocal.text";
-	
+
 	private static final String APP_PROJECT_TIMESTAMP = "org.fcpe.fantinlatour.app.project.timestamp";
 	private static final String APP_PROJECT_GROUP_ID = "org.fcpe.fantinlatour.app.project.groupId";
 	private static final String ABOUT_VERSION_TEXT = "org.fcpe.fantinlatour.view.about.versionText";
@@ -48,7 +49,7 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 	private static final String UNIMPLEMENTED_FUNCTION_TITLE = "unimplemented";
 	private static final String UNIMPLEMENTED_HEADER_TEXT = "org.fcpe.fantinlatour.view.unimplemented.headerText";
 	private static final String UNIMPLEMENTED_TEXT = "org.fcpe.fantinlatour.view.unimplemented.text";
-	
+
 	@FXML
 	private MenuBar menuBar;
 	private ViewFactory viewFactory;
@@ -67,8 +68,6 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 		String conseiLocalName = (String) source.getUserData();
 		provideOpenFunctionnality(conseiLocalName);
 	}
-
-	
 
 	/**
 	 * Handle action related to "Sortir" menu item.
@@ -120,7 +119,7 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 			}
 		}
 	}
-	
+
 	@FXML
 	private void handleSetDefaultConseilLocal(final ActionEvent event) {
 		ConfirmationAlertDialog confirmationAlertDialog = new ConfirmationAlertDialog(new Alert(AlertType.CONFIRMATION),
@@ -146,8 +145,6 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 	private void handleManageMailinglist(final ActionEvent event) {
 		provideUnsupportedFunction();
 	}
-
-	
 
 	@FXML
 	private void handleImportConseilLocal(final ActionEvent event) {
@@ -232,13 +229,12 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 		} else
 			try {
 				String defaultConseilLocal = conseilLocalEtablissementManager.getDefault();
-				if (defaultConseilLocal!=null) {
+				if (defaultConseilLocal != null) {
 					provideOpenFunctionnality(defaultConseilLocal);
 				}
 			} catch (DataException e) {
 				showExceptionAlertDialog(e);
 			}
-		
 
 	}
 
@@ -246,13 +242,14 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 		ExceptionAlertDialog exceptionAlertDialog = new ExceptionAlertDialog(new Alert(AlertType.ERROR), exception);
 		exceptionAlertDialog.showAndWait();
 	}
-	
+
 	private void provideOpenFunctionnality(String conseiLocalName) {
-		try {
-			conseilLocalEtablissementManager.open(conseiLocalName);
-		} catch (DataException e) {
-			showExceptionAlertDialog(e);
-		}
+		AppContext appContext = SpringFactory.getService(AppContext.ID);
+		appContext.setConseiLocalToBeOpened(conseiLocalName);
+		
+		viewFactory.createStage("openconseillocal", Modality.APPLICATION_MODAL).show();
+			
+	
 	}
 
 }

@@ -22,7 +22,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 
-public class ConseilLocalEtablissementController extends AbstractConseilLocalController {
+public class CreateConseilLocalEtablissementController extends AbstractConseilLocalController {
 
 	private static final String TYPE_ETABLISSEMENT_UNSELECTED = "org.fcpe.fantinlatour.view.newconseillocal.type.tooltip.unselected";
 	private static final String PASSWORD_INVALID = "org.fcpe.fantinlatour.view.newconseillocal.password.tooltip.invalid";
@@ -39,7 +39,7 @@ public class ConseilLocalEtablissementController extends AbstractConseilLocalCon
 	@FXML
 	private CheckBox defaultCheckBox;
 
-	public ConseilLocalEtablissementController() {
+	public CreateConseilLocalEtablissementController() {
 	}
 
 	@Override
