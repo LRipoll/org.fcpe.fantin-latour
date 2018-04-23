@@ -48,6 +48,7 @@ public class ConseilLocalApp extends Application {
 		ConseilLocalEtablissementManager conseilLocalEtablissementManager = SpringFactory
 				.getService(ConseilLocalEtablissementManager.ID);
 		conseilLocalEtablissementManager.init();
+		
 		stage.show();
 		// TODO Afficher la feêtre du mot de passe en fonction du fait qu'il y ait ou non conseil par défaut
 	}

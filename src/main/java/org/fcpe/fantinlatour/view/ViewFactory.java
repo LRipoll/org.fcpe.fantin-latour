@@ -35,7 +35,8 @@ public class ViewFactory {
 			
 			// TODO Lire le bundle dans Spring via ReloadableResourceBundleMessageSource
 			// resourceBundleMessageSource = SpringFactory.getService("messageSource");
-			loader.setResources(ResourceBundle.getBundle(MESSAGES, Locale.getDefault()));
+
+			loader.setResources(ResourceBundle.getBundle(MESSAGES,Locale.getDefault()));
 			fxmlRoot = loader.load(getClass().getResourceAsStream(String.format(FORMAT_FXML, name)));
 
 			result = new Scene(fxmlRoot);

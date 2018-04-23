@@ -81,7 +81,7 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 
 	public void init() throws DataException {
 
-		open(userPreferencesDAO.getDefaultConseilLocalName());
+		open(null);
 
 	}
 

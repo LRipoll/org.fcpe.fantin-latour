@@ -130,8 +130,6 @@ public class ConseilLocalEtablissementManagerTest {
 	@Test
 	public void testInitWhenNoDefaultDefinesShouldReturnNull() throws DataException {
 
-		EasyMock.expect(userPreferencesDAO.getDefaultConseilLocalName()).andReturn(null);
-
 		conseilLocalEtablissementManagerListener.onSelected(null);
 		EasyMock.expectLastCall().once();
 		support.replayAll();
@@ -141,22 +139,6 @@ public class ConseilLocalEtablissementManagerTest {
 		support.verifyAll();
 	}
 	
-	@Test
-	public void testInitWhenDefaultShouldReturnIt() throws DataException {
-
-		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
-		
-		EasyMock.expect(userPreferencesDAO.getDefaultConseilLocalName()).andReturn("Default");
-		EasyMock.expect(conseilLocalEtablissementDAO.load("Default")).andReturn(conseilLocalEtablissement);
-		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
-		EasyMock.expectLastCall().once();
-
-		support.replayAll();
-
-		conseilLocalEtablissementManager.init();
-		assertSame(conseilLocalEtablissement, conseilLocalEtablissementManager.getCurrentConseilLocalEtablissement());
-		support.verifyAll();
-	}
 	
 	@Test
 	public void testOpenShouldReturnIt() throws DataException {
