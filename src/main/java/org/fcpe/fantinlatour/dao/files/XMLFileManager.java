@@ -32,6 +32,7 @@ public class XMLFileManager {
 			XStreamMarshaller xstream = (XStreamMarshaller) marshaller;
 			XStream.setupDefaultSecurity(xstream.getXStream());
 			xstream.getXStream().allowTypesByWildcard(new String[] { "org.fcpe.fantinlatour.model.**" });
+			
 		}
 
 	}

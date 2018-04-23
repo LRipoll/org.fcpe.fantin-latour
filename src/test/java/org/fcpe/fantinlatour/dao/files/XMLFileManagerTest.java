@@ -22,6 +22,7 @@ import org.junit.Test;
 import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.Unmarshaller;
 import org.springframework.oxm.XmlMappingException;
+import org.springframework.oxm.xstream.XStreamMarshaller;
 
 public class XMLFileManagerTest {
 
@@ -42,7 +43,13 @@ public class XMLFileManagerTest {
 		xmlFileManager = new XMLFileManager(marshaller, unmarshaller, fileFactory);
 
 	}
-
+	
+	@Test
+	public void testConstructorWithXStreamMarshaller() {
+		new XMLFileManager(new XStreamMarshaller(), unmarshaller, fileFactory);
+	
+	}
+	
 	@Test
 	public void testStoreWhenCreateWriterReturnExceptionShouldRaiseDataException() throws DataException {
 		File file = ctrl.createMock(File.class);
