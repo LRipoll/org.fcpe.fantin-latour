@@ -83,6 +83,20 @@ public class ConseilLocalEtablissementManagerTest {
 
 		support.verifyAll();
 	}
+	
+	@Test
+	public void testGetDefault() throws DataException {
+
+	
+		String defaultValue = "Default";
+		EasyMock.expect(userPreferencesDAO.getDefaultConseilLocalName()).andReturn(defaultValue);
+
+		support.replayAll();
+
+		assertSame(defaultValue, conseilLocalEtablissementManager.getDefault());
+
+		support.verifyAll();
+	}
 
 	@Test
 	public void testCreateADefaultConseilLocalTheUserPreferencesMustBeStore() throws DataException {

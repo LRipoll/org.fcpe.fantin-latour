@@ -65,13 +65,10 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 	public void handleOpen(final ActionEvent event) {
 		MenuItem source = (MenuItem) event.getSource();
 		String conseiLocalName = (String) source.getUserData();
-		try {
-			conseilLocalEtablissementManager.open(conseiLocalName);
-		} catch (DataException e) {
-			ExceptionAlertDialog exceptionAlertDialog = new ExceptionAlertDialog(new Alert(AlertType.ERROR), e);
-			exceptionAlertDialog.showAndWait();
-		}
+		provideOpenFunctionnality(conseiLocalName);
 	}
+
+	
 
 	/**
 	 * Handle action related to "Sortir" menu item.
@@ -119,8 +116,7 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 			try {
 				conseilLocalEtablissementManager.delete();
 			} catch (DataException e) {
-				ExceptionAlertDialog exceptionAlertDialog = new ExceptionAlertDialog(new Alert(AlertType.ERROR), e);
-				exceptionAlertDialog.showAndWait();
+				showExceptionAlertDialog(e);
 			}
 		}
 	}
@@ -141,8 +137,7 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 			try {
 				conseilLocalEtablissementManager.setAsDefault();
 			} catch (DataException e) {
-				ExceptionAlertDialog exceptionAlertDialog = new ExceptionAlertDialog(new Alert(AlertType.ERROR), e);
-				exceptionAlertDialog.showAndWait();
+				showExceptionAlertDialog(e);
 			}
 		}
 	}
@@ -233,9 +228,31 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 			title = SpringFactory.getMessage(MAIN_DEFINED_TITLE,
 					new String[] { conseilLocalEtablissement.getEtablissement().getTypeEtablissement().toString(),
 							conseilLocalEtablissement.getEtablissement().getNom() });
-		}
-		getStage().setTitle(title);
+			getStage().setTitle(title);
+		} else
+			try {
+				String defaultConseilLocal = conseilLocalEtablissementManager.getDefault();
+				if (defaultConseilLocal!=null) {
+					provideOpenFunctionnality(defaultConseilLocal);
+				}
+			} catch (DataException e) {
+				showExceptionAlertDialog(e);
+			}
+		
 
+	}
+
+	protected void showExceptionAlertDialog(DataException exception) {
+		ExceptionAlertDialog exceptionAlertDialog = new ExceptionAlertDialog(new Alert(AlertType.ERROR), exception);
+		exceptionAlertDialog.showAndWait();
+	}
+	
+	private void provideOpenFunctionnality(String conseiLocalName) {
+		try {
+			conseilLocalEtablissementManager.open(conseiLocalName);
+		} catch (DataException e) {
+			showExceptionAlertDialog(e);
+		}
 	}
 
 }

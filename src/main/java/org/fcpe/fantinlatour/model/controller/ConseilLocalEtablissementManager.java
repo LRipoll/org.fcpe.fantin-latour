@@ -134,4 +134,9 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 		
 	}
 
+	public String getDefault() throws DataException {
+		
+		return userPreferencesDAO.getDefaultConseilLocalName();
+	}
+
 }
