@@ -6,6 +6,7 @@ import org.fcpe.fantinlatour.service.SpringFactory;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.stage.Stage;
 
 public class AlertDialog {
 
@@ -19,7 +20,14 @@ public class AlertDialog {
 	}
 
 	public Optional<ButtonType> showAndWait() {
+		Stage stage = getStage();
+		 stage.setAlwaysOnTop(true);
 		return alert.showAndWait();
 		
+		
+	}
+
+	protected Stage getStage() {
+		return (Stage) alert.getDialogPane().getScene().getWindow();
 	}
 }

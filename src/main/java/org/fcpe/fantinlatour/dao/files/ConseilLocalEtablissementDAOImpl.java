@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.commons.io.FilenameUtils;
 import org.fcpe.fantinlatour.dao.ConseilLocalEtablissementDAO;
 import org.fcpe.fantinlatour.dao.DataException;
+import org.fcpe.fantinlatour.dao.PasswordException;
 import org.fcpe.fantinlatour.model.ConseilLocalEtablissement;
 import org.fcpe.fantinlatour.model.ConseilLocalEtablissementFactory;
 import org.fcpe.fantinlatour.model.TypeEtablissement;
@@ -86,7 +87,13 @@ public class ConseilLocalEtablissementDAOImpl extends AbstractFileManager implem
 	@Override
 	public ConseilLocalEtablissement load(String name) throws DataException {
 		File file = getFile(name);
-		return load(file);
+		ConseilLocalEtablissement result = load(file);
+		
+		if (result !=null && !name.equals(result.getEtablissement().getNom())) {
+			throw new PasswordException(SpringFactory.getMessage(
+					"org.fcpe.fantinlatour.dao.files.ConseilLocalEtablissementDAOImpl.password.failed"),null);
+		}
+		return result;
 	}
 
 	protected ConseilLocalEtablissement load(File file) throws DataException {

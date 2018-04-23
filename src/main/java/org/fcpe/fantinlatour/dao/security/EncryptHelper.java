@@ -68,8 +68,10 @@ public class EncryptHelper {
 			byte[] decrypted = cipher.doFinal(Base64.getDecoder().decode(encryptedText.getBytes(ENCODING)));
 			result = new String(decrypted);
 
-		} catch (IllegalBlockSizeException | BadPaddingException | InvalidKeyException | UnsupportedEncodingException  e) {
+		} catch (IllegalBlockSizeException  | InvalidKeyException | UnsupportedEncodingException  e) {
 			logger.error(e.getLocalizedMessage(), e);
+		} catch (BadPaddingException e) {
+			// RAS : problème de saisie de mdp
 		}
 
 		return result;
