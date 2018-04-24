@@ -25,6 +25,8 @@ import javafx.scene.control.PasswordField;
 public class CreateConseilLocalEtablissementController extends AbstractConseilLocalController {
 
 	private static final String TYPE_ETABLISSEMENT_UNSELECTED = "org.fcpe.fantinlatour.view.newconseillocal.type.tooltip.unselected";
+	private static final String TYPE_ETABLISSEMENT_SELECTED = "org.fcpe.fantinlatour.view.newconseillocal.type.tooltip.selected";
+	private static final String PASSWORD_VALID = "org.fcpe.fantinlatour.view.newconseillocal.password.tooltip.invalid";
 	private static final String PASSWORD_INVALID = "org.fcpe.fantinlatour.view.newconseillocal.password.tooltip.invalid";
 	private static final String PASSWORD_INCOHERENT = "org.fcpe.fantinlatour.view.newconseillocal.password.tooltip.incoherent";
 
@@ -52,12 +54,12 @@ public class CreateConseilLocalEtablissementController extends AbstractConseilLo
 		defaultCheckBox.setSelected(true);
 		
 		MandatoryListValidator<TypeEtablissement> mandatoryListValidator = new MandatoryListValidator<TypeEtablissement>(
-				sceneValidator, typeComboBox, "", resources.getString(TYPE_ETABLISSEMENT_UNSELECTED));
+				sceneValidator, typeComboBox, resources.getString(TYPE_ETABLISSEMENT_SELECTED), resources.getString(TYPE_ETABLISSEMENT_UNSELECTED));
 		typeComboBox.valueProperty().addListener((ChangeListener<? super TypeEtablissement>) mandatoryListValidator);
 		
 		EncryptHelper encryptHelper = SpringFactory.getService(EncryptHelper.ID);
 		CombinedPasswordValidator combinedPasswordValidator = new CombinedPasswordValidator(sceneValidator,
-				encryptHelper, passwordTextField, confirmpasswordTextField, "", resources.getString(PASSWORD_INVALID),
+				encryptHelper, passwordTextField, confirmpasswordTextField, resources.getString(PASSWORD_VALID), resources.getString(PASSWORD_INVALID),
 				resources.getString(PASSWORD_INCOHERENT));
 		
 		passwordTextField.textProperty().addListener(combinedPasswordValidator);

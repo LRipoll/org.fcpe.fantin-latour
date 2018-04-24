@@ -247,7 +247,7 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 		AppContext appContext = SpringFactory.getService(AppContext.ID);
 		appContext.setConseiLocalToBeOpened(conseiLocalName);
 		
-		viewFactory.createStage("openconseillocal", Modality.APPLICATION_MODAL).show();
+		viewFactory.createStage("openconseillocal",new  Object[] {conseiLocalName}, Modality.APPLICATION_MODAL).show();
 			
 	
 	}

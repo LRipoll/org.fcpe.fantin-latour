@@ -25,6 +25,10 @@ public class ViewFactory {
 	}
 
 	public Scene createScene(Stage stage, String name) {
+		return createScene(stage, name, null);
+		
+	}
+	public Scene createScene(Stage stage, String name, Object[] params) {
 		Scene result = null;
 
 		FXMLLoader loader = new FXMLLoader();
@@ -32,11 +36,10 @@ public class ViewFactory {
 
 		try {
 
-			
 			// TODO Lire le bundle dans Spring via ReloadableResourceBundleMessageSource
 			// resourceBundleMessageSource = SpringFactory.getService("messageSource");
 
-			loader.setResources(ResourceBundle.getBundle(MESSAGES,Locale.getDefault()));
+			loader.setResources(ResourceBundle.getBundle(MESSAGES, Locale.getDefault()));
 			fxmlRoot = loader.load(getClass().getResourceAsStream(String.format(FORMAT_FXML, name)));
 
 			result = new Scene(fxmlRoot);
@@ -44,7 +47,7 @@ public class ViewFactory {
 			String css = this.getClass().getResource(String.format(FORMAT_CSS, name)).toExternalForm();
 			result.getStylesheets().add(css);
 
-			stage.setTitle(SpringFactory.getMessage(String.format(FORMAT_TITLE, name)));
+			stage.setTitle(SpringFactory.getMessage(String.format(FORMAT_TITLE, name), params));
 			stage.setScene(result);
 
 		} catch (IOException e) {
@@ -55,14 +58,25 @@ public class ViewFactory {
 		return result;
 	}
 
+	public Stage createStage(String name, Object[] params, Modality modality) {
+		Stage stage = createStage(modality);
+		createScene(stage, name, params);
+
+		return stage;
+	}
+
 	public Stage createStage(String name, Modality modality) {
+		return createStage(name, null, modality);
+	}
+
+	private Stage createStage(Modality modality) {
 		Stage stage = new Stage();
 
 		stage.initModality(modality);
 		stage.initStyle(StageStyle.UTILITY);
-		createScene(stage, name);
-
 		return stage;
 	}
+
+	
 
 }
