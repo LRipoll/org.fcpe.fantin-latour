@@ -16,5 +16,6 @@ public interface ConseilLocalEtablissementDAO {
 	List<String> getExistingConseilEtablissements() throws DataException;
 	ConseilLocalEtablissement rename(String oldName, String newName) throws DataException;
 	void delete(String string) throws DataException;
+	String getAttachedFilename(String etablissement);
 	
 }

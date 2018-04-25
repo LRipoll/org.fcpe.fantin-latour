@@ -153,8 +153,10 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 
 	@FXML
 	private void handleExportConseilLocal(final ActionEvent event) {
-		provideUnsupportedFunction();
+		provideExportFunction();
 	}
+
+	
 
 	@FXML
 	private void handleSetMailinglist(final ActionEvent event) {
@@ -186,6 +188,15 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 		}
 	}
 
+	private void provideExportFunction() {
+		try {
+			conseilLocalEtablissementManager.exportAsZip();
+		} catch (DataException e) {
+			showExceptionAlertDialog(e);
+		}
+		
+	}
+	
 	/**
 	 * Perform functionality associated with "About" menu selection or CTRL-A.
 	 */

@@ -147,4 +147,10 @@ public class ConseilLocalEtablissementDAOImpl extends AbstractFileManager implem
 
 	}
 
+	@Override
+	public String getAttachedFilename(String name) {
+		File file = getFile(name);
+		return file.getAbsolutePath();
+	}
+
 }

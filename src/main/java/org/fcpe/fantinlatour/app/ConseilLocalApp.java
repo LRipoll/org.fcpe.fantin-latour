@@ -30,7 +30,10 @@ public class ConseilLocalApp extends Application {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		
 		SpringFactory.setResource("spring/applicationContext.xml");
+	
+		
 		launch(args);
 
 	}

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.awt.Desktop;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import org.easymock.IMocksControl;
 import org.fcpe.fantinlatour.dao.ConseilLocalEtablissementDAO;
 import org.fcpe.fantinlatour.dao.DataException;
 import org.fcpe.fantinlatour.dao.UserPreferencesDAO;
+import org.fcpe.fantinlatour.dao.files.ZipFilesDAO;
 import org.fcpe.fantinlatour.model.ConseilLocalEtablissement;
 import org.fcpe.fantinlatour.model.Etablissement;
 import org.fcpe.fantinlatour.model.TypeEtablissement;
@@ -28,6 +30,8 @@ public class ConseilLocalEtablissementManagerTest {
 
 	private ConseilLocalEtablissementDAO conseilLocalEtablissementDAO;
 	private UserPreferencesDAO userPreferencesDAO;
+	private ZipFilesDAO zipFilesDAO;
+	private Desktop desktop;
 	private ConseilLocalEtablissementManagerListener conseilLocalEtablissementManagerListener;
 	private ConseilLocalEtablissementManager conseilLocalEtablissementManager;
 
@@ -37,9 +41,11 @@ public class ConseilLocalEtablissementManagerTest {
 		ctrl = support.createControl();
 		conseilLocalEtablissementDAO = ctrl.createMock(ConseilLocalEtablissementDAO.class);
 		userPreferencesDAO = ctrl.createMock(UserPreferencesDAO.class);
+		zipFilesDAO = ctrl.createMock(ZipFilesDAO.class);
+		desktop = ctrl.createMock(Desktop.class);
 		conseilLocalEtablissementManagerListener  = ctrl.createMock(ConseilLocalEtablissementManagerListener.class);
 		conseilLocalEtablissementManager = new ConseilLocalEtablissementManager(conseilLocalEtablissementDAO,
-				userPreferencesDAO);
+				userPreferencesDAO, zipFilesDAO, desktop);
 		
 		conseilLocalEtablissementManager.addListener(conseilLocalEtablissementManagerListener);
 

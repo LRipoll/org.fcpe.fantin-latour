@@ -47,6 +47,12 @@
 		scope="singleton">
 		<constructor-arg ref="conseilLocalEtablissementDAO"/>
 		<constructor-arg ref="userPreferencesDAO"/>
+		<constructor-arg ref="zipFilesDAO"/>
+	</bean>
+	
+	<bean id="zipFilesDAO" class="org.fcpe.fantinlatour.dao.files.ZipFilesDAO"
+		scope="singleton">
+		<constructor-arg ref="fileFactory"/>
 	</bean>
 	
 	<bean id="encryptHelper" class="org.fcpe.fantinlatour.dao.security.EncryptHelper"

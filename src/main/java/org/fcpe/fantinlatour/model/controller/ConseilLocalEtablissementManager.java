@@ -1,27 +1,41 @@
 package org.fcpe.fantinlatour.model.controller;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.fcpe.fantinlatour.dao.ConseilLocalEtablissementDAO;
 import org.fcpe.fantinlatour.dao.DataException;
 import org.fcpe.fantinlatour.dao.UserPreferencesDAO;
+import org.fcpe.fantinlatour.dao.files.ZipFilesDAO;
 import org.fcpe.fantinlatour.model.ConseilLocalEtablissement;
 import org.fcpe.fantinlatour.model.TypeEtablissement;
+import org.fcpe.fantinlatour.service.SpringFactory;
 
 public class ConseilLocalEtablissementManager implements UniqueNameManager {
 
 	public static final String ID = "conseilLocalEtablissementManager";
 
+	private ConseilLocalEtablissement currentConseilLocalEtablissement;
 	private ConseilLocalEtablissementDAO conseilLocalEtablissementDAO;
 	private UserPreferencesDAO userPreferencesDAO;
-	private ConseilLocalEtablissement currentConseilLocalEtablissement;
+	private ZipFilesDAO zipFilesDAO;
+	private Desktop desktop;
 	private List<ConseilLocalEtablissementManagerListener> listeners;
 
 	public ConseilLocalEtablissementManager(ConseilLocalEtablissementDAO conseilLocalEtablissementDAO,
-			UserPreferencesDAO userPreferencesDAO) {
+			UserPreferencesDAO userPreferencesDAO, ZipFilesDAO zipFilesDAO) {
+		this(conseilLocalEtablissementDAO, userPreferencesDAO, zipFilesDAO, Desktop.getDesktop());
+	}
+
+	public ConseilLocalEtablissementManager(ConseilLocalEtablissementDAO conseilLocalEtablissementDAO,
+			UserPreferencesDAO userPreferencesDAO, ZipFilesDAO zipFilesDAO, Desktop desktop) {
 		this.conseilLocalEtablissementDAO = conseilLocalEtablissementDAO;
 		this.userPreferencesDAO = userPreferencesDAO;
+		this.zipFilesDAO = zipFilesDAO;
+		this.desktop = desktop;
 		listeners = new ArrayList<ConseilLocalEtablissementManagerListener>();
 	}
 
@@ -131,12 +145,33 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 		userPreferencesDAO.setDefaultConseilLocalName(currentConseilLocalEtablissement.getEtablissement().getNom());
 		userPreferencesDAO.store();
 		notifyListeners(currentConseilLocalEtablissement);
-		
+
 	}
 
 	public String getDefault() throws DataException {
-		
+
 		return userPreferencesDAO.getDefaultConseilLocalName();
+	}
+
+	public void exportAsZip() throws DataException {
+		
+		String etablissement = currentConseilLocalEtablissement.getEtablissement().getNom();
+
+		String attachedFilename = conseilLocalEtablissementDAO.getAttachedFilename(etablissement);
+
+		String zipFilename = getZipFileName(etablissement);
+		File zipFile = zipFilesDAO.pack(attachedFilename, zipFilename);
+		try {
+			desktop.open(zipFile);
+		} catch (IOException e) {
+			throw new DataException(SpringFactory.getMessage("org.fcpe.fantinlatour.model.controller.exportAsZip.iOException"), e);
+		}
+
+	}
+
+	private String getZipFileName(String etablissement) {
+		return String.format("%s%s.zip", System.getProperty("java.io.tmpdir"), etablissement);
+
 	}
 
 }

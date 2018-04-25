@@ -88,26 +88,12 @@
 				<artifactId>depgraph-maven-plugin</artifactId>
 				<version>3.0.1</version>
 			</plugin>
-			<!--  plugin>
-				<groupId>com.github.github</groupId>
-				<artifactId>downloads-maven-plugin</artifactId>
-				<version>0.6</version>
-				<configuration>
-					<description>Official ${project.name} build of the
-						${project.version} release</description>
-					<override>true</override>
-					<includeAttached>true</includeAttached>
-					<server>github</server>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>upload</goal>
-						</goals>
-						<phase>install</phase>
-					</execution>
-				</executions>
-			</plugin-->
+			<!-- plugin> <groupId>com.github.github</groupId> <artifactId>downloads-maven-plugin</artifactId> 
+				<version>0.6</version> <configuration> <description>Official ${project.name} 
+				build of the ${project.version} release</description> <override>true</override> 
+				<includeAttached>true</includeAttached> <server>github</server> </configuration> 
+				<executions> <execution> <goals> <goal>upload</goal> </goals> <phase>install</phase> 
+				</execution> </executions> </plugin -->
 			<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>site-maven-plugin</artifactId>
@@ -140,23 +126,11 @@
 					</archive>
 				</configuration>
 			</plugin>
-			<!-- Ne fonctionne pas plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.9</version>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-						<configuration>
-							<additionalparam>${javadoc.opts}</additionalparam>
-							<additionalparam>-Xdoclint:none</additionalparam>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin-->
+			<!-- Ne fonctionne pas plugin> <groupId>org.apache.maven.plugins</groupId> 
+				<artifactId>maven-javadoc-plugin</artifactId> <version>2.9</version> <executions> 
+				<execution> <id>attach-javadocs</id> <goals> <goal>jar</goal> </goals> <configuration> 
+				<additionalparam>${javadoc.opts}</additionalparam> <additionalparam>-Xdoclint:none</additionalparam> 
+				</configuration> </execution> </executions> </plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
@@ -211,14 +185,9 @@
 								<dependencyLocationsEnabled>true</dependencyLocationsEnabled>
 							</configuration>
 						</plugin>
-						<!--  >plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-javadoc-plugin</artifactId>
-							<configuration>
-								<additionalparam>${javadoc.opts}</additionalparam>
-								<additionalparam>-Xdoclint:none</additionalparam>
-							</configuration>
-						</plugin-->
+						<!-- >plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-javadoc-plugin</artifactId> 
+							<configuration> <additionalparam>${javadoc.opts}</additionalparam> <additionalparam>-Xdoclint:none</additionalparam> 
+							</configuration> </plugin -->
 						<plugin>
 							<groupId>org.apache.maven.plugins</groupId>
 							<artifactId>maven-surefire-report-plugin</artifactId>
@@ -309,6 +278,19 @@
 			<artifactId>owner</artifactId>
 			<version>1.0.4</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.zeroturnaround</groupId>
+			<artifactId>zt-zip</artifactId>
+			<version>1.12</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.25</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.github.hazendaz</groupId>
 			<artifactId>javabean-tester</artifactId>
@@ -332,9 +314,6 @@
 			<version>4.9</version>
 			<scope>test</scope>
 		</dependency>
-
-
-
 	</dependencies>
 
 
