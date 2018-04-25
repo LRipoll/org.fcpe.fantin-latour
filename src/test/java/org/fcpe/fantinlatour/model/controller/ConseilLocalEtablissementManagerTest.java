@@ -6,6 +6,8 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -387,6 +389,36 @@ public class ConseilLocalEtablissementManagerTest {
 		support.replayAll();
 		conseilLocalEtablissementManager.open("opened");
 		assertTrue(conseilLocalEtablissementManager.isDefault());
+		support.verifyAll();
+	}
+	
+	@Test
+	public void testExportAsZip() throws DataException, IOException {
+
+		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
+		Etablissement etablissement = ctrl.createMock(Etablissement.class);
+		
+		EasyMock.expect(conseilLocalEtablissement.getEtablissement()).andReturn(etablissement).anyTimes();
+		EasyMock.expect(etablissement.getNom()).andReturn("exported").anyTimes();
+		
+
+		
+		EasyMock.expect(conseilLocalEtablissementDAO.load("exported")).andReturn(conseilLocalEtablissement);
+		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
+		EasyMock.expectLastCall().once();
+		
+		EasyMock.expect(conseilLocalEtablissementDAO.getAttachedFilename("exported")).andReturn("zippedFilename");
+		File zipFile = ctrl.createMock(File.class);
+		
+		String zipFilename = String.format("%s%s.zip", System.getProperty("java.io.tmpdir"), "exported");
+		
+		EasyMock.expect(zipFilesDAO.pack("zippedFilename", zipFilename)).andReturn(zipFile);
+		
+		desktop.open(zipFile);
+		EasyMock.expectLastCall().once();
+		support.replayAll();
+		conseilLocalEtablissementManager.open("exported");
+		conseilLocalEtablissementManager.exportAsZip();
 		support.verifyAll();
 	}
 }
