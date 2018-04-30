@@ -33,7 +33,7 @@ public class ZipFilesDAOTest {
 	}
 
 	@Test
-	public void testPackWhenFileAlreadyExisst() throws DataException {
+	public void testPackWhenFileAlreadyExists() throws DataException {
 
 		String zipFilename = "zipFilename.ext";
 		String zippedFilename = "zipFilename.zip";
@@ -48,6 +48,35 @@ public class ZipFilesDAOTest {
 		EasyMock.expect(zippedFile.exists()).andReturn(true);
 		zippedFile.deleteOnExit();
 		EasyMock.expectLastCall().once();
+
+		File[] filesToBepacked = new File[] { filetoBeZipped };
+		ZipUtil.packEntries(filesToBepacked, zippedFile);
+		PowerMock.expectLastCall();
+
+		support.replayAll();
+
+		zipFilesDAO.pack(zipFilename, zippedFilename);
+
+		support.verifyAll();
+	}
+
+	@Test
+	public void testPackWhenFileDoesNotExist() throws DataException {
+
+		String zipFilename = "zipFilename.ext";
+		String zippedFilename = "zipFilename.zip";
+		File filetoBeZipped = ctrl.createMock(File.class);
+
+		EasyMock.expect(fileFactory.create(zipFilename)).andReturn(filetoBeZipped);
+
+		File zippedFile = ctrl.createMock(File.class);
+
+		EasyMock.expect(fileFactory.create(zippedFilename)).andReturn(zippedFile);
+
+		EasyMock.expect(zippedFile.exists()).andReturn(false);
+		File parentFile = ctrl.createMock(File.class);
+		EasyMock.expect(zippedFile.getParentFile()).andReturn(parentFile);
+		EasyMock.expect(parentFile.mkdirs()).andReturn(true);
 
 		File[] filesToBepacked = new File[] { filetoBeZipped };
 		ZipUtil.packEntries(filesToBepacked, zippedFile);
