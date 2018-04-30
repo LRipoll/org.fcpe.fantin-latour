@@ -45,14 +45,14 @@ public class ConseilLocalEtablissementManagerTest {
 		userPreferencesDAO = ctrl.createMock(UserPreferencesDAO.class);
 		zipFilesDAO = ctrl.createMock(ZipFilesDAO.class);
 		desktop = ctrl.createMock(Desktop.class);
-		conseilLocalEtablissementManagerListener  = ctrl.createMock(ConseilLocalEtablissementManagerListener.class);
+		conseilLocalEtablissementManagerListener = ctrl.createMock(ConseilLocalEtablissementManagerListener.class);
 		conseilLocalEtablissementManager = new ConseilLocalEtablissementManager(conseilLocalEtablissementDAO,
 				userPreferencesDAO, zipFilesDAO, desktop);
-		
+
 		conseilLocalEtablissementManager.addListener(conseilLocalEtablissementManagerListener);
 
 	}
-	
+
 	@Test
 	public void testGetExistingConseilEtablissements() throws DataException {
 
@@ -91,11 +91,10 @@ public class ConseilLocalEtablissementManagerTest {
 
 		support.verifyAll();
 	}
-	
+
 	@Test
 	public void testGetDefault() throws DataException {
 
-	
 		String defaultValue = "Default";
 		EasyMock.expect(userPreferencesDAO.getDefaultConseilLocalName()).andReturn(defaultValue);
 
@@ -117,8 +116,7 @@ public class ConseilLocalEtablissementManagerTest {
 
 		userPreferencesDAO.setDefaultConseilLocalName(name);
 		EasyMock.expectLastCall().once();
-		
-		
+
 		EasyMock.expect(userPreferencesDAO.store()).andReturn(true);
 
 		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
@@ -130,7 +128,7 @@ public class ConseilLocalEtablissementManagerTest {
 		assertSame(conseilLocalEtablissement, conseilLocalEtablissementManager.getCurrentConseilLocalEtablissement());
 		support.verifyAll();
 	}
-	
+
 	@Test
 	public void testCreateNotAsDefaultConseilLocalTheUserPreferencesMustBeStore() throws DataException {
 
@@ -160,14 +158,12 @@ public class ConseilLocalEtablissementManagerTest {
 
 		support.verifyAll();
 	}
-	
-	
+
 	@Test
 	public void testOpenShouldReturnIt() throws DataException {
 
 		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
-		
-		
+
 		EasyMock.expect(conseilLocalEtablissementDAO.load("opened")).andReturn(conseilLocalEtablissement);
 		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
 		EasyMock.expectLastCall().once();
@@ -178,30 +174,28 @@ public class ConseilLocalEtablissementManagerTest {
 		assertSame(conseilLocalEtablissement, conseilLocalEtablissementManager.getCurrentConseilLocalEtablissement());
 		support.verifyAll();
 	}
-	
+
 	@Test
 	public void testRenameWhenItisNotTheDefault() throws DataException {
 
 		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
 		Etablissement etablissement = ctrl.createMock(Etablissement.class);
-		
+
 		EasyMock.expect(conseilLocalEtablissement.getEtablissement()).andReturn(etablissement).anyTimes();
 		EasyMock.expect(etablissement.getNom()).andReturn("opened");
-		
+
 		EasyMock.expect(userPreferencesDAO.getDefaultConseilLocalName()).andReturn("Default");
 
 		EasyMock.expect(conseilLocalEtablissementDAO.load("opened")).andReturn(conseilLocalEtablissement);
 		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
 		EasyMock.expectLastCall().once();
-		
-		EasyMock.expect(conseilLocalEtablissementDAO.rename("opened","newName")).andReturn(conseilLocalEtablissement);
+
+		EasyMock.expect(conseilLocalEtablissementDAO.rename("opened", "newName")).andReturn(conseilLocalEtablissement);
 		EasyMock.expectLastCall().once();
-		
-		
+
 		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
 		EasyMock.expectLastCall().once();
-		
-		
+
 		support.replayAll();
 
 		conseilLocalEtablissementManager.open("opened");
@@ -209,31 +203,28 @@ public class ConseilLocalEtablissementManagerTest {
 		assertSame(conseilLocalEtablissement, conseilLocalEtablissementManager.getCurrentConseilLocalEtablissement());
 		support.verifyAll();
 	}
-	
+
 	@Test
 	public void testDeleteWhenItisNotTheDefault() throws DataException {
 
 		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
 		Etablissement etablissement = ctrl.createMock(Etablissement.class);
-		
+
 		EasyMock.expect(conseilLocalEtablissement.getEtablissement()).andReturn(etablissement).anyTimes();
 		EasyMock.expect(etablissement.getNom()).andReturn("opened");
-		
+
 		EasyMock.expect(userPreferencesDAO.getDefaultConseilLocalName()).andReturn("Default");
 
 		EasyMock.expect(conseilLocalEtablissementDAO.load("opened")).andReturn(conseilLocalEtablissement);
 		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
 		EasyMock.expectLastCall().once();
-		
+
 		conseilLocalEtablissementDAO.delete("opened");
 		EasyMock.expectLastCall().once();
-		
-	
-		
+
 		conseilLocalEtablissementManagerListener.onSelected(null);
 		EasyMock.expectLastCall().once();
-		
-		
+
 		support.replayAll();
 
 		conseilLocalEtablissementManager.open("opened");
@@ -241,32 +232,31 @@ public class ConseilLocalEtablissementManagerTest {
 		assertNull(conseilLocalEtablissementManager.getCurrentConseilLocalEtablissement());
 		support.verifyAll();
 	}
-	
+
 	@Test
 	public void testDeleteWhenItisTheDefault() throws DataException {
 
 		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
 		Etablissement etablissement = ctrl.createMock(Etablissement.class);
-		
+
 		EasyMock.expect(conseilLocalEtablissement.getEtablissement()).andReturn(etablissement).anyTimes();
 		EasyMock.expect(etablissement.getNom()).andReturn("opened");
-		
+
 		EasyMock.expect(userPreferencesDAO.getDefaultConseilLocalName()).andReturn("opened");
 
 		EasyMock.expect(conseilLocalEtablissementDAO.load("opened")).andReturn(conseilLocalEtablissement);
 		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
 		EasyMock.expectLastCall().once();
-		
+
 		conseilLocalEtablissementDAO.delete("opened");
 		EasyMock.expectLastCall().once();
-		
+
 		userPreferencesDAO.setDefaultConseilLocalName(null);
 		EasyMock.expectLastCall().once();
 		EasyMock.expect(userPreferencesDAO.store()).andReturn(true);
 		conseilLocalEtablissementManagerListener.onSelected(null);
 		EasyMock.expectLastCall().once();
-		
-		
+
 		support.replayAll();
 
 		conseilLocalEtablissementManager.open("opened");
@@ -274,66 +264,62 @@ public class ConseilLocalEtablissementManagerTest {
 		assertNull(conseilLocalEtablissementManager.getCurrentConseilLocalEtablissement());
 		support.verifyAll();
 	}
-	
+
 	@Test
 	public void testsetDefault() throws DataException {
 
 		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
 		Etablissement etablissement = ctrl.createMock(Etablissement.class);
-		
+
 		EasyMock.expect(conseilLocalEtablissement.getEtablissement()).andReturn(etablissement).anyTimes();
 		EasyMock.expect(etablissement.getNom()).andReturn("opened");
-		
 
 		EasyMock.expect(conseilLocalEtablissementDAO.load("opened")).andReturn(conseilLocalEtablissement);
 		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
 		EasyMock.expectLastCall().once();
-		
+
 		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
 		EasyMock.expectLastCall().once();
-		
+
 		userPreferencesDAO.setDefaultConseilLocalName("opened");
 		EasyMock.expectLastCall().once();
 		EasyMock.expect(userPreferencesDAO.store()).andReturn(true);
 
 		EasyMock.expectLastCall().once();
-		
-		
+
 		support.replayAll();
 
 		conseilLocalEtablissementManager.open("opened");
 		conseilLocalEtablissementManager.setAsDefault();
-		assertSame(conseilLocalEtablissement,conseilLocalEtablissementManager.getCurrentConseilLocalEtablissement());
+		assertSame(conseilLocalEtablissement, conseilLocalEtablissementManager.getCurrentConseilLocalEtablissement());
 		support.verifyAll();
 	}
-	
+
 	@Test
 	public void testRenameWhenItisTheDefault() throws DataException {
 
 		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
 		Etablissement etablissement = ctrl.createMock(Etablissement.class);
-		
+
 		EasyMock.expect(conseilLocalEtablissement.getEtablissement()).andReturn(etablissement).anyTimes();
 		EasyMock.expect(etablissement.getNom()).andReturn("opened");
-		
+
 		EasyMock.expect(userPreferencesDAO.getDefaultConseilLocalName()).andReturn("opened");
 
 		EasyMock.expect(conseilLocalEtablissementDAO.load("opened")).andReturn(conseilLocalEtablissement);
 		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
 		EasyMock.expectLastCall().once();
-		
-		EasyMock.expect(conseilLocalEtablissementDAO.rename("opened","newName")).andReturn(conseilLocalEtablissement);
+
+		EasyMock.expect(conseilLocalEtablissementDAO.rename("opened", "newName")).andReturn(conseilLocalEtablissement);
 		EasyMock.expectLastCall().once();
-		
-	
+
 		userPreferencesDAO.setDefaultConseilLocalName("newName");
 		EasyMock.expectLastCall().once();
-		
+
 		EasyMock.expect(userPreferencesDAO.store()).andReturn(true);
 		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
 		EasyMock.expectLastCall().once();
-		
-		
+
 		support.replayAll();
 
 		conseilLocalEtablissementManager.open("opened");
@@ -341,7 +327,7 @@ public class ConseilLocalEtablissementManagerTest {
 		assertSame(conseilLocalEtablissement, conseilLocalEtablissementManager.getCurrentConseilLocalEtablissement());
 		support.verifyAll();
 	}
-	
+
 	@Test
 	public void testisDefaultWhenNoSelection() throws DataException {
 
@@ -349,71 +335,70 @@ public class ConseilLocalEtablissementManagerTest {
 		assertFalse(conseilLocalEtablissementManager.isDefault());
 		support.verifyAll();
 	}
-	
+
 	@Test
 	public void testisDefaultWhenIsNotTheOpened() throws DataException {
 
 		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
 		Etablissement etablissement = ctrl.createMock(Etablissement.class);
-		
+
 		EasyMock.expect(conseilLocalEtablissement.getEtablissement()).andReturn(etablissement).anyTimes();
 		EasyMock.expect(etablissement.getNom()).andReturn("opened");
-		
+
 		EasyMock.expect(userPreferencesDAO.getDefaultConseilLocalName()).andReturn("Default");
 
 		EasyMock.expect(conseilLocalEtablissementDAO.load("opened")).andReturn(conseilLocalEtablissement);
 		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
 		EasyMock.expectLastCall().once();
-		
+
 		support.replayAll();
 		conseilLocalEtablissementManager.open("opened");
 		assertFalse(conseilLocalEtablissementManager.isDefault());
 		support.verifyAll();
 	}
-	
+
 	@Test
 	public void testisDefaultWhenIsTheOpened() throws DataException {
 
 		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
 		Etablissement etablissement = ctrl.createMock(Etablissement.class);
-		
+
 		EasyMock.expect(conseilLocalEtablissement.getEtablissement()).andReturn(etablissement).anyTimes();
 		EasyMock.expect(etablissement.getNom()).andReturn("opened");
-		
+
 		EasyMock.expect(userPreferencesDAO.getDefaultConseilLocalName()).andReturn("opened");
 
 		EasyMock.expect(conseilLocalEtablissementDAO.load("opened")).andReturn(conseilLocalEtablissement);
 		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
 		EasyMock.expectLastCall().once();
-		
+
 		support.replayAll();
 		conseilLocalEtablissementManager.open("opened");
 		assertTrue(conseilLocalEtablissementManager.isDefault());
 		support.verifyAll();
 	}
-	
+
 	@Test
 	public void testExportAsZip() throws DataException, IOException {
 
 		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
 		Etablissement etablissement = ctrl.createMock(Etablissement.class);
-		
+
 		EasyMock.expect(conseilLocalEtablissement.getEtablissement()).andReturn(etablissement).anyTimes();
 		EasyMock.expect(etablissement.getNom()).andReturn("exported").anyTimes();
-		
 
-		
 		EasyMock.expect(conseilLocalEtablissementDAO.load("exported")).andReturn(conseilLocalEtablissement);
 		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
 		EasyMock.expectLastCall().once();
-		
+
 		EasyMock.expect(conseilLocalEtablissementDAO.getAttachedFilename("exported")).andReturn("zippedFilename");
 		File zipFile = ctrl.createMock(File.class);
-		
-		String zipFilename = String.format("%s%s.zip", System.getProperty("java.io.tmpdir"), "exported");
-		
+
+		String zipFilename = "dir/test.zip";
+		EasyMock.expect(zipFilesDAO.getZipFileName("exported")).andReturn(zipFilename);
+
 		EasyMock.expect(zipFilesDAO.pack("zippedFilename", zipFilename)).andReturn(zipFile);
-		
+
 		desktop.open(zipFile);
 		EasyMock.expectLastCall().once();
 		support.replayAll();

@@ -53,6 +53,7 @@
 	<bean id="zipFilesDAO" class="org.fcpe.fantinlatour.dao.files.ZipFilesDAO"
 		scope="singleton">
 		<constructor-arg ref="fileFactory"/>
+		<constructor-arg value="${user.home}/${org.fcpe.fantinlatour.app.context.files.dir.zip}"/>
 	</bean>
 	
 	<bean id="encryptHelper" class="org.fcpe.fantinlatour.dao.security.EncryptHelper"

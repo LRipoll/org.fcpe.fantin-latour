@@ -154,23 +154,20 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 	}
 
 	public void exportAsZip() throws DataException {
-		
+
 		String etablissement = currentConseilLocalEtablissement.getEtablissement().getNom();
 
 		String attachedFilename = conseilLocalEtablissementDAO.getAttachedFilename(etablissement);
 
-		String zipFilename = getZipFileName(etablissement);
+		String zipFilename = zipFilesDAO.getZipFileName(etablissement);
+
 		File zipFile = zipFilesDAO.pack(attachedFilename, zipFilename);
 		try {
 			desktop.open(zipFile);
 		} catch (IOException e) {
-			throw new DataException(SpringFactory.getMessage("org.fcpe.fantinlatour.model.controller.exportAsZip.iOException"), e);
+			throw new DataException(
+					SpringFactory.getMessage("org.fcpe.fantinlatour.model.controller.exportAsZip.iOException"), e);
 		}
-
-	}
-
-	private String getZipFileName(String etablissement) {
-		return String.format("%s%s.zip", System.getProperty("java.io.tmpdir"), etablissement);
 
 	}
 

@@ -8,10 +8,12 @@ import org.zeroturnaround.zip.ZipUtil;
 public class ZipFilesDAO  {
 
 	private FileFactory fileFactory;
+	private String zipDirname;
 	
-	public ZipFilesDAO(FileFactory fileFactory) {
+	public ZipFilesDAO(FileFactory fileFactory,String zipDirname) {
 		super();
 		this.fileFactory = fileFactory;
+		this.zipDirname = zipDirname;
 	}
 
 	public File pack(String zippedFilename, String zipFilename) throws DataException {
@@ -31,6 +33,11 @@ public class ZipFilesDAO  {
 		
 		return result;
 
+	}
+
+	public String getZipFileName(String filename) {
+		return String.format("%s%s.zip", String.format("%s%s", zipDirname,File.separator) , filename);
+		//return String.format("%s%s.zip", String.format("%s%s%s%s", System.getProperty("user.home"),File.separator,"Downloads",File.separator) , filename);
 	}
 
 }

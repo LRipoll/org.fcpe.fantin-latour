@@ -1,5 +1,7 @@
 package org.fcpe.fantinlatour.dao.files;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 
 import org.easymock.EasyMock;
@@ -22,16 +24,25 @@ public class ZipFilesDAOTest {
 	private IMocksControl ctrl;
 	private ZipFilesDAO zipFilesDAO;
 	private FileFactory fileFactory;
+	private String dirname;
 
 	@Before
 	public void setUp() {
 		ctrl = support.createControl();
 		fileFactory = ctrl.createMock(FileFactory.class);
 		PowerMock.mockStatic(ZipUtil.class);
-
-		zipFilesDAO = new ZipFilesDAO(fileFactory);
+		dirname = "dirname";
+		zipFilesDAO = new ZipFilesDAO(fileFactory, dirname);
 	}
 
+	@Test
+	public void testGetZipFileName() throws DataException {
+		support.replayAll();
+
+		assertEquals(dirname+File.separator+"test.zip", zipFilesDAO.getZipFileName("test"));
+
+		support.verifyAll();
+	}
 	@Test
 	public void testPackWhenFileAlreadyExists() throws DataException {
 
