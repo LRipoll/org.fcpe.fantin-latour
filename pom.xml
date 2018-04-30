@@ -167,6 +167,7 @@
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>dd/MM/yyyy</maven.build.timestamp.format>
 		<spring.version>4.1.6.RELEASE</spring.version>
+		<powermock.version>1.7.1</powermock.version>
 	</properties>
 	<reporting>
 		<plugins>
@@ -314,7 +315,21 @@
 			<version>4.9</version>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-easymock</artifactId>
+			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
+
 
 
 	<ciManagement>
