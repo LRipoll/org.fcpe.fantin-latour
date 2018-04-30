@@ -2,8 +2,8 @@ package org.fcpe.fantinlatour.parser;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
-import org.fcpe.fantinlatour.model.Classe;
 import org.fcpe.fantinlatour.model.AnneeScolaire;
+import org.fcpe.fantinlatour.model.Classe;
 import org.fcpe.fantinlatour.model.Engagement;
 import org.fcpe.fantinlatour.model.ResponsableLegal;
 import org.fcpe.fantinlatour.model.Titre;

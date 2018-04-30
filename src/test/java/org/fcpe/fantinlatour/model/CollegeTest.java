@@ -13,12 +13,6 @@ import java.util.Set;
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.easymock.IMocksControl;
-import org.fcpe.fantinlatour.model.Classe;
-import org.fcpe.fantinlatour.model.ClasseFactory;
-import org.fcpe.fantinlatour.model.AnneeScolaire;
-import org.fcpe.fantinlatour.model.ConseilLocalConfig;
-import org.fcpe.fantinlatour.model.Eleve;
-import org.fcpe.fantinlatour.model.ResponsableLegal;
 import org.junit.Before;
 import org.junit.Test;
 

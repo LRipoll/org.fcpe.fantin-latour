@@ -4,11 +4,6 @@ import static org.junit.Assert.assertSame;
 
 import org.easymock.EasyMockSupport;
 import org.easymock.IMocksControl;
-import org.fcpe.fantinlatour.model.Classe;
-import org.fcpe.fantinlatour.model.ClasseFactory;
-import org.fcpe.fantinlatour.model.AnneeScolaire;
-import org.fcpe.fantinlatour.model.ConseilLocalConfig;
-import org.fcpe.fantinlatour.model.EleveFactory;
 import org.junit.Test;
 
 public class ClasseFactoryTest {

@@ -4,8 +4,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 
 import org.easymock.EasyMockSupport;
-import org.fcpe.fantinlatour.model.ResponsableLegal;
-import org.fcpe.fantinlatour.model.ResponsableLegalFactory;
 import org.junit.Test;
 
 public class ResponsableLegalFactoryTest {

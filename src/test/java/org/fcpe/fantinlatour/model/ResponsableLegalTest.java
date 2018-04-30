@@ -6,7 +6,6 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import org.easymock.EasyMockSupport;
-import org.fcpe.fantinlatour.model.ResponsableLegal;
 import org.junit.Test;
 
 public class ResponsableLegalTest {

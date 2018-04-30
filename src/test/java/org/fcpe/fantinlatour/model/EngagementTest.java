@@ -2,7 +2,6 @@ package org.fcpe.fantinlatour.model;
 
 import static org.junit.Assert.assertSame;
 
-import org.fcpe.fantinlatour.model.Engagement;
 import org.junit.Test;
 
 public class EngagementTest {

@@ -3,7 +3,6 @@ package org.fcpe.fantinlatour.model;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 
-import org.fcpe.fantinlatour.model.Titre;
 import org.junit.Test;
 
 public class TitreTest {

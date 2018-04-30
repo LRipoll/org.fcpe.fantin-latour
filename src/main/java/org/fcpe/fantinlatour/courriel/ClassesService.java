@@ -6,8 +6,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.fcpe.fantinlatour.model.Classe;
 import org.fcpe.fantinlatour.model.AnneeScolaire;
+import org.fcpe.fantinlatour.model.Classe;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.velocity.VelocityEngineUtils;

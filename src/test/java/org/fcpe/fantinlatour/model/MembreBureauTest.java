@@ -4,9 +4,6 @@ import static org.junit.Assert.assertSame;
 
 import org.easymock.EasyMockSupport;
 import org.easymock.IMocksControl;
-import org.fcpe.fantinlatour.model.MembreBureau;
-import org.fcpe.fantinlatour.model.ResponsableLegal;
-import org.fcpe.fantinlatour.model.Titre;
 import org.junit.Test;
 
 public class MembreBureauTest {

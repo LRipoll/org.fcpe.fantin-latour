@@ -14,15 +14,6 @@ import java.util.List;
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.easymock.IMocksControl;
-import org.fcpe.fantinlatour.model.Classe;
-import org.fcpe.fantinlatour.model.AnneeScolaire;
-import org.fcpe.fantinlatour.model.ConseilLocalConfig;
-import org.fcpe.fantinlatour.model.ConseilLocal;
-import org.fcpe.fantinlatour.model.Delegue;
-import org.fcpe.fantinlatour.model.Eleve;
-import org.fcpe.fantinlatour.model.EleveFactory;
-import org.fcpe.fantinlatour.model.Engagement;
-import org.fcpe.fantinlatour.model.ResponsableLegal;
 import org.junit.Before;
 import org.junit.Test;
 

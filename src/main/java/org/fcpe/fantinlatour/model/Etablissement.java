@@ -1,9 +1,10 @@
 package org.fcpe.fantinlatour.model;
 
+import org.fcpe.fantinlatour.dao.files.xstream.EncryptedStringConverter;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
-import org.fcpe.fantinlatour.dao.files.xstream.EncryptedStringConverter;
 
 @XStreamAlias("Etablissement")
 public class Etablissement {
