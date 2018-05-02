@@ -4,3 +4,4 @@ encoding//src/test/resources=ISO-8859-1
 encoding//src/test/resources/DeleguesServicesTest.html=UTF-8
 encoding//src/test/resources/TableauDeleguesTest.html=UTF-8
 encoding//src/test/resources/TableauMembresBureauTest.html=UTF-8
+encoding/<project>=UTF-8

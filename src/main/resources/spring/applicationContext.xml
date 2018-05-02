@@ -50,15 +50,23 @@
 		<constructor-arg ref="zipFilesDAO"/>
 	</bean>
 	
-	<bean id="zipFilesDAO" class="org.fcpe.fantinlatour.dao.files.ZipFilesDAO"
-		scope="singleton">
-		<constructor-arg ref="fileFactory"/>
-		<constructor-arg value="${user.home}/${org.fcpe.fantinlatour.app.context.files.dir.zip}"/>
-	</bean>
+	
 	
 	<bean id="encryptHelper" class="org.fcpe.fantinlatour.dao.security.EncryptHelper"
 		scope="singleton"/>
 	<!--  DAO Files -->
+	
+	<bean id="zipFilesDAO" class="org.fcpe.fantinlatour.dao.files.ZipFilesDAO"
+		scope="singleton">
+		<constructor-arg ref="fileFactory"/>
+		<constructor-arg ref="zipFileFactory"/>
+		<constructor-arg value="${user.home}/${org.fcpe.fantinlatour.app.context.files.dir.zip}"/>
+	</bean>
+	
+	<bean id="zipFileFactory" class="org.fcpe.fantinlatour.dao.files.ZipFileFactory"
+		scope="singleton">
+	</bean>
+	
 	<bean id="conseilLocalEtablissementDAO" class="org.fcpe.fantinlatour.dao.files.ConseilLocalEtablissementDAOImpl"
 		scope="singleton">
 		<constructor-arg ref="conseilLocalEtablissementFactory"/>
