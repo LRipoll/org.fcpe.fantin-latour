@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import org.fcpe.fantinlatour.model.*?>
+<GridPane id="windows" prefHeight="100.0" prefWidth="300.0"
+	xmlns:fx="http://javafx.com/fxml"
+	fx:controller="org.fcpe.fantinlatour.app.controller.ExportConseilLocalEtablissementController"
+	alignment="center" hgap="10" vgap="10">
+	
+	<columnConstraints>
+		<ColumnConstraints minWidth="150" prefWidth="150"
+			maxWidth="Infinity" halignment="LEFT">
+		</ColumnConstraints>
+		<ColumnConstraints minWidth="150" prefWidth="150"
+			maxWidth="Infinity" hgrow="ALWAYS">
+		</ColumnConstraints>
+	</columnConstraints>
+
+	<Label
+		text="%org.fcpe.fantinlatour.view.exportconseillocal.password.label"
+		GridPane.columnIndex="0" GridPane.rowIndex="0" />
+	<PasswordField fx:id="passwordTextField"
+		text="%org.fcpe.fantinlatour.view.exportconseillocal.password.text"
+		GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+	<Button onAction="#cancel"
+		text="%org.fcpe.fantinlatour.view.exportconseillocal.cancelButton.text"
+		prefWidth="90" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.halignment="CENTER">
+		<tooltip>
+			<Tooltip
+				text="%org.fcpe.fantinlatour.view.exportconseillocal.cancelButton.tooltip.text" />
+		</tooltip>
+	</Button>
+	<Button fx:id="okButton" onAction="#execute"
+		text="%org.fcpe.fantinlatour.view.exportconseillocal.openButton.text"
+		prefWidth="90" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.halignment="CENTER">
+		<tooltip>
+			<Tooltip
+				text="%org.fcpe.fantinlatour.view.exportconseillocal.openButton.tooltip.text" />
+		</tooltip>
+	</Button>
+</GridPane>

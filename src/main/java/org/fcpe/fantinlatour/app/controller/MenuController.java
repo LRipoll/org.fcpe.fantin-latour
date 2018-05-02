@@ -97,6 +97,11 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 
 		viewFactory.createStage("renameconseillocal", Modality.APPLICATION_MODAL).show();
 	}
+	
+	private void provideExportFunction() {
+		viewFactory.createStage("exportconseillocal", Modality.APPLICATION_MODAL).show();
+		
+	}
 
 	@FXML
 	private void handleDeleteConseilLocal(final ActionEvent event) {
@@ -188,14 +193,7 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 		}
 	}
 
-	private void provideExportFunction() {
-		try {
-			conseilLocalEtablissementManager.exportAsZip();
-		} catch (DataException e) {
-			showExceptionAlertDialog(e);
-		}
-		
-	}
+	
 	
 	/**
 	 * Perform functionality associated with "About" menu selection or CTRL-A.
