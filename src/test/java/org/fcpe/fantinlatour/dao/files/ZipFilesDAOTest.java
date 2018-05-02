@@ -17,8 +17,6 @@ import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.ZipParameters;
 
-
-
 public class ZipFilesDAOTest {
 
 	private EasyMockSupport support = new EasyMockSupport();
@@ -41,10 +39,11 @@ public class ZipFilesDAOTest {
 	public void testGetZipFileName() throws DataException {
 		support.replayAll();
 
-		assertEquals(dirname+File.separator+"test.zip", zipFilesDAO.getZipFileName("test"));
+		assertEquals(dirname + File.separator + "test.zip", zipFilesDAO.getZipFileName("test"));
 
 		support.verifyAll();
 	}
+
 	@Test
 	public void testPackWhenFileAlreadyExists() throws DataException, ZipException {
 
@@ -62,19 +61,20 @@ public class ZipFilesDAOTest {
 		archiveFile.deleteOnExit();
 		EasyMock.expectLastCall().once();
 
-
 		ZipFile zipFile = ctrl.createMock(ZipFile.class);
 		EasyMock.expect(zipFileFactory.create(archiveFilename)).andReturn(zipFile);
-		
+
 		ZipParameters zipParameters = ctrl.createMock(ZipParameters.class);
 		EasyMock.expect(zipFileFactory.createZipParameters()).andReturn(zipParameters);
-		
+		zipParameters.setPassword("password");
+
+		EasyMock.expectLastCall().once();
 		zipFile.addFile(inputFile, zipParameters);
 		EasyMock.expectLastCall().once();
 
 		support.replayAll();
 
-		zipFilesDAO.pack(inputFilename, archiveFilename);
+		zipFilesDAO.pack(inputFilename, archiveFilename, "password");
 
 		support.verifyAll();
 	}
@@ -92,7 +92,6 @@ public class ZipFilesDAOTest {
 
 		EasyMock.expect(fileFactory.create(archiveFilename)).andReturn(archiveFile);
 
-
 		EasyMock.expect(archiveFile.exists()).andReturn(false);
 		File parentFile = ctrl.createMock(File.class);
 		EasyMock.expect(archiveFile.getParentFile()).andReturn(parentFile);
@@ -100,20 +99,21 @@ public class ZipFilesDAOTest {
 
 		ZipFile zipFile = ctrl.createMock(ZipFile.class);
 		EasyMock.expect(zipFileFactory.create(archiveFilename)).andReturn(zipFile);
-		
+
 		ZipParameters zipParameters = ctrl.createMock(ZipParameters.class);
 		EasyMock.expect(zipFileFactory.createZipParameters()).andReturn(zipParameters);
-		
+		zipParameters.setPassword("password");
+		EasyMock.expectLastCall().once();
 		zipFile.addFile(inputFile, zipParameters);
 		EasyMock.expectLastCall().once();
 
 		support.replayAll();
 
-		zipFilesDAO.pack(inputFilename, archiveFilename);
-		
+		zipFilesDAO.pack(inputFilename, archiveFilename, "password");
+
 		support.verifyAll();
 	}
-	
+
 	@Test
 	public void testPackWhenZipExpectionIsRaise() throws DataException, ZipException {
 
@@ -127,7 +127,6 @@ public class ZipFilesDAOTest {
 
 		EasyMock.expect(fileFactory.create(archiveFilename)).andReturn(archiveFile);
 
-
 		EasyMock.expect(archiveFile.exists()).andReturn(false);
 		File parentFile = ctrl.createMock(File.class);
 		EasyMock.expect(archiveFile.getParentFile()).andReturn(parentFile);
@@ -140,7 +139,7 @@ public class ZipFilesDAOTest {
 
 		support.replayAll();
 		try {
-			zipFilesDAO.pack(inputFilename, archiveFilename);
+			zipFilesDAO.pack(inputFilename, archiveFilename, "password");
 			fail("Should throw DataException");
 		} catch (DataException aExp) {
 			assertEquals("org.fcpe.fantinlatour.dao.files.ZipFilesDAO.pack.failed", aExp.getMessage());

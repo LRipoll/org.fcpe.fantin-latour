@@ -397,13 +397,13 @@ public class ConseilLocalEtablissementManagerTest {
 		String zipFilename = "dir/test.zip";
 		EasyMock.expect(zipFilesDAO.getZipFileName("exported")).andReturn(zipFilename);
 
-		EasyMock.expect(zipFilesDAO.pack("zippedFilename", zipFilename)).andReturn(zipFile);
+		EasyMock.expect(zipFilesDAO.pack("zippedFilename", zipFilename,"password")).andReturn(zipFile);
 
 		desktop.open(zipFile);
 		EasyMock.expectLastCall().once();
 		support.replayAll();
 		conseilLocalEtablissementManager.open("exported");
-		conseilLocalEtablissementManager.exportAsZip();
+		conseilLocalEtablissementManager.exportAsZip("password");
 		support.verifyAll();
 	}
 }

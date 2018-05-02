@@ -20,7 +20,7 @@ public class ExportConseilLocalEtablissementController extends AbstractSecureCon
 		try {
 			
 			getEncryptHelper().setPassword(passwordTextField.getText());
-			conseilLocalEtablissementManager.exportAsZip();
+			conseilLocalEtablissementManager.exportAsZip(passwordTextField.getText());
 			super.execute(event);
 
 		} catch (PasswordException e) {

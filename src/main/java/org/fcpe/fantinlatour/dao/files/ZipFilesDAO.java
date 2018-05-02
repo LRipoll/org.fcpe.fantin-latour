@@ -23,7 +23,7 @@ public class ZipFilesDAO {
 
 	}
 
-	public File pack(String zippedFilename, String zipFilename) throws DataException {
+	public File pack(String zippedFilename, String zipFilename, String password) throws DataException {
 
 		File result = null;
 
@@ -41,7 +41,7 @@ public class ZipFilesDAO {
 
 			ZipParameters parameters = zipFileFactory.createZipParameters();
 
-			// TODO parameters.setPassword("howtodoinjava");
+			parameters.setPassword(password);
 
 			zipFile.addFile(zippedFile, parameters);
 		} catch (ZipException e) {

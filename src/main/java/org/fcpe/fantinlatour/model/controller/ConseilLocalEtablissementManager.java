@@ -153,7 +153,7 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 		return userPreferencesDAO.getDefaultConseilLocalName();
 	}
 
-	public void exportAsZip() throws DataException {
+	public void exportAsZip(String password) throws DataException {
 
 		String etablissement = currentConseilLocalEtablissement.getEtablissement().getNom();
 
@@ -161,7 +161,7 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 
 		String zipFilename = zipFilesDAO.getZipFileName(etablissement);
 
-		File zipFile = zipFilesDAO.pack(attachedFilename, zipFilename);
+		File zipFile = zipFilesDAO.pack(attachedFilename, zipFilename, password);
 		try {
 			desktop.open(zipFile);
 		} catch (IOException e) {
