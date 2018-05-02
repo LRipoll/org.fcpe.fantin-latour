@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import org.fcpe.fantinlatour.model.*?>
-<GridPane id="windows" prefHeight="250.0" prefWidth="400.0" xmlns:fx="http://javafx.com/fxml" fx:controller="org.fcpe.fantinlatour.app.controller.CreateConseilLocalEtablissementController" alignment="center"
+<GridPane id="windows" prefHeight="200.0" prefWidth="400.0" xmlns:fx="http://javafx.com/fxml" fx:controller="org.fcpe.fantinlatour.app.controller.CreateConseilLocalEtablissementController" alignment="center"
           hgap="10" vgap="10">
-        <!--  padding><Insets top="10" right="10" bottom="10" left="10"/></padding-->
+        
 		<columnConstraints>
 			<ColumnConstraints minWidth="200" prefWidth="200"
 	                           maxWidth="Infinity" halignment="LEFT">
