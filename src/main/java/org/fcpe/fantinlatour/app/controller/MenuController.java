@@ -102,6 +102,11 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 		viewFactory.createStage("exportconseillocal", Modality.APPLICATION_MODAL).show();
 		
 	}
+	
+	private void provideImportFunction() {
+		viewFactory.createStage("importconseillocal", Modality.APPLICATION_MODAL).show();
+		
+	}
 
 	@FXML
 	private void handleDeleteConseilLocal(final ActionEvent event) {
@@ -153,7 +158,7 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 
 	@FXML
 	private void handleImportConseilLocal(final ActionEvent event) {
-		provideUnsupportedFunction();
+		provideImportFunction();
 	}
 
 	@FXML

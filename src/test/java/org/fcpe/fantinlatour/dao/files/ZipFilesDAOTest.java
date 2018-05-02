@@ -132,7 +132,7 @@ public class ZipFilesDAOTest {
 		EasyMock.expect(archiveFile.getParentFile()).andReturn(parentFile);
 		EasyMock.expect(parentFile.mkdirs()).andReturn(true);
 
-		ZipFile zipFile = ctrl.createMock(ZipFile.class);
+		
 		zipFileFactory.create(archiveFilename);
 		ZipException zipException = ctrl.createMock(ZipException.class);
 		EasyMock.expectLastCall().andThrow(zipException);
