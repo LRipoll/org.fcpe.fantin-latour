@@ -7,88 +7,44 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import org.fcpe.fantinlatour.model.*?>
-<GridPane id="windows" prefHeight="200.0" prefWidth="400.0" xmlns:fx="http://javafx.com/fxml" fx:controller="org.fcpe.fantinlatour.app.controller.CreateConseilLocalEtablissementController">  
-<columnConstraints>
-		<ColumnConstraints fillWidth="true" percentWidth="100"/>
-	</columnConstraints>
-	<HBox alignment="BOTTOM_LEFT" GridPane.rowIndex="0">
-		<Label text="%org.fcpe.fantinlatour.view.newconseillocal.name.label" GridPane.columnIndex="0" GridPane.rowIndex="0">
-			<HBox.margin>
-				<Insets bottom="10.0" right="15"/>
-			</HBox.margin>
-		</Label>
-		<TextField fx:id="nameTextField" text="%org.fcpe.fantinlatour.view.newconseillocal.name.text" GridPane.columnIndex="1">
-			<HBox.margin>
-				<Insets bottom="10.0" />
-			</HBox.margin>
-		</TextField>
-	</HBox>
-	<HBox alignment="BOTTOM_LEFT" GridPane.rowIndex="1">
-		<Label  text="%org.fcpe.fantinlatour.view.newconseillocal.type.label" GridPane.columnIndex="0" >
-			<HBox.margin>
-				<Insets bottom="10.0" right="15"/>
-			</HBox.margin>
-		</Label>
-		<ComboBox fx:id="typeComboBox" GridPane.columnIndex="1">
-			<HBox.margin>
-				<Insets bottom="10.0" />
-			</HBox.margin>
-		</ComboBox>
-	</HBox>
-	<HBox alignment="BOTTOM_LEFT" GridPane.rowIndex="2">
-		<Label  text="%org.fcpe.fantinlatour.view.newconseillocal.default.label" GridPane.columnIndex="0" >
-			<HBox.margin>
-				<Insets bottom="10.0" right="15"/>
-			</HBox.margin>
-		</Label>
-		<CheckBox fx:id="defaultCheckBox" GridPane.columnIndex="1">
-			<HBox.margin>
-				<Insets bottom="20.0" />
-			</HBox.margin>
-		</CheckBox>
-	</HBox>
-	<HBox alignment="BOTTOM_LEFT" GridPane.rowIndex="3">
-		<Label text="%org.fcpe.fantinlatour.view.newconseillocal.password.label" GridPane.columnIndex="0" GridPane.rowIndex="0">
-			<HBox.margin>
-				<Insets bottom="10.0" right="15"/>
-			</HBox.margin>
-		</Label>
-		<PasswordField fx:id="passwordTextField" text="%org.fcpe.fantinlatour.view.newconseillocal.password.text" GridPane.columnIndex="1">
-			<HBox.margin>
-				<Insets bottom="10.0" />
-			</HBox.margin>
-		</PasswordField>
-	</HBox>
-<HBox alignment="BOTTOM_LEFT" GridPane.rowIndex="4">
-		<Label text="%org.fcpe.fantinlatour.view.newconseillocal.confirmpassword.label" GridPane.columnIndex="0" GridPane.rowIndex="0">
-			<HBox.margin>
-				<Insets bottom="10.0" right="15"/>
-			</HBox.margin>
-		</Label>
-		<PasswordField fx:id="confirmpasswordTextField" text="%org.fcpe.fantinlatour.view.newconseillocal.confirmpassword.text" GridPane.columnIndex="1">
-			<HBox.margin>
-				<Insets bottom="10.0" />
-			</HBox.margin>
-		</PasswordField>
-	</HBox>
+<GridPane id="windows" prefHeight="250.0" prefWidth="400.0" xmlns:fx="http://javafx.com/fxml" fx:controller="org.fcpe.fantinlatour.app.controller.CreateConseilLocalEtablissementController" alignment="center"
+          hgap="10" vgap="10">
+        <!--  padding><Insets top="10" right="10" bottom="10" left="10"/></padding-->
+		<columnConstraints>
+			<ColumnConstraints minWidth="200" prefWidth="200"
+	                           maxWidth="Infinity" halignment="LEFT">
+	        </ColumnConstraints>
+	        <ColumnConstraints minWidth="200" prefWidth="250"
+	                           maxWidth="Infinity" hgrow="ALWAYS">
+	        </ColumnConstraints>
+		</columnConstraints>
 	
-	<HBox alignment="BOTTOM_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="5">
-		<ButtonBar prefHeight="40.0">
-			<buttons>
-				<Button  onAction="#cancel" text="%org.fcpe.fantinlatour.view.newconseillocal.cancelButton.text" prefWidth="90">
-					<HBox.margin>
-						<Insets right="20" left="40"/>
-					</HBox.margin>
-					<tooltip>
-				        <Tooltip text="%org.fcpe.fantinlatour.view.newconseillocal.cancelButton.tooltip.text"/>
-				    </tooltip>
-			    </Button>
-			    <Button fx:id="okButton" onAction="#execute" text="%org.fcpe.fantinlatour.view.newconseillocal.createButton.text" prefWidth="90">
-					<tooltip>
-				        <Tooltip text="%org.fcpe.fantinlatour.view.newconseillocal.createButton.tooltip.text"/>
-				    </tooltip>
-			    </Button>
-			 </buttons>
-		</ButtonBar>
-	</HBox>
+		<Label text="%org.fcpe.fantinlatour.view.newconseillocal.name.label" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+		<TextField fx:id="nameTextField" text="%org.fcpe.fantinlatour.view.newconseillocal.name.text" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+		
+		<Label text="%org.fcpe.fantinlatour.view.newconseillocal.type.label" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+		<ComboBox fx:id="typeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+		
+		<Label  text="%org.fcpe.fantinlatour.view.newconseillocal.default.label" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+		<CheckBox fx:id="defaultCheckBox" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+	
+	
+		<Label text="%org.fcpe.fantinlatour.view.newconseillocal.password.label" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+		<PasswordField fx:id="passwordTextField" text="%org.fcpe.fantinlatour.view.newconseillocal.password.text" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+		
+		<Label text="%org.fcpe.fantinlatour.view.newconseillocal.confirmpassword.label" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+		<PasswordField fx:id="confirmpasswordTextField" text="%org.fcpe.fantinlatour.view.newconseillocal.confirmpassword.text" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+		
+		<Button  onAction="#cancel" text="%org.fcpe.fantinlatour.view.newconseillocal.cancelButton.text" GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.halignment="CENTER" prefWidth="90">
+			<tooltip>
+		        <Tooltip text="%org.fcpe.fantinlatour.view.newconseillocal.cancelButton.tooltip.text"/>
+		    </tooltip>
+	    </Button>
+	    <Button fx:id="okButton" onAction="#execute" text="%org.fcpe.fantinlatour.view.newconseillocal.createButton.text" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.halignment="CENTER"  prefWidth="90">
+			<tooltip>
+		        <Tooltip text="%org.fcpe.fantinlatour.view.newconseillocal.createButton.tooltip.text"/>
+		    </tooltip>
+	    </Button>
+	
+	
 </GridPane>
