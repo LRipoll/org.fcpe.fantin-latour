@@ -3,7 +3,6 @@ package org.fcpe.fantinlatour.app.controller;
 import org.fcpe.fantinlatour.app.context.AppContext;
 import org.fcpe.fantinlatour.dao.DataException;
 import org.fcpe.fantinlatour.dao.PasswordException;
-import org.fcpe.fantinlatour.model.controller.ConseilLocalEtablissementManager;
 import org.fcpe.fantinlatour.service.SpringFactory;
 import org.fcpe.fantinlatour.view.ExceptionAlertDialog;
 

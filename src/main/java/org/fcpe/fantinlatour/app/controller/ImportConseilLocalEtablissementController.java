@@ -3,6 +3,7 @@ package org.fcpe.fantinlatour.app.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.fcpe.fantinlatour.app.controller.validator.ImportedArchiveNameValidator;
 import org.fcpe.fantinlatour.dao.DataException;
 import org.fcpe.fantinlatour.dao.PasswordException;
 import org.fcpe.fantinlatour.view.ExceptionAlertDialog;
@@ -10,16 +11,21 @@ import org.fcpe.fantinlatour.view.ExceptionAlertDialog;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 
 public class ImportConseilLocalEtablissementController extends AbstractSecureController {
 
+	static final String NAME_INVALID = "org.fcpe.fantinlatour.view.importconseillocal.file.tooltip.invalid";
+	static final String NAME_ALREADY_EXIST = "org.fcpe.fantinlatour.view.importconseillocal.file.tooltip.alreadyExist";
+	static final String NAME_VALID = "org.fcpe.fantinlatour.view.importconseillocal.file.tooltip.valid";
+	
 	@FXML
 	private CheckBox defaultCheckBox;
 	@FXML
 	private TextField fileTextField;
+	private ImportedArchiveNameValidator importedArchiveNameValidator;
 	
 	public ImportConseilLocalEtablissementController() {
 		
@@ -30,6 +36,11 @@ public class ImportConseilLocalEtablissementController extends AbstractSecureCon
 	public void initialize(URL location, ResourceBundle resources) {
 		super.initialize(location, resources);
 		defaultCheckBox.setSelected(true);
+		
+		importedArchiveNameValidator = new ImportedArchiveNameValidator(sceneValidator, conseilLocalEtablissementManager, fileTextField,
+				resources.getString(NAME_VALID), resources.getString(NAME_ALREADY_EXIST),
+				resources.getString(NAME_INVALID));
+		fileTextField.textProperty().addListener(importedArchiveNameValidator);
 	}
 
 

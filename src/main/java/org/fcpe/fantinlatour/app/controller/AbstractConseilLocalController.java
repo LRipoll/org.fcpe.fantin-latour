@@ -21,7 +21,7 @@ public abstract class AbstractConseilLocalController extends AbstractController 
 	@FXML
 	protected TextField nameTextField;
 
-	UniqueNameValidator uniqueNameValidator;
+	private UniqueNameValidator uniqueNameValidator;
 
 	public AbstractConseilLocalController() {
 		conseilLocalEtablissementManager = SpringFactory.getService(ConseilLocalEtablissementManager.ID);
