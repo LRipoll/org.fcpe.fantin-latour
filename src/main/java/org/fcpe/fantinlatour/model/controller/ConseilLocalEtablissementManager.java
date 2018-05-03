@@ -58,7 +58,11 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 	public boolean exists(String name) {
 		return conseilLocalEtablissementDAO.exists(name);
 	}
+	
+	
+	
 
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -71,16 +75,23 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 		return conseilLocalEtablissementDAO.isValidName(name);
 	}
 
+	public boolean existsFromArchiveFilename(String archiveFilename) {
+		String name = conseilLocalEtablissementDAO.getNameFromArchiveFilename(archiveFilename); 
+		return conseilLocalEtablissementDAO.exists(name);
+	}
+	
+	
+	public boolean isValidFromArchiveFilename(String archiveFilename) {
+		String name = conseilLocalEtablissementDAO.getNameFromArchiveFilename(archiveFilename);
+		return conseilLocalEtablissementDAO.isValidName(name);
+	}
+	
 	public ConseilLocalEtablissement create(String name, TypeEtablissement typeEtablissement, boolean isDefault)
 			throws DataException {
 
 		ConseilLocalEtablissement result = conseilLocalEtablissementDAO.create(name, typeEtablissement);
 
-		if (isDefault) {
-
-			userPreferencesDAO.setDefaultConseilLocalName(name);
-			userPreferencesDAO.store();
-		}
+		setDefaultConseilLocalName(isDefault, name);
 		notifyListeners(result);
 
 		return result;
@@ -153,13 +164,13 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 		return userPreferencesDAO.getDefaultConseilLocalName();
 	}
 
-	public void exportAsZip(String password) throws DataException {
+	public void exportArchive(String password) throws DataException {
 
 		String etablissement = currentConseilLocalEtablissement.getEtablissement().getNom();
 
 		String attachedFilename = conseilLocalEtablissementDAO.getAttachedFilename(etablissement);
 
-		String zipFilename = zipFilesDAO.getZipFileName(etablissement);
+		String zipFilename = zipFilesDAO.getExportZipFilename(etablissement);
 
 		File zipFile = zipFilesDAO.pack(attachedFilename, zipFilename, password);
 		try {
@@ -169,6 +180,29 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 					SpringFactory.getMessage("org.fcpe.fantinlatour.model.controller.exportAsZip.iOException"), e);
 		}
 
+	}
+
+	public ConseilLocalEtablissement importArchive(String archiveFilename, boolean isDefault, String password) throws DataException {
+		String archiveHeaderFilename = conseilLocalEtablissementDAO.getArchiveHeaderFilename(archiveFilename);
+		
+		String unzipDirname = zipFilesDAO.unpack(archiveFilename, password, archiveHeaderFilename);
+		
+		ConseilLocalEtablissement result = conseilLocalEtablissementDAO.createFromArchive(unzipDirname);
+
+		String name = result.getEtablissement().getNom();
+		setDefaultConseilLocalName(isDefault, name);
+		notifyListeners(result);
+
+		return result;
+				
+	}
+
+	private void setDefaultConseilLocalName(boolean isDefault, String name) throws DataException {
+		if (isDefault) {
+
+			userPreferencesDAO.setDefaultConseilLocalName(name);
+			userPreferencesDAO.store();
+		}
 	}
 
 }

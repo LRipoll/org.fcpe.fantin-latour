@@ -24,22 +24,24 @@ public class ZipFilesDAOTest {
 	private ZipFilesDAO zipFilesDAO;
 	private FileFactory fileFactory;
 	private ZipFileFactory zipFileFactory;
-	private String dirname;
+	private String exportDirname;
+	private String importDirname;
 
 	@Before
 	public void setUp() {
 		ctrl = support.createControl();
 		fileFactory = ctrl.createMock(FileFactory.class);
 		zipFileFactory = ctrl.createMock(ZipFileFactory.class);
-		dirname = "dirname";
-		zipFilesDAO = new ZipFilesDAO(fileFactory, zipFileFactory, dirname);
+		exportDirname = "exportDirname";
+		importDirname = "importDirname";
+		zipFilesDAO = new ZipFilesDAO(fileFactory, zipFileFactory,exportDirname, importDirname);
 	}
 
 	@Test
 	public void testGetZipFileName() throws DataException {
 		support.replayAll();
 
-		assertEquals(dirname + File.separator + "test.zip", zipFilesDAO.getZipFileName("test"));
+		assertEquals(exportDirname + File.separator + "test.zip", zipFilesDAO.getExportZipFilename("test"));
 
 		support.verifyAll();
 	}

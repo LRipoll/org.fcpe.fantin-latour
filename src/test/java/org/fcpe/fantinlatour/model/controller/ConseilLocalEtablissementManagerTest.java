@@ -67,6 +67,34 @@ public class ConseilLocalEtablissementManagerTest {
 	}
 
 	@Test
+	public void testExistsFromArchiveFilename() {
+
+		String name = "existname";
+		EasyMock.expect(conseilLocalEtablissementDAO.exists(name)).andReturn(true);
+		EasyMock.expect(conseilLocalEtablissementDAO.getNameFromArchiveFilename("/a/existname.zip")).andReturn(name);
+
+		support.replayAll();
+
+		assertTrue(conseilLocalEtablissementManager.existsFromArchiveFilename("/a/existname.zip"));
+
+		support.verifyAll();
+	}
+
+	@Test
+	public void testIsValidFromArchiveFilename() {
+
+		String name = "existname";
+		EasyMock.expect(conseilLocalEtablissementDAO.isValidName(name)).andReturn(true);
+		EasyMock.expect(conseilLocalEtablissementDAO.getNameFromArchiveFilename("/a/existname.zip")).andReturn(name);
+
+		support.replayAll();
+
+		assertTrue(conseilLocalEtablissementManager.isValidFromArchiveFilename("/a/existname.zip"));
+
+		support.verifyAll();
+	}
+
+	@Test
 	public void testWhenNameExistShouldReturnTrue() {
 
 		String name = "existname";
@@ -395,7 +423,7 @@ public class ConseilLocalEtablissementManagerTest {
 		File zipFile = ctrl.createMock(File.class);
 
 		String zipFilename = "dir/test.zip";
-		EasyMock.expect(zipFilesDAO.getZipFileName("exported")).andReturn(zipFilename);
+		EasyMock.expect(zipFilesDAO.getExportZipFilename("exported")).andReturn(zipFilename);
 
 		EasyMock.expect(zipFilesDAO.pack("zippedFilename", zipFilename,"password")).andReturn(zipFile);
 
@@ -403,7 +431,7 @@ public class ConseilLocalEtablissementManagerTest {
 		EasyMock.expectLastCall().once();
 		support.replayAll();
 		conseilLocalEtablissementManager.open("exported");
-		conseilLocalEtablissementManager.exportAsZip("password");
+		conseilLocalEtablissementManager.exportArchive("password");
 		support.verifyAll();
 	}
 }

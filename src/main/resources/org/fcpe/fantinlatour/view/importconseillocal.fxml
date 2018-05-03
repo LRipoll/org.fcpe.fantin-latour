@@ -35,9 +35,12 @@
 		text="%org.fcpe.fantinlatour.view.importconseillocal.password.text"
 		GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
+	<Label  text="%org.fcpe.fantinlatour.view.importconseillocal.default.label" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+	<CheckBox fx:id="defaultCheckBox" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+		
 	<Button onAction="#cancel"
 		text="%org.fcpe.fantinlatour.view.importconseillocal.cancelButton.text"
-		prefWidth="90" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.halignment="CENTER">
+		prefWidth="90" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.halignment="CENTER">
 		<tooltip>
 			<Tooltip
 				text="%org.fcpe.fantinlatour.view.importconseillocal.cancelButton.tooltip.text" />
@@ -45,7 +48,7 @@
 	</Button>
 	<Button fx:id="okButton" onAction="#execute"
 		text="%org.fcpe.fantinlatour.view.importconseillocal.openButton.text"
-		prefWidth="90" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.halignment="CENTER">
+		prefWidth="90" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.halignment="CENTER">
 		<tooltip>
 			<Tooltip
 				text="%org.fcpe.fantinlatour.view.importconseillocal.openButton.tooltip.text" />

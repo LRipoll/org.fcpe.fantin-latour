@@ -153,4 +153,21 @@ public class ConseilLocalEtablissementDAOImpl extends AbstractFileManager implem
 		return file.getAbsolutePath();
 	}
 
+	@Override
+	public ConseilLocalEtablissement createFromArchive(String unzipDirname) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getArchiveHeaderFilename(String archiveFilename) {
+		
+		return String.format("%s.%s", getNameFromArchiveFilename(archiveFilename),appFileExt);
+	}
+
+	@Override
+	public String getNameFromArchiveFilename(String archiveFilename) {
+		return FilenameUtils.getBaseName(archiveFilename);
+	}
+
 }

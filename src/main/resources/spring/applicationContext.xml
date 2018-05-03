@@ -61,6 +61,7 @@
 		<constructor-arg ref="fileFactory"/>
 		<constructor-arg ref="zipFileFactory"/>
 		<constructor-arg value="${user.home}/${org.fcpe.fantinlatour.app.context.files.dir.zip}"/>
+		<constructor-arg value="${java.io.tmpdir}/${org.fcpe.fantinlatour.app.context.files.dir.unzip}"/>
 	</bean>
 	
 	<bean id="zipFileFactory" class="org.fcpe.fantinlatour.dao.files.ZipFileFactory"
