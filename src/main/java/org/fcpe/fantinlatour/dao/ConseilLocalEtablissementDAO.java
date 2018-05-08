@@ -19,6 +19,6 @@ public interface ConseilLocalEtablissementDAO {
 	String getAttachedFilename(String etablissement);
 	ConseilLocalEtablissement createFromArchive(String unzipDirname);
 	String getArchiveHeaderFilename(String archiveFilename);
-	String getNameFromArchiveFilename(String archiveFilename);
+	
 	
 }

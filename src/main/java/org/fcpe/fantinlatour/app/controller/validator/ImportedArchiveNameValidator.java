@@ -31,14 +31,16 @@ public class ImportedArchiveNameValidator extends AbstractControlValidatorListen
 
 	private void updateTooltipText(String newValue) {
 		tooltipText = validTootipText;
+		
+		// TODO : vérifier qu'il s'agit bien d'un fichier existant
 		if (conseilLocalEtablissementManager.existsFromArchiveFilename(newValue)) {
 
 			tooltipText = alreadyExistTootipText;
 		} else if (!conseilLocalEtablissementManager.isValidFromArchiveFilename(newValue)) {
 
 			tooltipText = invalidTootipText;
-
 		}
+		// TODO vérifier qu'il s'agit bien d'une archive bien formée
 
 	}
 

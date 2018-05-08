@@ -149,5 +149,12 @@ public class ZipFilesDAOTest {
 		}
 		support.verifyAll();
 	}
+	
+	
+	
+	@Test
+	public void testGetNameFromArchive() {
+		assertEquals("test",zipFilesDAO.getNameFromArchiveFilename("/a/b/test.zip"));
+	}
 
 }

@@ -96,7 +96,9 @@ public class ZipFilesDAO {
 		return String.format("%s%s.zip", String.format("%s%s", exportZipDirname, File.separator), filename);
 	}
 	
-	
+	public String getNameFromArchiveFilename(String archiveFilename) {
+		return FilenameUtils.getBaseName(archiveFilename);
+	}
 
 	
 

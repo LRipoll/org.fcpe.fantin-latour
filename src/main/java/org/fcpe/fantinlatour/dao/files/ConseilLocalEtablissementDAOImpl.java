@@ -81,7 +81,7 @@ public class ConseilLocalEtablissementDAOImpl extends AbstractFileManager implem
 	}
 
 	private String getFilename(String filename) {
-		return FileUtils.getAbsolutePath(appDirManager.getAbsolutePath(), String.format("%s.%s", filename, appFileExt));
+		return FileUtils.getAbsolutePath(appDirManager.getAbsolutePath(), getArchiveHeaderFilename(filename));
 	}
 
 	@Override
@@ -160,14 +160,11 @@ public class ConseilLocalEtablissementDAOImpl extends AbstractFileManager implem
 	}
 
 	@Override
-	public String getArchiveHeaderFilename(String archiveFilename) {
+	public String getArchiveHeaderFilename(String filename) {
 		
-		return String.format("%s.%s", getNameFromArchiveFilename(archiveFilename),appFileExt);
+		return String.format("%s.%s", filename, appFileExt);
 	}
 
-	@Override
-	public String getNameFromArchiveFilename(String archiveFilename) {
-		return FilenameUtils.getBaseName(archiveFilename);
-	}
+	
 
 }

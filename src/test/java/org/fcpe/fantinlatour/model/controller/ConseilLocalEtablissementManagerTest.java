@@ -71,7 +71,7 @@ public class ConseilLocalEtablissementManagerTest {
 
 		String name = "existname";
 		EasyMock.expect(conseilLocalEtablissementDAO.exists(name)).andReturn(true);
-		EasyMock.expect(conseilLocalEtablissementDAO.getNameFromArchiveFilename("/a/existname.zip")).andReturn(name);
+		EasyMock.expect(zipFilesDAO.getNameFromArchiveFilename("/a/existname.zip")).andReturn(name);
 
 		support.replayAll();
 
@@ -85,7 +85,7 @@ public class ConseilLocalEtablissementManagerTest {
 
 		String name = "existname";
 		EasyMock.expect(conseilLocalEtablissementDAO.isValidName(name)).andReturn(true);
-		EasyMock.expect(conseilLocalEtablissementDAO.getNameFromArchiveFilename("/a/existname.zip")).andReturn(name);
+		EasyMock.expect(zipFilesDAO.getNameFromArchiveFilename("/a/existname.zip")).andReturn(name);
 
 		support.replayAll();
 

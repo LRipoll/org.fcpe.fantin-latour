@@ -460,13 +460,10 @@ public class ConseilLocalEtablissementDAOImplTest {
 		support.verifyAll();
 	}
 	
-	@Test
-	public void testGetNameFromArchive() {
-		assertEquals("test",conseilLocalEtablissementDAOImpl.getNameFromArchiveFilename("/a/b/test.zip"));
-	}
+	
 
 	@Test
 	public void testGetArchiveHeaderFilename() {
-		assertEquals("test.ext",conseilLocalEtablissementDAOImpl.getArchiveHeaderFilename("/a/b/test.zip"));
+		assertEquals("test.ext",conseilLocalEtablissementDAOImpl.getArchiveHeaderFilename("test"));
 	}
 }

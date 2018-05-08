@@ -76,13 +76,13 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 	}
 
 	public boolean existsFromArchiveFilename(String archiveFilename) {
-		String name = conseilLocalEtablissementDAO.getNameFromArchiveFilename(archiveFilename); 
+		String name = zipFilesDAO.getNameFromArchiveFilename(archiveFilename); 
 		return conseilLocalEtablissementDAO.exists(name);
 	}
 	
 	
 	public boolean isValidFromArchiveFilename(String archiveFilename) {
-		String name = conseilLocalEtablissementDAO.getNameFromArchiveFilename(archiveFilename);
+		String name = zipFilesDAO.getNameFromArchiveFilename(archiveFilename);
 		return conseilLocalEtablissementDAO.isValidName(name);
 	}
 	
