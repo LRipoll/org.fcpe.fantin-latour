@@ -434,4 +434,33 @@ public class ConseilLocalEtablissementManagerTest {
 		conseilLocalEtablissementManager.exportArchive("password");
 		support.verifyAll();
 	}
+	
+	@Test
+	public void testExportedArchiveAlreadyExistsShouldReturnFalseWhenNoOneisOpened() {
+		support.replayAll();
+		assertFalse(conseilLocalEtablissementManager.exportedArchiveAlreadyExists());
+		support.verifyAll();
+
+	}
+	
+	@Test
+	public void testExportedArchiveAlreadyExistsShouldReturnTrueAsNecessary() throws DataException {
+		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
+		Etablissement etablissement = ctrl.createMock(Etablissement.class);
+
+		EasyMock.expect(conseilLocalEtablissement.getEtablissement()).andReturn(etablissement).anyTimes();
+		EasyMock.expect(etablissement.getNom()).andReturn("exported").anyTimes();
+
+		EasyMock.expect(conseilLocalEtablissementDAO.load("exported")).andReturn(conseilLocalEtablissement);
+		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
+		EasyMock.expectLastCall().once();
+		
+		EasyMock.expect(zipFilesDAO.exportZipFilenameAlreadyExists("exported")).andReturn(true);
+		
+		support.replayAll();
+		conseilLocalEtablissementManager.open("exported");
+		assertTrue(conseilLocalEtablissementManager.exportedArchiveAlreadyExists());
+		support.verifyAll();
+
+	}
 }

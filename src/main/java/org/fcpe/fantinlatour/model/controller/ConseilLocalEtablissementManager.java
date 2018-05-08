@@ -164,6 +164,15 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 		return userPreferencesDAO.getDefaultConseilLocalName();
 	}
 
+	public boolean exportedArchiveAlreadyExists() {
+		boolean result = (currentConseilLocalEtablissement!=null);
+		if (result) {
+			String etablissement = currentConseilLocalEtablissement.getEtablissement().getNom();
+			result = zipFilesDAO.exportZipFilenameAlreadyExists(etablissement);
+		}
+ 		
+		return result;
+	}
 	public void exportArchive(String password) throws DataException {
 
 		String etablissement = currentConseilLocalEtablissement.getEtablissement().getNom();

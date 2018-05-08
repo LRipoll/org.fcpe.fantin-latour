@@ -2,6 +2,7 @@ package org.fcpe.fantinlatour.dao.files;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
@@ -46,6 +47,20 @@ public class ZipFilesDAOTest {
 		support.verifyAll();
 	}
 
+	@Test
+	public void testExportZipFilenameAlreadyExists() throws DataException {
+
+		File inputFile = ctrl.createMock(File.class);
+
+		EasyMock.expect(fileFactory.create(exportDirname + File.separator + "test.zip")).andReturn(inputFile);
+
+		EasyMock.expect(inputFile.exists()).andReturn(true);
+		support.replayAll();
+
+		assertTrue(zipFilesDAO.exportZipFilenameAlreadyExists("test"));
+
+		support.verifyAll();
+	} 
 	@Test
 	public void testPackWhenFileAlreadyExists() throws DataException, ZipException {
 

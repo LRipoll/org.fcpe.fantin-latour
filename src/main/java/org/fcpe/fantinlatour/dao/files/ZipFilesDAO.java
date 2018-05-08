@@ -92,12 +92,17 @@ public class ZipFilesDAO {
 	private String getImportZipDirname(String zipFilename) {
 		return String.format("%s%s", String.format("%s%s%s", importZipDirname, File.separator,zipFilename));
 	}
-	public String getExportZipFilename(String filename) {
-		return String.format("%s%s.zip", String.format("%s%s", exportZipDirname, File.separator), filename);
+	public String getExportZipFilename(String etablissement) {
+		return String.format("%s%s.zip", String.format("%s%s", exportZipDirname, File.separator), etablissement);
 	}
 	
 	public String getNameFromArchiveFilename(String archiveFilename) {
 		return FilenameUtils.getBaseName(archiveFilename);
+	}
+
+	public boolean exportZipFilenameAlreadyExists(String etablissement) {
+		String filename = getExportZipFilename(etablissement);
+		return fileFactory.create(filename).exists();
 	}
 
 	
