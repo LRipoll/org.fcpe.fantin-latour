@@ -173,13 +173,23 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
  		
 		return result;
 	}
+	
+	public String getExportedArchiveFilename() {
+		String result = null;
+		if (currentConseilLocalEtablissement!=null) {
+			String etablissement = currentConseilLocalEtablissement.getEtablissement().getNom();
+			result = zipFilesDAO.getExportZipFilename(etablissement);
+		}
+ 		
+		return result;
+	}
 	public void exportArchive(String password) throws DataException {
 
 		String etablissement = currentConseilLocalEtablissement.getEtablissement().getNom();
 
-		String attachedFilename = conseilLocalEtablissementDAO.getAttachedFilename(etablissement);
-
 		String zipFilename = zipFilesDAO.getExportZipFilename(etablissement);
+		
+		String attachedFilename = conseilLocalEtablissementDAO.getAttachedFilename(etablissement);
 
 		File zipFile = zipFilesDAO.pack(attachedFilename, zipFilename, password);
 		try {

@@ -1,5 +1,6 @@
 package org.fcpe.fantinlatour.model.controller;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
@@ -443,6 +444,7 @@ public class ConseilLocalEtablissementManagerTest {
 
 	}
 	
+	
 	@Test
 	public void testExportedArchiveAlreadyExistsShouldReturnTrueAsNecessary() throws DataException {
 		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
@@ -463,4 +465,34 @@ public class ConseilLocalEtablissementManagerTest {
 		support.verifyAll();
 
 	}
+
+	@Test
+	public void testGetExportedArchiveFilenameShouldReturnNullIfNoOneIsOpened() {
+		support.replayAll();
+		assertNull(conseilLocalEtablissementManager.getExportedArchiveFilename());
+		support.verifyAll();
+
+	}
+
+	@Test
+	public void testGetExportedArchiveFilenameShouldReturnZipDAO() throws DataException {
+		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
+		Etablissement etablissement = ctrl.createMock(Etablissement.class);
+
+		EasyMock.expect(conseilLocalEtablissement.getEtablissement()).andReturn(etablissement).anyTimes();
+		EasyMock.expect(etablissement.getNom()).andReturn("exported").anyTimes();
+
+		EasyMock.expect(conseilLocalEtablissementDAO.load("exported")).andReturn(conseilLocalEtablissement);
+		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
+		EasyMock.expectLastCall().once();
+		
+		EasyMock.expect(zipFilesDAO.getExportZipFilename("exported")).andReturn("/a/exported.zip");
+		
+		support.replayAll();
+		conseilLocalEtablissementManager.open("exported");
+		assertEquals("/a/exported.zip",conseilLocalEtablissementManager.getExportedArchiveFilename());
+		support.verifyAll();
+
+	}
+
 }
