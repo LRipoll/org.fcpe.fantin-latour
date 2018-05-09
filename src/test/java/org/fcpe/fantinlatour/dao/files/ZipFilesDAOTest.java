@@ -1,6 +1,7 @@
 package org.fcpe.fantinlatour.dao.files;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -47,7 +48,7 @@ public class ZipFilesDAOTest {
 		support.replayAll();
 
 		assertEquals(exportDirname + File.separator + zipPrefix + "test." + zipSuffix,
-				zipFilesDAO.getExportZipFilename("test"));
+				zipFilesDAO.getExportZipAbsoluteFilename("test"));
 
 		support.verifyAll();
 	}
@@ -174,6 +175,19 @@ public class ZipFilesDAOTest {
 	@Test
 	public void testGetNameFromArchive() {
 		assertEquals("test", zipFilesDAO.getNameFromArchiveFilename("/a/b/test.zip"));
+	}
+	
+	@Test
+	public void testIsValidArchiveFilename() {
+		assertFalse(zipFilesDAO.isValidArchiveFilename("/a/b/test.zip"));
+		assertFalse(zipFilesDAO.isValidArchiveFilename("/a/b/test.arc"));
+		assertFalse(zipFilesDAO.isValidArchiveFilename("/a/b/export-test.zip"));
+		assertTrue(zipFilesDAO.isValidArchiveFilename("/a/b/export-test.arc"));
+	}
+	
+	@Test
+	public void testGetExportFilenameWildcardMatcher() {
+		assertEquals("export-*.arc",zipFilesDAO.getExportFilenameWildcardMatcher());
 	}
 
 }

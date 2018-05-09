@@ -22,7 +22,8 @@ public class ZipFilesDAO {
 	private String zipPrefix;
 	private String zipSuffix;
 
-	public ZipFilesDAO(FileFactory fileFactory, ZipFileFactory zipFileFactory, String exportZipDirname, String importZipDirname, String zipPrefix, String zipSuffix) {
+	public ZipFilesDAO(FileFactory fileFactory, ZipFileFactory zipFileFactory, String exportZipDirname,
+			String importZipDirname, String zipPrefix, String zipSuffix) {
 		super();
 		this.fileFactory = fileFactory;
 		this.zipFileFactory = zipFileFactory;
@@ -38,7 +39,6 @@ public class ZipFilesDAO {
 		File result = null;
 
 		File zippedFile = fileFactory.create(zippedFilename);
-		
 
 		result = fileFactory.create(zipFilename);
 		if (result.exists()) {
@@ -67,11 +67,12 @@ public class ZipFilesDAO {
 		String result = getImportZipDirname(FilenameUtils.getBaseName(archiveFilename));
 		ZipFile zfile;
 		try {
-			zfile = new ZipFile(archiveFilename);
+			zfile = zipFileFactory.create(archiveFilename);
 			if (!zfile.isValidZipFile()) {
-				throw new DataException(SpringFactory.getMessage("org.fcpe.fantinlatour.dao.files.ZipFilesDAO.pack.failed"), null);
+				throw new DataException(
+						SpringFactory.getMessage("org.fcpe.fantinlatour.dao.files.ZipFilesDAO.pack.failed"), null);
 			}
-			File file = new File(result);
+			File file = fileFactory.create(result);
 			if (file.isDirectory() && !file.exists()) {
 				file.mkdirs();
 			}
@@ -82,33 +83,48 @@ public class ZipFilesDAO {
 			zfile.extractFile(fileHeader, result);
 			zfile.extractAll(result);
 		} catch (ZipException e) {
-			if (e.getCode()==ZipExceptionConstants.WRONG_PASSWORD) {
-				throw new PasswordException(SpringFactory.getMessage(
-						"org.fcpe.fantinlatour.dao.files.ZipFilesDAO.unpack.password.failed"),null);
+			if (e.getCode() == ZipExceptionConstants.WRONG_PASSWORD) {
+				throw new PasswordException(
+						SpringFactory.getMessage("org.fcpe.fantinlatour.dao.files.ZipFilesDAO.unpack.password.failed"),
+						null);
 			}
-			throw new DataException("",e);
+			throw new DataException("", e);
 		}
-		
+
 		return result;
 
 	}
-	
+
 	private String getImportZipDirname(String zipFilename) {
-		return String.format("%s%s", String.format("%s%s%s", importZipDirname, File.separator,zipFilename));
+		return String.format("%s%s", String.format("%s%s%s", importZipDirname, File.separator, zipFilename));
 	}
-	public String getExportZipFilename(String etablissement) {
-		return FilenameUtils.normalize(String.format("%s%s.%s", String.format("%s%s%s",exportZipDirname, File.separator, zipPrefix), etablissement,zipSuffix));
+
+	public String getExportZipAbsoluteFilename(String etablissement) {
+		return FilenameUtils.normalize(
+				String.format("%s%s%s", exportZipDirname, File.separator, getExportZipFilename(etablissement)));
 	}
-	
+
 	public String getNameFromArchiveFilename(String archiveFilename) {
 		return FilenameUtils.getBaseName(archiveFilename);
 	}
 
 	public boolean exportZipFilenameAlreadyExists(String etablissement) {
-		String filename = getExportZipFilename(etablissement);
+		String filename = getExportZipAbsoluteFilename(etablissement);
 		return fileFactory.create(filename).exists();
 	}
 
-	
+	public boolean isValidArchiveFilename(String filename) {
+
+		return FilenameUtils.wildcardMatch(FilenameUtils.getName(filename), getExportFilenameWildcardMatcher());
+	}
+
+	public String getExportFilenameWildcardMatcher() {
+
+		return getExportZipFilename("*");
+	}
+
+	private String getExportZipFilename(String etablissement) {
+		return String.format("%s%s.%s", zipPrefix, etablissement, zipSuffix);
+	}
 
 }

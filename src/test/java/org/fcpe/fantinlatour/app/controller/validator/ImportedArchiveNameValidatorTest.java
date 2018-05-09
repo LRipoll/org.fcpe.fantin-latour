@@ -48,7 +48,7 @@ public class ImportedArchiveNameValidatorTest {
 		nameTextField = new TextField();
 		sceneValidator = ctrl.createMock(SceneValidator.class);
 		importedArchiveNameValidator = new ImportedArchiveNameValidator(sceneValidator, conseilLocalEtablissementManager, nameTextField, "okTooltip",
-				"existTooltip", "invalidTooltip");
+				"existTooltip", "invalidTooltip" ,"invalidFilenameTooltip");
 		EasyMock.reset(sceneValidator);
 
 	}
@@ -59,6 +59,7 @@ public class ImportedArchiveNameValidatorTest {
 		
 		String name = "existname";
 		
+		EasyMock.expect(conseilLocalEtablissementManager.isValidArchiveFilename(name)).andReturn(true);
 		EasyMock.expect(conseilLocalEtablissementManager.existsFromArchiveFilename(name)).andReturn(true);
 		
 		support.replayAll();
@@ -80,6 +81,7 @@ public class ImportedArchiveNameValidatorTest {
 		
 		String name = "invalid";
 		
+		EasyMock.expect(conseilLocalEtablissementManager.isValidArchiveFilename(name)).andReturn(true);
 		EasyMock.expect(conseilLocalEtablissementManager.existsFromArchiveFilename(name)).andReturn(false);
 		EasyMock.expect(conseilLocalEtablissementManager.isValidFromArchiveFilename(name)).andReturn(false);
 		
@@ -95,13 +97,36 @@ public class ImportedArchiveNameValidatorTest {
 		
 		support.verifyAll();
 	}
+
 	
+	@Test
+	public void testWhenFilenameIsInvalidShouldSetAccordingToolTipAndStyle() {
+
+		
+		String name = "invalid";
+		
+		EasyMock.expect(conseilLocalEtablissementManager.isValidArchiveFilename(name)).andReturn(false);
+		
+		
+		support.replayAll();
+		nameTextField.setText(name);
+		importedArchiveNameValidator.changed(nameTextField.textProperty(), "", name);
+
+		assertEquals("invalidFilenameTooltip",nameTextField.getTooltip().getText());
+		assertTrue(nameTextField.getStyleClass().contains(ImportedArchiveNameValidator.TEXT_FIELD_ERROR));
+		assertFalse(importedArchiveNameValidator.isValid());
+		
+
+		support.verifyAll();
+	}
+
 	@Test
 	public void testWhenNameIsValidShouldSetAccordingToolTipAndStyle() {
 
 		
 		String name = "valid";
 		
+		EasyMock.expect(conseilLocalEtablissementManager.isValidArchiveFilename(name)).andReturn(true);
 		EasyMock.expect(conseilLocalEtablissementManager.existsFromArchiveFilename(name)).andReturn(false);
 		EasyMock.expect(conseilLocalEtablissementManager.isValidFromArchiveFilename(name)).andReturn(true);
 		

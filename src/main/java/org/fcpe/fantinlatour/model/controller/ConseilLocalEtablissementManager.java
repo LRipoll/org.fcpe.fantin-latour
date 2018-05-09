@@ -58,11 +58,7 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 	public boolean exists(String name) {
 		return conseilLocalEtablissementDAO.exists(name);
 	}
-	
-	
-	
 
-	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -76,16 +72,15 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 	}
 
 	public boolean existsFromArchiveFilename(String archiveFilename) {
-		String name = zipFilesDAO.getNameFromArchiveFilename(archiveFilename); 
+		String name = zipFilesDAO.getNameFromArchiveFilename(archiveFilename);
 		return conseilLocalEtablissementDAO.exists(name);
 	}
-	
-	
+
 	public boolean isValidFromArchiveFilename(String archiveFilename) {
 		String name = zipFilesDAO.getNameFromArchiveFilename(archiveFilename);
 		return conseilLocalEtablissementDAO.isValidName(name);
 	}
-	
+
 	public ConseilLocalEtablissement create(String name, TypeEtablissement typeEtablissement, boolean isDefault)
 			throws DataException {
 
@@ -165,30 +160,31 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 	}
 
 	public boolean exportedArchiveAlreadyExists() {
-		boolean result = (currentConseilLocalEtablissement!=null);
+		boolean result = (currentConseilLocalEtablissement != null);
 		if (result) {
 			String etablissement = currentConseilLocalEtablissement.getEtablissement().getNom();
 			result = zipFilesDAO.exportZipFilenameAlreadyExists(etablissement);
 		}
- 		
+
 		return result;
 	}
-	
+
 	public String getExportedArchiveFilename() {
 		String result = null;
-		if (currentConseilLocalEtablissement!=null) {
+		if (currentConseilLocalEtablissement != null) {
 			String etablissement = currentConseilLocalEtablissement.getEtablissement().getNom();
-			result = zipFilesDAO.getExportZipFilename(etablissement);
+			result = zipFilesDAO.getExportZipAbsoluteFilename(etablissement);
 		}
- 		
+
 		return result;
 	}
+
 	public void exportArchive(String password) throws DataException {
 
 		String etablissement = currentConseilLocalEtablissement.getEtablissement().getNom();
 
-		String zipFilename = zipFilesDAO.getExportZipFilename(etablissement);
-		
+		String zipFilename = zipFilesDAO.getExportZipAbsoluteFilename(etablissement);
+
 		String attachedFilename = conseilLocalEtablissementDAO.getAttachedFilename(etablissement);
 
 		File zipFile = zipFilesDAO.pack(attachedFilename, zipFilename, password);
@@ -201,11 +197,12 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 
 	}
 
-	public ConseilLocalEtablissement importArchive(String archiveFilename, boolean isDefault, String password) throws DataException {
+	public ConseilLocalEtablissement importArchive(String archiveFilename, boolean isDefault, String password)
+			throws DataException {
 		String archiveHeaderFilename = conseilLocalEtablissementDAO.getArchiveHeaderFilename(archiveFilename);
-		
+
 		String unzipDirname = zipFilesDAO.unpack(archiveFilename, password, archiveHeaderFilename);
-		
+
 		ConseilLocalEtablissement result = conseilLocalEtablissementDAO.createFromArchive(unzipDirname);
 
 		String name = result.getEtablissement().getNom();
@@ -213,7 +210,7 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 		notifyListeners(result);
 
 		return result;
-				
+
 	}
 
 	private void setDefaultConseilLocalName(boolean isDefault, String name) throws DataException {
@@ -222,6 +219,15 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 			userPreferencesDAO.setDefaultConseilLocalName(name);
 			userPreferencesDAO.store();
 		}
+	}
+
+	public boolean isValidArchiveFilename(String filename) {
+
+		return zipFilesDAO.isValidArchiveFilename(filename);
+	}
+
+	public String getExportFilenameWildcardMatcher() {
+		return zipFilesDAO.getExportFilenameWildcardMatcher();
 	}
 
 }

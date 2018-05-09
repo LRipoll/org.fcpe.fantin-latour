@@ -18,45 +18,44 @@ import javafx.scene.control.TextField;
 public class ImportConseilLocalEtablissementController extends AbstractSecureController {
 
 	static final String NAME_INVALID = "org.fcpe.fantinlatour.view.importconseillocal.file.tooltip.invalid";
+	static final String NAME_INVALID_FILENAME = "org.fcpe.fantinlatour.view.importconseillocal.file.tooltip.invalidFilename";
 	static final String NAME_ALREADY_EXIST = "org.fcpe.fantinlatour.view.importconseillocal.file.tooltip.alreadyExist";
 	static final String NAME_VALID = "org.fcpe.fantinlatour.view.importconseillocal.file.tooltip.valid";
-	
+
 	@FXML
 	private CheckBox defaultCheckBox;
 	@FXML
 	private TextField fileTextField;
 	private ImportedArchiveNameValidator importedArchiveNameValidator;
-	
+
 	public ImportConseilLocalEtablissementController() {
-		
+
 	}
-	
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		super.initialize(location, resources);
 		defaultCheckBox.setSelected(true);
-		
-		importedArchiveNameValidator = new ImportedArchiveNameValidator(sceneValidator, conseilLocalEtablissementManager, fileTextField,
-				resources.getString(NAME_VALID), resources.getString(NAME_ALREADY_EXIST),
-				resources.getString(NAME_INVALID));
+
+		importedArchiveNameValidator = new ImportedArchiveNameValidator(sceneValidator,
+				conseilLocalEtablissementManager, fileTextField, resources.getString(NAME_VALID),
+				resources.getString(NAME_ALREADY_EXIST), resources.getString(NAME_INVALID), String.format(
+						NAME_INVALID_FILENAME, conseilLocalEtablissementManager.getExportFilenameWildcardMatcher()));
 		fileTextField.textProperty().addListener(importedArchiveNameValidator);
 	}
-
-
 
 	@Override
 	protected void execute(ActionEvent event) {
 		try {
-			
+
 			getEncryptHelper().setPassword(passwordTextField.getText());
-			conseilLocalEtablissementManager.importArchive(fileTextField.getText(),defaultCheckBox.isSelected(), passwordTextField.getText());
+			conseilLocalEtablissementManager.importArchive(fileTextField.getText(), defaultCheckBox.isSelected(),
+					passwordTextField.getText());
 			super.execute(event);
 
 		} catch (PasswordException e) {
 			passwordTextField.setText(null);
-		} 
-		catch (DataException e) {
+		} catch (DataException e) {
 
 			ExceptionAlertDialog exceptionAlertDialog = new ExceptionAlertDialog(new Alert(AlertType.ERROR), e);
 			exceptionAlertDialog.showAndWait();

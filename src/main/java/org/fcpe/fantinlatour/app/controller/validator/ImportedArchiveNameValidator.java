@@ -11,14 +11,16 @@ public class ImportedArchiveNameValidator extends AbstractControlValidatorListen
 	private ConseilLocalEtablissementManager conseilLocalEtablissementManager;
 	private String alreadyExistTootipText;
 	private String tooltipText;
+	private String invalidFilenameTootipText;
 
 	public ImportedArchiveNameValidator(SceneValidator sceneValidator,
 			ConseilLocalEtablissementManager conseilLocalEtablissementManager, TextField nameTextField,
-			String validTootipText, String alreadyExistTootipText, String invalidTootipText) {
+			String validTootipText, String alreadyExistTootipText, String invalidTootipText , String invalidFilenameTootipText) {
 		super(sceneValidator, nameTextField, validTootipText, invalidTootipText);
 
 		this.conseilLocalEtablissementManager = conseilLocalEtablissementManager;
 		this.alreadyExistTootipText = alreadyExistTootipText;
+		this.invalidFilenameTootipText = invalidFilenameTootipText;
 
 	}
 
@@ -29,14 +31,16 @@ public class ImportedArchiveNameValidator extends AbstractControlValidatorListen
 		updateControl();
 	}
 
-	private void updateTooltipText(String newValue) {
+	private void updateTooltipText(String filename) {
 		tooltipText = validTootipText;
 		
-		// TODO : vérifier qu'il s'agit bien d'un fichier existant
-		if (conseilLocalEtablissementManager.existsFromArchiveFilename(newValue)) {
+		if (!conseilLocalEtablissementManager.isValidArchiveFilename(filename)) {
+			tooltipText = invalidFilenameTootipText;
+		}
+		else if (conseilLocalEtablissementManager.existsFromArchiveFilename(filename)) {
 
 			tooltipText = alreadyExistTootipText;
-		} else if (!conseilLocalEtablissementManager.isValidFromArchiveFilename(newValue)) {
+		} else if (!conseilLocalEtablissementManager.isValidFromArchiveFilename(filename)) {
 
 			tooltipText = invalidTootipText;
 		}
