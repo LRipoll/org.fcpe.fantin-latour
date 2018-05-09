@@ -27,6 +27,8 @@ public class ZipFilesDAOTest {
 	private ZipFileFactory zipFileFactory;
 	private String exportDirname;
 	private String importDirname;
+	private String zipPrefix;
+	private String zipSuffix;
 
 	@Before
 	public void setUp() {
@@ -35,14 +37,17 @@ public class ZipFilesDAOTest {
 		zipFileFactory = ctrl.createMock(ZipFileFactory.class);
 		exportDirname = "exportDirname";
 		importDirname = "importDirname";
-		zipFilesDAO = new ZipFilesDAO(fileFactory, zipFileFactory,exportDirname, importDirname);
+		zipPrefix = "export-";
+		zipSuffix = "arc";
+		zipFilesDAO = new ZipFilesDAO(fileFactory, zipFileFactory, exportDirname, importDirname, zipPrefix, zipSuffix);
 	}
 
 	@Test
 	public void testGetZipFileName() throws DataException {
 		support.replayAll();
 
-		assertEquals(exportDirname + File.separator + "test.zip", zipFilesDAO.getExportZipFilename("test"));
+		assertEquals(exportDirname + File.separator + zipPrefix + "test." + zipSuffix,
+				zipFilesDAO.getExportZipFilename("test"));
 
 		support.verifyAll();
 	}
@@ -52,7 +57,8 @@ public class ZipFilesDAOTest {
 
 		File inputFile = ctrl.createMock(File.class);
 
-		EasyMock.expect(fileFactory.create(exportDirname + File.separator + "test.zip")).andReturn(inputFile);
+		EasyMock.expect(fileFactory.create(exportDirname + File.separator + zipPrefix + "test" + "." + zipSuffix))
+				.andReturn(inputFile);
 
 		EasyMock.expect(inputFile.exists()).andReturn(true);
 		support.replayAll();
@@ -60,7 +66,8 @@ public class ZipFilesDAOTest {
 		assertTrue(zipFilesDAO.exportZipFilenameAlreadyExists("test"));
 
 		support.verifyAll();
-	} 
+	}
+
 	@Test
 	public void testPackWhenFileAlreadyExists() throws DataException, ZipException {
 
@@ -149,7 +156,6 @@ public class ZipFilesDAOTest {
 		EasyMock.expect(archiveFile.getParentFile()).andReturn(parentFile);
 		EasyMock.expect(parentFile.mkdirs()).andReturn(true);
 
-		
 		zipFileFactory.create(archiveFilename);
 		ZipException zipException = ctrl.createMock(ZipException.class);
 		EasyMock.expectLastCall().andThrow(zipException);
@@ -164,12 +170,10 @@ public class ZipFilesDAOTest {
 		}
 		support.verifyAll();
 	}
-	
-	
-	
+
 	@Test
 	public void testGetNameFromArchive() {
-		assertEquals("test",zipFilesDAO.getNameFromArchiveFilename("/a/b/test.zip"));
+		assertEquals("test", zipFilesDAO.getNameFromArchiveFilename("/a/b/test.zip"));
 	}
 
 }

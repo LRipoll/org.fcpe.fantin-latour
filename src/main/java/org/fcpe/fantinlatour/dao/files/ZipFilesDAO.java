@@ -19,13 +19,17 @@ public class ZipFilesDAO {
 	private String exportZipDirname;
 	private String importZipDirname;
 	private ZipFileFactory zipFileFactory;
+	private String zipPrefix;
+	private String zipSuffix;
 
-	public ZipFilesDAO(FileFactory fileFactory, ZipFileFactory zipFileFactory, String exportZipDirname, String importZipDirname) {
+	public ZipFilesDAO(FileFactory fileFactory, ZipFileFactory zipFileFactory, String exportZipDirname, String importZipDirname, String zipPrefix, String zipSuffix) {
 		super();
 		this.fileFactory = fileFactory;
 		this.zipFileFactory = zipFileFactory;
 		this.exportZipDirname = exportZipDirname;
 		this.importZipDirname = importZipDirname;
+		this.zipPrefix = zipPrefix;
+		this.zipSuffix = zipSuffix;
 
 	}
 
@@ -93,7 +97,7 @@ public class ZipFilesDAO {
 		return String.format("%s%s", String.format("%s%s%s", importZipDirname, File.separator,zipFilename));
 	}
 	public String getExportZipFilename(String etablissement) {
-		return FilenameUtils.normalize(String.format("%s%s.zip", String.format("%s%s", exportZipDirname, File.separator), etablissement));
+		return FilenameUtils.normalize(String.format("%s%s.%s", String.format("%s%s%s",exportZipDirname, File.separator, zipPrefix), etablissement,zipSuffix));
 	}
 	
 	public String getNameFromArchiveFilename(String archiveFilename) {
