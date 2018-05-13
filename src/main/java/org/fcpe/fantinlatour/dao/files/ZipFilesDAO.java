@@ -3,6 +3,7 @@ package org.fcpe.fantinlatour.dao.files;
 import java.io.File;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.log4j.Logger;
 import org.fcpe.fantinlatour.dao.DataException;
 import org.fcpe.fantinlatour.dao.PasswordException;
 import org.fcpe.fantinlatour.service.SpringFactory;
@@ -15,6 +16,8 @@ import net.lingala.zip4j.model.ZipParameters;
 
 public class ZipFilesDAO {
 
+	private static final Logger logger = Logger.getLogger(ZipFilesDAO.class);
+	
 	private FileFactory fileFactory;
 	private String exportZipDirname;
 	private String importZipDirname;
@@ -130,18 +133,26 @@ public class ZipFilesDAO {
 	}
 
 	public boolean existsArchiveFile(String filename) {
-		// TODO Auto-generated method stub
-		return false;
+		return fileFactory.create(filename).exists();
 	}
 
 	public boolean isValidArchiveFile(String filename) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		try {
+			return zipFileFactory.create(filename).isValidZipFile();
+		} catch (ZipException e) {
+			logger.error(e.getLocalizedMessage(),e);
+			return false;
+		}
 	}
 
-	public boolean isEncryptedArchiveFile(String filename) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isEncryptedArchiveFile(String filename)  {
+		try {
+			return zipFileFactory.create(filename).isEncrypted();
+		} catch (ZipException e) {
+			logger.error(e.getLocalizedMessage(),e);
+			return false;
+		}
 	}
 
 }

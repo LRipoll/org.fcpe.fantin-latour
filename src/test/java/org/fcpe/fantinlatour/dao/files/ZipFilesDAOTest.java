@@ -192,16 +192,26 @@ public class ZipFilesDAOTest {
 	
 	@Test
 	public void testExistsArchiveFile() {
-		EasyMock.expect(zipFilesDAO.existsArchiveFile("/a/exported.zip")).andReturn(true);
+		
+		File inputFile = ctrl.createMock(File.class);
+
+		EasyMock.expect(fileFactory.create("/a/exported.zip"))
+				.andReturn(inputFile);
+		EasyMock.expect(inputFile.exists()).andReturn(true);
 		support.replayAll();
+
 		assertTrue(zipFilesDAO.existsArchiveFile("/a/exported.zip"));
 		support.verifyAll();
 
 	}
 	
 	@Test
-	public void testIsValidArchiveFile() {
-		EasyMock.expect(zipFilesDAO.isValidArchiveFile("/a/exported.zip")).andReturn(true);
+	public void testIsValidArchiveFile() throws DataException, ZipException {
+		ZipFile inputFile = ctrl.createMock(ZipFile.class);
+
+		EasyMock.expect(zipFileFactory.create("/a/exported.zip"))
+				.andReturn(inputFile);
+		EasyMock.expect(inputFile.isValidZipFile()).andReturn(true);
 		support.replayAll();
 		assertTrue(zipFilesDAO.isValidArchiveFile("/a/exported.zip"));
 		support.verifyAll();
@@ -209,10 +219,35 @@ public class ZipFilesDAOTest {
 	}
 	
 	@Test
-	public void testIsEncryptedArchiveFile() {
-		EasyMock.expect(zipFilesDAO.isEncryptedArchiveFile("/a/exported.zip")).andReturn(true);
+	public void testIsValidArchiveFileWhenExceptionShouldReturnFalse() throws DataException, ZipException {
+		
+		zipFileFactory.create("/a/exported.zip");
+		EasyMock.expectLastCall().andThrow(new ZipException());
+		support.replayAll();
+		assertFalse(zipFilesDAO.isValidArchiveFile("/a/exported.zip"));
+		support.verifyAll();
+
+	}
+	
+	@Test
+	public void testIsEncryptedArchiveFile() throws ZipException, DataException {
+		ZipFile inputFile = ctrl.createMock(ZipFile.class);
+
+		EasyMock.expect(zipFileFactory.create("/a/exported.zip"))
+				.andReturn(inputFile);
+		EasyMock.expect(inputFile.isEncrypted()).andReturn(true);
 		support.replayAll();
 		assertTrue(zipFilesDAO.isEncryptedArchiveFile("/a/exported.zip"));
+		support.verifyAll();
+
+	}
+
+	@Test
+	public void testIsEncryptedArchiveFileWhenExceptionShouldReturnFalse() throws ZipException, DataException {
+		zipFileFactory.create("/a/exported.zip");
+		EasyMock.expectLastCall().andThrow(new ZipException());
+		support.replayAll();
+		assertFalse(zipFilesDAO.isEncryptedArchiveFile("/a/exported.zip"));
 		support.verifyAll();
 
 	}

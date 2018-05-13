@@ -514,7 +514,7 @@ public class ConseilLocalEtablissementManagerTest {
 	}
 	
 	@Test
-	public void testIsValidArchiveFile() {
+	public void testIsValidArchiveFile() throws DataException {
 		EasyMock.expect(zipFilesDAO.isValidArchiveFile("/a/exported.zip")).andReturn(true);
 		support.replayAll();
 		assertTrue(conseilLocalEtablissementManager.isValidArchiveFile("/a/exported.zip"));
@@ -523,7 +523,7 @@ public class ConseilLocalEtablissementManagerTest {
 	}
 	
 	@Test
-	public void testIsEncryptedArchiveFile() {
+	public void testIsEncryptedArchiveFile() throws DataException {
 		EasyMock.expect(zipFilesDAO.isEncryptedArchiveFile("/a/exported.zip")).andReturn(true);
 		support.replayAll();
 		assertTrue(conseilLocalEtablissementManager.isEncryptedArchiveFile("/a/exported.zip"));
