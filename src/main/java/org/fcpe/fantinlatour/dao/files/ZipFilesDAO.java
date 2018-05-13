@@ -1,6 +1,8 @@
 package org.fcpe.fantinlatour.dao.files;
 
 import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.io.FilenameUtils;
 import org.fcpe.fantinlatour.dao.DataException;
@@ -105,7 +107,9 @@ public class ZipFilesDAO {
 	}
 
 	public String getNameFromArchiveFilename(String archiveFilename) {
-		return FilenameUtils.getBaseName(archiveFilename);
+		
+		String baseName = FilenameUtils.getBaseName(archiveFilename);
+		return baseName.substring(zipPrefix.length());
 	}
 
 	public boolean exportZipFilenameAlreadyExists(String etablissement) {

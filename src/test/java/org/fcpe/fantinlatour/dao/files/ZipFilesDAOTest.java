@@ -174,7 +174,7 @@ public class ZipFilesDAOTest {
 
 	@Test
 	public void testGetNameFromArchive() {
-		assertEquals("test", zipFilesDAO.getNameFromArchiveFilename("/a/b/test.zip"));
+		assertEquals("test", zipFilesDAO.getNameFromArchiveFilename("/a/b/export-test.arc"));
 	}
 	
 	@Test
