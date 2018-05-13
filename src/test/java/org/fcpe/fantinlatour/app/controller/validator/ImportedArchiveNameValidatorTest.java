@@ -79,6 +79,72 @@ public class ImportedArchiveNameValidatorTest {
 	}
 	
 	@Test
+	public void testWhenFileNotExistShouldSetAccordingToolTipAndStyle() {
+
+		
+		String name = "existname";
+		
+		EasyMock.expect(conseilLocalEtablissementManager.isValidArchiveFilename(name)).andReturn(true);
+		EasyMock.expect(conseilLocalEtablissementManager.existsArchiveFile(name)).andReturn(false);
+		support.replayAll();
+		
+		
+		nameTextField.setText(name);
+		importedArchiveNameValidator.changed(nameTextField.textProperty(), "", name);
+		
+		assertEquals("archiveFileDoesNotExistTootip",nameTextField.getTooltip().getText());
+		assertTrue(nameTextField.getStyleClass().contains(ImportedArchiveNameValidator.TEXT_FIELD_ERROR));
+		assertFalse(importedArchiveNameValidator.isValid());
+
+		support.verifyAll();
+	}
+	
+	@Test
+	public void testWhenArchiveFileIsInvalidSetAccordingToolTipAndStyle() {
+
+		
+		String name = "existname";
+		
+		EasyMock.expect(conseilLocalEtablissementManager.isValidArchiveFilename(name)).andReturn(true);
+		EasyMock.expect(conseilLocalEtablissementManager.existsArchiveFile(name)).andReturn(true);
+		EasyMock.expect(conseilLocalEtablissementManager.isValidArchiveFile(name)).andReturn(false);
+		support.replayAll();
+		
+		
+		nameTextField.setText(name);
+		importedArchiveNameValidator.changed(nameTextField.textProperty(), "", name);
+		
+		assertEquals("invalidArchiveFileTootip",nameTextField.getTooltip().getText());
+		assertTrue(nameTextField.getStyleClass().contains(ImportedArchiveNameValidator.TEXT_FIELD_ERROR));
+		assertFalse(importedArchiveNameValidator.isValid());
+
+		support.verifyAll();
+	}
+	
+	@Test
+	public void testWhenArchiveFileIsNotEncryptedSetAccordingToolTipAndStyle() {
+
+		
+		String name = "existname";
+		
+		EasyMock.expect(conseilLocalEtablissementManager.isValidArchiveFilename(name)).andReturn(true);
+		EasyMock.expect(conseilLocalEtablissementManager.existsArchiveFile(name)).andReturn(true);
+		EasyMock.expect(conseilLocalEtablissementManager.isValidArchiveFile(name)).andReturn(true);
+		EasyMock.expect(conseilLocalEtablissementManager.isEncryptedArchiveFile(name)).andReturn(false);
+		
+		support.replayAll();
+		
+		
+		nameTextField.setText(name);
+		importedArchiveNameValidator.changed(nameTextField.textProperty(), "", name);
+		
+		assertEquals("unencryptedArchiveFileTootip",nameTextField.getTooltip().getText());
+		assertTrue(nameTextField.getStyleClass().contains(ImportedArchiveNameValidator.TEXT_FIELD_ERROR));
+		assertFalse(importedArchiveNameValidator.isValid());
+
+		support.verifyAll();
+	}
+	@Test
 	public void testWhenNameIsInvalidShouldSetAccordingToolTipAndStyle() {
 
 		
