@@ -230,4 +230,17 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 		return zipFilesDAO.getExportFilenameWildcardMatcher();
 	}
 
+	public boolean existsArchiveFile(String filename) {
+		return zipFilesDAO.existsArchiveFile(filename);
+	}
+
+	public boolean isValidArchiveFile(String filename) {
+		return zipFilesDAO.isValidArchiveFile(filename);
+	
+	}
+
+	public boolean isEncryptedArchiveFile(String filename) {
+		return zipFilesDAO.isEncryptedArchiveFile(filename);
+	}
+
 }

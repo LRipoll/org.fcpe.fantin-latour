@@ -189,5 +189,32 @@ public class ZipFilesDAOTest {
 	public void testGetExportFilenameWildcardMatcher() {
 		assertEquals("export-*.arc",zipFilesDAO.getExportFilenameWildcardMatcher());
 	}
+	
+	@Test
+	public void testExistsArchiveFile() {
+		EasyMock.expect(zipFilesDAO.existsArchiveFile("/a/exported.zip")).andReturn(true);
+		support.replayAll();
+		assertTrue(zipFilesDAO.existsArchiveFile("/a/exported.zip"));
+		support.verifyAll();
+
+	}
+	
+	@Test
+	public void testIsValidArchiveFile() {
+		EasyMock.expect(zipFilesDAO.isValidArchiveFile("/a/exported.zip")).andReturn(true);
+		support.replayAll();
+		assertTrue(zipFilesDAO.isValidArchiveFile("/a/exported.zip"));
+		support.verifyAll();
+
+	}
+	
+	@Test
+	public void testIsEncryptedArchiveFile() {
+		EasyMock.expect(zipFilesDAO.isEncryptedArchiveFile("/a/exported.zip")).andReturn(true);
+		support.replayAll();
+		assertTrue(zipFilesDAO.isEncryptedArchiveFile("/a/exported.zip"));
+		support.verifyAll();
+
+	}
 
 }

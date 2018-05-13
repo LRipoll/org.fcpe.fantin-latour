@@ -1,8 +1,6 @@
 package org.fcpe.fantinlatour.dao.files;
 
 import java.io.File;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.io.FilenameUtils;
 import org.fcpe.fantinlatour.dao.DataException;
@@ -129,6 +127,21 @@ public class ZipFilesDAO {
 
 	private String getExportZipFilename(String etablissement) {
 		return String.format("%s%s.%s", zipPrefix, etablissement, zipSuffix);
+	}
+
+	public boolean existsArchiveFile(String filename) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean isValidArchiveFile(String filename) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean isEncryptedArchiveFile(String filename) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

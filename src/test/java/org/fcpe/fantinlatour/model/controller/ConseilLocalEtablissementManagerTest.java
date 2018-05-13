@@ -504,5 +504,32 @@ public class ConseilLocalEtablissementManagerTest {
 
 	}
 	
+	@Test
+	public void testExistsArchiveFile() {
+		EasyMock.expect(zipFilesDAO.existsArchiveFile("/a/exported.zip")).andReturn(true);
+		support.replayAll();
+		assertTrue(conseilLocalEtablissementManager.existsArchiveFile("/a/exported.zip"));
+		support.verifyAll();
+
+	}
+	
+	@Test
+	public void testIsValidArchiveFile() {
+		EasyMock.expect(zipFilesDAO.isValidArchiveFile("/a/exported.zip")).andReturn(true);
+		support.replayAll();
+		assertTrue(conseilLocalEtablissementManager.isValidArchiveFile("/a/exported.zip"));
+		support.verifyAll();
+
+	}
+	
+	@Test
+	public void testIsEncryptedArchiveFile() {
+		EasyMock.expect(zipFilesDAO.isEncryptedArchiveFile("/a/exported.zip")).andReturn(true);
+		support.replayAll();
+		assertTrue(conseilLocalEtablissementManager.isEncryptedArchiveFile("/a/exported.zip"));
+		support.verifyAll();
+
+	}
+	
 
 }
