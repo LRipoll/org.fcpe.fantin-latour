@@ -73,16 +73,7 @@ public class ConseilLocalEtablissementDAOImpl extends AbstractFileManager implem
 		return result;
 	}
 
-	private File getFile(String filename) {
-		String absolutePath = getFilename(filename);
-
-		File file = getFileFactory().create(absolutePath);
-		return file;
-	}
-
-	private String getFilename(String filename) {
-		return FileUtils.getAbsolutePath(appDirManager.getAbsolutePath(), getArchiveHeaderFilename(filename));
-	}
+	
 
 	@Override
 	public ConseilLocalEtablissement load(String name) throws DataException {
@@ -148,7 +139,13 @@ public class ConseilLocalEtablissementDAOImpl extends AbstractFileManager implem
 	}
 
 	@Override
-	public String getAttachedFilename(String name) {
+	public String getArchiveFilename(String filename) {
+		
+		return String.format("%s.%s", filename, appFileExt);
+	}
+	
+	@Override
+	public String getAbsoluteArchiveFilename(String name) {
 		File file = getFile(name);
 		return file.getAbsolutePath();
 	}
@@ -159,11 +156,16 @@ public class ConseilLocalEtablissementDAOImpl extends AbstractFileManager implem
 		return null;
 	}
 
-	@Override
-	public String getArchiveHeaderFilename(String filename) {
-		
-		return String.format("%s.%s", filename, appFileExt);
+	private File getFile(String filename) {
+		String absolutePath = getFilename(filename);
+
+		File file = getFileFactory().create(absolutePath);
+		return file;
 	}
+
+	private String getFilename(String filename) {
+		return FileUtils.getAbsolutePath(appDirManager.getAbsolutePath(), getArchiveFilename(filename));
+	}	
 
 	
 

@@ -185,7 +185,7 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 
 		String zipFilename = zipFilesDAO.getExportZipAbsoluteFilename(etablissement);
 
-		String attachedFilename = conseilLocalEtablissementDAO.getAttachedFilename(etablissement);
+		String attachedFilename = conseilLocalEtablissementDAO.getAbsoluteArchiveFilename(etablissement);
 
 		File zipFile = zipFilesDAO.pack(attachedFilename, zipFilename, password);
 		try {
@@ -199,9 +199,9 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 
 	public ConseilLocalEtablissement importArchive(String archiveFilename, boolean isDefault, String password)
 			throws DataException {
-		String archiveHeaderFilename = conseilLocalEtablissementDAO.getArchiveHeaderFilename(archiveFilename);
+		String expectedFilename = getExpectedFilename(archiveFilename);
 
-		String unzipDirname = zipFilesDAO.unpack(archiveFilename, password, archiveHeaderFilename);
+		String unzipDirname = zipFilesDAO.unpack(archiveFilename, password, expectedFilename);
 
 		ConseilLocalEtablissement result = conseilLocalEtablissementDAO.createFromArchive(unzipDirname);
 
@@ -212,14 +212,19 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 		return result;
 
 	}
-
-	private void setDefaultConseilLocalName(boolean isDefault, String name) throws DataException {
-		if (isDefault) {
-
-			userPreferencesDAO.setDefaultConseilLocalName(name);
-			userPreferencesDAO.store();
-		}
+	
+	public boolean containsExpectedArchives(String archiveFilename) {
+		String expectedFilename = getExpectedFilename(archiveFilename);
+		return zipFilesDAO.containsExpectedArchives(archiveFilename, expectedFilename);
 	}
+
+	private String getExpectedFilename(String archiveFilename) {
+		String name = zipFilesDAO.getNameFromArchiveFilename(archiveFilename);
+		String expectedFilename = conseilLocalEtablissementDAO.getArchiveFilename(name);
+		return expectedFilename;
+	}
+
+	
 
 	public boolean isValidArchiveFilename(String filename) {
 
@@ -243,4 +248,11 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 		return zipFilesDAO.isEncryptedArchiveFile(filename);
 	}
 
+	private void setDefaultConseilLocalName(boolean isDefault, String name) throws DataException {
+		if (isDefault) {
+
+			userPreferencesDAO.setDefaultConseilLocalName(name);
+			userPreferencesDAO.store();
+		}
+	}
 }

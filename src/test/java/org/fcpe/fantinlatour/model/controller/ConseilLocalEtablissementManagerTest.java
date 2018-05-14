@@ -420,7 +420,7 @@ public class ConseilLocalEtablissementManagerTest {
 		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
 		EasyMock.expectLastCall().once();
 
-		EasyMock.expect(conseilLocalEtablissementDAO.getAttachedFilename("exported")).andReturn("zippedFilename");
+		EasyMock.expect(conseilLocalEtablissementDAO.getAbsoluteArchiveFilename("exported")).andReturn("zippedFilename");
 		File zipFile = ctrl.createMock(File.class);
 
 		String zipFilename = "dir/test.zip";
@@ -531,5 +531,15 @@ public class ConseilLocalEtablissementManagerTest {
 
 	}
 	
+	@Test
+	public void testContainsExpectedArchives() {
+		EasyMock.expect(zipFilesDAO.getNameFromArchiveFilename("/a/exported.zip")).andReturn("exported");
+		EasyMock.expect(conseilLocalEtablissementDAO.getArchiveFilename("exported")).andReturn("file.ext");
+		EasyMock.expect(zipFilesDAO.containsExpectedArchives("/a/exported.zip","file.ext")).andReturn(true);
+		support.replayAll();
+		assertTrue(conseilLocalEtablissementManager.containsExpectedArchives("/a/exported.zip"));
+		support.verifyAll();
+
+	}
 
 }

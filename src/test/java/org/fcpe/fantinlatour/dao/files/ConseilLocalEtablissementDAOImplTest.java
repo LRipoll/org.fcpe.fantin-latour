@@ -455,7 +455,7 @@ public class ConseilLocalEtablissementDAOImplTest {
 
 		support.replayAll();
 
-		assertEquals("APath", conseilLocalEtablissementDAOImpl.getAttachedFilename(("name")));
+		assertEquals("APath", conseilLocalEtablissementDAOImpl.getAbsoluteArchiveFilename(("name")));
 
 		support.verifyAll();
 	}
@@ -464,6 +464,6 @@ public class ConseilLocalEtablissementDAOImplTest {
 
 	@Test
 	public void testGetArchiveHeaderFilename() {
-		assertEquals("test.ext",conseilLocalEtablissementDAOImpl.getArchiveHeaderFilename("test"));
+		assertEquals("test.ext",conseilLocalEtablissementDAOImpl.getArchiveFilename("test"));
 	}
 }
