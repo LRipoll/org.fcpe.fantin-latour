@@ -17,6 +17,7 @@ import org.junit.Test;
 
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
+import net.lingala.zip4j.model.FileHeader;
 import net.lingala.zip4j.model.ZipParameters;
 
 public class ZipFilesDAOTest {
@@ -251,5 +252,39 @@ public class ZipFilesDAOTest {
 		support.verifyAll();
 
 	}
+	
+	@Test
+	public void testContainsExpectedArchivesWhenExceptionShouldReturnFalse() throws ZipException, DataException {
+		zipFileFactory.create("/a/exported.zip");
+		EasyMock.expectLastCall().andThrow(new ZipException());
+		support.replayAll();
+		assertFalse(zipFilesDAO.containsExpectedArchives("/a/exported.zip",""));
+		support.verifyAll();
 
+	}
+
+	
+	@Test
+	public void testContainsExpectedArchivesWhenNotContainsTheExpectedOnes() throws ZipException, DataException {
+		ZipFile inputFile = ctrl.createMock(ZipFile.class);
+
+		EasyMock.expect(zipFileFactory.create("/a/exported.zip"))
+				.andReturn(inputFile);
+		EasyMock.expect(inputFile.getFileHeader("expected.file")).andReturn(null);
+		support.replayAll();
+		assertFalse(zipFilesDAO.containsExpectedArchives("/a/exported.zip","expected.file"));
+		support.verifyAll();
+	}
+	
+	@Test
+	public void testContainsExpectedArchivesWhenContainsTheExpectedOnes() throws ZipException, DataException {
+		ZipFile inputFile = ctrl.createMock(ZipFile.class);
+
+		EasyMock.expect(zipFileFactory.create("/a/exported.zip"))
+				.andReturn(inputFile);
+		EasyMock.expect(inputFile.getFileHeader("expected.file")).andReturn(new FileHeader());
+		support.replayAll();
+		assertTrue(zipFilesDAO.containsExpectedArchives("/a/exported.zip","expected.file"));
+		support.verifyAll();
+	}
 }

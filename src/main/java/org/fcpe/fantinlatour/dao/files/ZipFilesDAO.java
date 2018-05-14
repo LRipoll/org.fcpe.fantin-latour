@@ -50,7 +50,7 @@ public class ZipFilesDAO {
 			result.getParentFile().mkdirs();
 		}
 		try {
-			ZipFile zipFile = zipFileFactory.create(zipFilename);
+			ZipFile zipFile = createZipFile(zipFilename);
 
 			ZipParameters parameters = zipFileFactory.createZipParameters();
 
@@ -70,7 +70,7 @@ public class ZipFilesDAO {
 		String result = getImportZipDirname(FilenameUtils.getBaseName(archiveFilename));
 		ZipFile zfile;
 		try {
-			zfile = zipFileFactory.create(archiveFilename);
+			zfile = createZipFile(archiveFilename);
 			
 			File file = fileFactory.create(result);
 			if (file.isDirectory() && !file.exists()) {
@@ -136,7 +136,22 @@ public class ZipFilesDAO {
 	public boolean isValidArchiveFile(String filename) {
 		
 		try {
-			return zipFileFactory.create(filename).isValidZipFile();
+			final ZipFile zipFile = createZipFile(filename);
+			
+			return zipFile.isValidZipFile();
+		} catch (ZipException e) {
+			logger.error(e.getLocalizedMessage(),e);
+			return false;
+		}
+	}
+	
+	public boolean containsExpectedArchives(String filename, String archiveHeaderFilename) {
+		
+		try {
+			final ZipFile zipFile = createZipFile(filename);
+			FileHeader fileHeader = zipFile.getFileHeader(archiveHeaderFilename);
+			
+			return fileHeader!=null;
 		} catch (ZipException e) {
 			logger.error(e.getLocalizedMessage(),e);
 			return false;
@@ -145,11 +160,15 @@ public class ZipFilesDAO {
 
 	public boolean isEncryptedArchiveFile(String filename)  {
 		try {
-			return zipFileFactory.create(filename).isEncrypted();
+			final ZipFile zipFile = createZipFile(filename);
+			return zipFile.isEncrypted();
 		} catch (ZipException e) {
 			logger.error(e.getLocalizedMessage(),e);
 			return false;
 		}
 	}
-
+	
+	private ZipFile createZipFile(String filename) throws ZipException {
+		return zipFileFactory.create(filename);
+	}
 }
