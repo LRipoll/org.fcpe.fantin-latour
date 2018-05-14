@@ -24,6 +24,7 @@ public class ImportConseilLocalEtablissementController extends AbstractSecureCon
 	static final String NOT_EXISTING_FILE = "org.fcpe.fantinlatour.view.importconseillocal.file.tooltip.not_existing";
 	static final String INVALID_ARCHIVE = "org.fcpe.fantinlatour.view.importconseillocal.file.tooltip.invalid_archive";
 	static final String NOT_ENCRYPTED = "org.fcpe.fantinlatour.view.importconseillocal.file.tooltip.not_encrypted";
+	static final String INCOMPLETE_ARCHIVE = "org.fcpe.fantinlatour.view.importconseillocal.file.tooltip.incomplete_archive";
 
 	@FXML
 	private CheckBox defaultCheckBox;
@@ -46,7 +47,7 @@ public class ImportConseilLocalEtablissementController extends AbstractSecureCon
 				String.format(resources.getString(NAME_INVALID_FILENAME),
 						conseilLocalEtablissementManager.getExportFilenameWildcardMatcher()),
 				resources.getString(NOT_EXISTING_FILE), resources.getString(INVALID_ARCHIVE),
-				resources.getString(NOT_ENCRYPTED));
+				resources.getString(NOT_ENCRYPTED), resources.getString(INCOMPLETE_ARCHIVE));
 		fileTextField.textProperty().addListener(importedArchiveNameValidator);
 	}
 

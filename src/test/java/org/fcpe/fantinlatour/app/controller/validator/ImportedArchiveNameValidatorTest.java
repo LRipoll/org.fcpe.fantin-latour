@@ -49,7 +49,7 @@ public class ImportedArchiveNameValidatorTest {
 		sceneValidator = ctrl.createMock(SceneValidator.class);
 		importedArchiveNameValidator = new ImportedArchiveNameValidator(sceneValidator, conseilLocalEtablissementManager, nameTextField, "okTooltip",
 				"existTooltip", "invalidTooltip" ,"invalidFilenameTooltip", "archiveFileDoesNotExistTootip",
-				"invalidArchiveFileTootip", "unencryptedArchiveFileTootip");
+				"invalidArchiveFileTootip", "unencryptedArchiveFileTootip","incompleteArchiveFileTootip");
 		EasyMock.reset(sceneValidator);
 
 	}
@@ -203,6 +203,7 @@ public class ImportedArchiveNameValidatorTest {
 		EasyMock.expect(conseilLocalEtablissementManager.existsArchiveFile(name)).andReturn(true);
 		EasyMock.expect(conseilLocalEtablissementManager.isValidArchiveFile(name)).andReturn(true);
 		EasyMock.expect(conseilLocalEtablissementManager.isEncryptedArchiveFile(name)).andReturn(true);
+		EasyMock.expect(conseilLocalEtablissementManager.containsExpectedArchives(name)).andReturn(true);
 		sceneValidator.onStateChange(importedArchiveNameValidator);
 		EasyMock.expectLastCall().once();
 		
@@ -217,4 +218,29 @@ public class ImportedArchiveNameValidatorTest {
 		support.verifyAll();
 	}
 
+	@Test
+	public void testWhenArchiveIsIncompleteShouldSetAccordingToolTipAndStyle() {
+
+		
+		String name = "valid";
+		
+		EasyMock.expect(conseilLocalEtablissementManager.isValidArchiveFilename(name)).andReturn(true);
+		EasyMock.expect(conseilLocalEtablissementManager.existsFromArchiveFilename(name)).andReturn(false);
+		EasyMock.expect(conseilLocalEtablissementManager.isValidFromArchiveFilename(name)).andReturn(true);
+		EasyMock.expect(conseilLocalEtablissementManager.existsArchiveFile(name)).andReturn(true);
+		EasyMock.expect(conseilLocalEtablissementManager.isValidArchiveFile(name)).andReturn(true);
+		EasyMock.expect(conseilLocalEtablissementManager.isEncryptedArchiveFile(name)).andReturn(true);
+		EasyMock.expect(conseilLocalEtablissementManager.containsExpectedArchives(name)).andReturn(false);
+	
+		
+		support.replayAll();
+		nameTextField.setText(name);
+		importedArchiveNameValidator.changed(nameTextField.textProperty(), "", name);
+
+		assertEquals("incompleteArchiveFileTootip",nameTextField.getTooltip().getText());
+		assertTrue(nameTextField.getStyleClass().contains(ImportedArchiveNameValidator.TEXT_FIELD_ERROR));
+		assertFalse(importedArchiveNameValidator.isValid());
+		
+		support.verifyAll();
+	}
 }

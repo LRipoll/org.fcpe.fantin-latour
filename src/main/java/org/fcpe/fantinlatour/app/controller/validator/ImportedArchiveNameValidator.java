@@ -15,12 +15,15 @@ public class ImportedArchiveNameValidator extends AbstractControlValidatorListen
 	private String archiveFileDoesNotExistTootipText;
 	private String invalidArchiveFileTootipText;
 	private String unencryptedArchiveFileTootipText;
+	private String incompleteArchiveTootipText;
 
 	public ImportedArchiveNameValidator(SceneValidator sceneValidator,
 			ConseilLocalEtablissementManager conseilLocalEtablissementManager, TextField nameTextField,
 			String validTootipText, String alreadyExistTootipText, String invalidTootipText,
 			String invalidFilenameTootipText, String archiveFileDoesNotExistTootipText,
-			String invalidArchiveFileTootipText, String unencryptedArchiveFileTootipText) {
+			String invalidArchiveFileTootipText, String unencryptedArchiveFileTootipText
+			, String incompleteArchiveTootipText
+			) {
 		super(sceneValidator, nameTextField, validTootipText, invalidTootipText);
 
 		this.conseilLocalEtablissementManager = conseilLocalEtablissementManager;
@@ -29,6 +32,7 @@ public class ImportedArchiveNameValidator extends AbstractControlValidatorListen
 		this.archiveFileDoesNotExistTootipText = archiveFileDoesNotExistTootipText;
 		this.invalidArchiveFileTootipText = invalidArchiveFileTootipText;
 		this.unencryptedArchiveFileTootipText = unencryptedArchiveFileTootipText;
+		this.incompleteArchiveTootipText = incompleteArchiveTootipText;
 	}
 
 	@Override
@@ -53,6 +57,8 @@ public class ImportedArchiveNameValidator extends AbstractControlValidatorListen
 			tooltipText = alreadyExistTootipText;
 		} else if (!conseilLocalEtablissementManager.isValidFromArchiveFilename(filename)) {
 			tooltipText = invalidTootipText;
+		} else if (!conseilLocalEtablissementManager.containsExpectedArchives(filename)) {
+			tooltipText = incompleteArchiveTootipText;
 		}
 
 	}
