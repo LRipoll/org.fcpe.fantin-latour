@@ -71,17 +71,14 @@ public class ZipFilesDAO {
 		ZipFile zfile;
 		try {
 			zfile = zipFileFactory.create(archiveFilename);
-			if (!zfile.isValidZipFile()) {
-				throw new DataException(
-						SpringFactory.getMessage("org.fcpe.fantinlatour.dao.files.ZipFilesDAO.pack.failed"), null);
-			}
+			
 			File file = fileFactory.create(result);
 			if (file.isDirectory() && !file.exists()) {
 				file.mkdirs();
 			}
-			if (zfile.isEncrypted()) {
-				zfile.setPassword(password.toCharArray());
-			}
+			
+			zfile.setPassword(password.toCharArray());
+			
 			FileHeader fileHeader = zfile.getFileHeader(archiveHeaderFilename);
 			zfile.extractFile(fileHeader, result);
 			zfile.extractAll(result);
