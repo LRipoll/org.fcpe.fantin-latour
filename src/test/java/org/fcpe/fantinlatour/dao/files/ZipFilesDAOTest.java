@@ -12,6 +12,7 @@ import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.easymock.IMocksControl;
 import org.fcpe.fantinlatour.dao.DataException;
+import org.fcpe.fantinlatour.dao.PasswordException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -37,15 +38,15 @@ public class ZipFilesDAOTest {
 		fileFactory = ctrl.createMock(FileFactory.class);
 		zipFileFactory = ctrl.createMock(ZipFileFactory.class);
 		importExportDirname = "exportDirname";
-		
+
 		zipPrefix = "export-";
 		zipSuffix = "arc";
 		zipFilesDAO = new ZipFilesDAO(fileFactory, zipFileFactory, importExportDirname, zipPrefix, zipSuffix);
 	}
-	
+
 	@Test
-	public void testGetZipDirname(){
-		assertSame(importExportDirname,zipFilesDAO.getZipDirname());
+	public void testGetZipDirname() {
+		assertSame(importExportDirname, zipFilesDAO.getZipDirname());
 	}
 
 	@Test
@@ -181,7 +182,7 @@ public class ZipFilesDAOTest {
 	public void testGetNameFromArchive() {
 		assertEquals("test", zipFilesDAO.getNameFromArchiveFilename("/a/b/export-test.arc"));
 	}
-	
+
 	@Test
 	public void testIsValidArchiveFilename() {
 		assertFalse(zipFilesDAO.isValidArchiveFilename("/a/b/test.zip"));
@@ -189,19 +190,18 @@ public class ZipFilesDAOTest {
 		assertFalse(zipFilesDAO.isValidArchiveFilename("/a/b/export-test.zip"));
 		assertTrue(zipFilesDAO.isValidArchiveFilename("/a/b/export-test.arc"));
 	}
-	
+
 	@Test
 	public void testGetExportFilenameWildcardMatcher() {
-		assertEquals("export-*.arc",zipFilesDAO.getZipFilenameWildcardMatcher());
+		assertEquals("export-*.arc", zipFilesDAO.getZipFilenameWildcardMatcher());
 	}
-	
+
 	@Test
 	public void testExistsArchiveFile() {
-		
+
 		File inputFile = ctrl.createMock(File.class);
 
-		EasyMock.expect(fileFactory.create("/a/exported.zip"))
-				.andReturn(inputFile);
+		EasyMock.expect(fileFactory.create("/a/exported.zip")).andReturn(inputFile);
 		EasyMock.expect(inputFile.exists()).andReturn(true);
 		support.replayAll();
 
@@ -209,23 +209,22 @@ public class ZipFilesDAOTest {
 		support.verifyAll();
 
 	}
-	
+
 	@Test
 	public void testIsValidArchiveFile() throws DataException, ZipException {
 		ZipFile inputFile = ctrl.createMock(ZipFile.class);
 
-		EasyMock.expect(zipFileFactory.create("/a/exported.zip"))
-				.andReturn(inputFile);
+		EasyMock.expect(zipFileFactory.create("/a/exported.zip")).andReturn(inputFile);
 		EasyMock.expect(inputFile.isValidZipFile()).andReturn(true);
 		support.replayAll();
 		assertTrue(zipFilesDAO.isValidArchiveFile("/a/exported.zip"));
 		support.verifyAll();
 
 	}
-	
+
 	@Test
 	public void testIsValidArchiveFileWhenExceptionShouldReturnFalse() throws DataException, ZipException {
-		
+
 		zipFileFactory.create("/a/exported.zip");
 		EasyMock.expectLastCall().andThrow(new ZipException());
 		support.replayAll();
@@ -233,13 +232,12 @@ public class ZipFilesDAOTest {
 		support.verifyAll();
 
 	}
-	
+
 	@Test
 	public void testIsEncryptedArchiveFile() throws ZipException, DataException {
 		ZipFile inputFile = ctrl.createMock(ZipFile.class);
 
-		EasyMock.expect(zipFileFactory.create("/a/exported.zip"))
-				.andReturn(inputFile);
+		EasyMock.expect(zipFileFactory.create("/a/exported.zip")).andReturn(inputFile);
 		EasyMock.expect(inputFile.isEncrypted()).andReturn(true);
 		support.replayAll();
 		assertTrue(zipFilesDAO.isEncryptedArchiveFile("/a/exported.zip"));
@@ -256,39 +254,136 @@ public class ZipFilesDAOTest {
 		support.verifyAll();
 
 	}
-	
+
 	@Test
 	public void testContainsExpectedArchivesWhenExceptionShouldReturnFalse() throws ZipException, DataException {
 		zipFileFactory.create("/a/exported.zip");
 		EasyMock.expectLastCall().andThrow(new ZipException());
 		support.replayAll();
-		assertFalse(zipFilesDAO.containsExpectedArchives("/a/exported.zip",""));
+		assertFalse(zipFilesDAO.containsExpectedArchives("/a/exported.zip", ""));
 		support.verifyAll();
 
 	}
 
-	
 	@Test
 	public void testContainsExpectedArchivesWhenNotContainsTheExpectedOnes() throws ZipException, DataException {
 		ZipFile inputFile = ctrl.createMock(ZipFile.class);
 
-		EasyMock.expect(zipFileFactory.create("/a/exported.zip"))
-				.andReturn(inputFile);
+		EasyMock.expect(zipFileFactory.create("/a/exported.zip")).andReturn(inputFile);
 		EasyMock.expect(inputFile.getFileHeader("expected.file")).andReturn(null);
 		support.replayAll();
-		assertFalse(zipFilesDAO.containsExpectedArchives("/a/exported.zip","expected.file"));
+		assertFalse(zipFilesDAO.containsExpectedArchives("/a/exported.zip", "expected.file"));
 		support.verifyAll();
 	}
-	
+
 	@Test
 	public void testContainsExpectedArchivesWhenContainsTheExpectedOnes() throws ZipException, DataException {
 		ZipFile inputFile = ctrl.createMock(ZipFile.class);
 
-		EasyMock.expect(zipFileFactory.create("/a/exported.zip"))
-				.andReturn(inputFile);
+		EasyMock.expect(zipFileFactory.create("/a/exported.zip")).andReturn(inputFile);
 		EasyMock.expect(inputFile.getFileHeader("expected.file")).andReturn(new FileHeader());
 		support.replayAll();
-		assertTrue(zipFilesDAO.containsExpectedArchives("/a/exported.zip","expected.file"));
+		assertTrue(zipFilesDAO.containsExpectedArchives("/a/exported.zip", "expected.file"));
 		support.verifyAll();
 	}
+
+	@Test
+	public void testUnpackWhenItsOk() throws ZipException, DataException {
+		ZipFile inputFile = ctrl.createMock(ZipFile.class);
+
+		EasyMock.expect(zipFileFactory.create("/a/exported.zip")).andReturn(inputFile);
+		inputFile.setPassword("password");
+		EasyMock.expectLastCall().once();
+		
+		final FileHeader fileHeader = ctrl.createMock(FileHeader.class);
+		EasyMock.expect(inputFile.getFileHeader("expected.file")).andReturn(fileHeader);
+		
+		File destDir = ctrl.createMock(File.class);
+		EasyMock.expect(fileFactory.create("/app/dir")).andReturn(destDir);
+		EasyMock.expect(destDir.exists()).andReturn(true);
+		
+		inputFile.extractFile(fileHeader, "/app/dir");
+		EasyMock.expectLastCall().once();
+		
+		support.replayAll();
+		zipFilesDAO.unpack("/a/exported.zip", "password", "expected.file", "/app/dir");
+		support.verifyAll();
+	}
+	
+	@Test
+	public void testUnpackWhenItsOkButTargerDirDoNotExists() throws ZipException, DataException {
+		ZipFile inputFile = ctrl.createMock(ZipFile.class);
+
+		EasyMock.expect(zipFileFactory.create("/a/exported.zip")).andReturn(inputFile);
+		inputFile.setPassword("password");
+		EasyMock.expectLastCall().once();
+		
+		final FileHeader fileHeader = ctrl.createMock(FileHeader.class);
+		EasyMock.expect(inputFile.getFileHeader("expected.file")).andReturn(fileHeader);
+		
+		File destDir = ctrl.createMock(File.class);
+		EasyMock.expect(fileFactory.create("/app/dir")).andReturn(destDir);
+		EasyMock.expect(destDir.exists()).andReturn(false);
+		EasyMock.expect(destDir.mkdirs()).andReturn(true);
+		
+		inputFile.extractFile(fileHeader, "/app/dir");
+		EasyMock.expectLastCall().once();
+		
+		support.replayAll();
+		zipFilesDAO.unpack("/a/exported.zip", "password", "expected.file", "/app/dir");
+		support.verifyAll();
+	}
+	
+	@Test
+	public void testUnpackWhenPasswordIsWrong() throws ZipException, DataException {
+		ZipFile inputFile = ctrl.createMock(ZipFile.class);
+
+		EasyMock.expect(zipFileFactory.create("/a/exported.zip")).andReturn(inputFile);
+		inputFile.setPassword("password");
+		EasyMock.expectLastCall().once();
+		
+		final FileHeader fileHeader = ctrl.createMock(FileHeader.class);
+		EasyMock.expect(inputFile.getFileHeader("expected.file")).andReturn(fileHeader);
+		
+		File destDir = ctrl.createMock(File.class);
+		EasyMock.expect(fileFactory.create("/app/dir")).andReturn(destDir);
+		EasyMock.expect(destDir.exists()).andReturn(true);
+		
+		inputFile.extractFile(fileHeader, "/app/dir");
+		EasyMock.expectLastCall().andThrow(new ZipException("Wrong Password"));
+		
+		support.replayAll();
+		try {
+		zipFilesDAO.unpack("/a/exported.zip", "password", "expected.file", "/app/dir");
+		fail("Should throw PasswordException");
+		} catch (PasswordException aExp) {
+			assertEquals("org.fcpe.fantinlatour.dao.files.ZipFilesDAO.unpack.password.failed",
+					aExp.getMessage());
+
+		}
+
+		support.verifyAll();
+	}
+	
+	@Test
+	public void testUnpackWhenZipException() throws ZipException, DataException {
+		ZipException zipException = ctrl.createMock( ZipException.class);
+		EasyMock.expect(zipException.getMessage()).andReturn("Right Password but not");
+		EasyMock.expect(zipFileFactory.create("/a/exported.zip")).andThrow(zipException);
+		
+		support.replayAll();
+		try {
+			zipFilesDAO.unpack("/a/exported.zip", "password", "expected.file", "/app/dir");
+			fail("Should throw DataException");
+		} catch (DataException aExp) {
+			assertEquals("org.fcpe.fantinlatour.dao.files.ZipFilesDAO.unpack.zipException",
+					aExp.getMessage());
+
+		}
+
+		support.verifyAll();
+	}
+
+
+	
 }

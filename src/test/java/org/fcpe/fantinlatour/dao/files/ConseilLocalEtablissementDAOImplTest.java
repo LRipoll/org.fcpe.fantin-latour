@@ -217,6 +217,7 @@ public class ConseilLocalEtablissementDAOImplTest {
 
 		support.replayAll();
 
+		
 		try {
 			conseilLocalEtablissementDAOImpl.load(name);
 			fail("Should throw PasswordException");

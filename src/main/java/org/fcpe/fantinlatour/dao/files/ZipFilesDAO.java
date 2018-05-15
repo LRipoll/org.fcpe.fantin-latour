@@ -142,9 +142,14 @@ public class ZipFilesDAO {
 
 		try {
 			ZipFile zipfile = createZipFile(archiveFilename);
-			zipfile.setPassword(password.toCharArray());
+			zipfile.setPassword(password);
 
 			FileHeader fileHeader = zipfile.getFileHeader(archiveHeaderFilename);
+
+			File destDir = fileFactory.create(destPath);
+			if (!destDir.exists()) {
+				destDir.mkdirs();
+			}
 			zipfile.extractFile(fileHeader, destPath);
 
 		} catch (ZipException e) {
