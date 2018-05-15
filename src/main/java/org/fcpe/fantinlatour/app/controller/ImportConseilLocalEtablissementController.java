@@ -1,11 +1,13 @@
 package org.fcpe.fantinlatour.app.controller;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import org.fcpe.fantinlatour.app.controller.validator.ImportedArchiveNameValidator;
 import org.fcpe.fantinlatour.dao.DataException;
 import org.fcpe.fantinlatour.dao.PasswordException;
+import org.fcpe.fantinlatour.service.SpringFactory;
 import org.fcpe.fantinlatour.view.ExceptionAlertDialog;
 
 import javafx.event.ActionEvent;
@@ -14,6 +16,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 
 public class ImportConseilLocalEtablissementController extends AbstractSecureController {
 
@@ -30,7 +33,11 @@ public class ImportConseilLocalEtablissementController extends AbstractSecureCon
 	private CheckBox defaultCheckBox;
 	@FXML
 	private TextField fileTextField;
+	@FXML
+	FileChooser inputFileChooser;
+
 	private ImportedArchiveNameValidator importedArchiveNameValidator;
+	private FileChooser importedfileChooser;
 
 	public ImportConseilLocalEtablissementController() {
 
@@ -39,16 +46,29 @@ public class ImportConseilLocalEtablissementController extends AbstractSecureCon
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		super.initialize(location, resources);
+
+		importedfileChooser = new FileChooser();
+
 		defaultCheckBox.setSelected(true);
 
 		importedArchiveNameValidator = new ImportedArchiveNameValidator(sceneValidator,
 				conseilLocalEtablissementManager, fileTextField, resources.getString(NAME_VALID),
 				resources.getString(NAME_ALREADY_EXIST), resources.getString(NAME_INVALID),
 				String.format(resources.getString(NAME_INVALID_FILENAME),
-						conseilLocalEtablissementManager.getExportFilenameWildcardMatcher()),
+						conseilLocalEtablissementManager.getArchiveFilenameWildcardMatcher()),
 				resources.getString(NOT_EXISTING_FILE), resources.getString(INVALID_ARCHIVE),
 				resources.getString(NOT_ENCRYPTED), resources.getString(INCOMPLETE_ARCHIVE));
 		fileTextField.textProperty().addListener(importedArchiveNameValidator);
+	}
+
+	@FXML
+	protected void selectImportedFile(ActionEvent event) {
+		configureFileChooser(importedfileChooser);
+		File file = importedfileChooser.showOpenDialog(getStage());
+		if (file != null) {
+			fileTextField.setText(file.getAbsolutePath());
+		}
+
 	}
 
 	@Override
@@ -73,4 +93,12 @@ public class ImportConseilLocalEtablissementController extends AbstractSecureCon
 
 	}
 
+	private void configureFileChooser(FileChooser fileChooser) {
+		fileChooser.setTitle(SpringFactory.getMessage("org.fcpe.fantinlatour.view.importconseillocal.filechooser.title"));
+		fileChooser.setInitialDirectory(new File(conseilLocalEtablissementManager.getArchiveDirname()));
+		fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter(SpringFactory.getMessage("org.fcpe.fantinlatour.view.importconseillocal.filechooser.extension.title"), conseilLocalEtablissementManager.getArchiveFilenameWildcardMatcher())
+            );
+
+	}
 }

@@ -80,6 +80,18 @@ public class ConseilLocalEtablissementManagerTest {
 
 		support.verifyAll();
 	}
+	
+	@Test
+	public void testGetArchiveDirname() {
+		EasyMock.expect(zipFilesDAO.getZipDirname()).andReturn("/a/zipdir");
+		
+		support.replayAll();
+
+		assertEquals("/a/zipdir",conseilLocalEtablissementManager.getArchiveDirname());
+
+		support.verifyAll();
+
+	}
 
 	@Test
 	public void testIsValidFromArchiveFilename() {

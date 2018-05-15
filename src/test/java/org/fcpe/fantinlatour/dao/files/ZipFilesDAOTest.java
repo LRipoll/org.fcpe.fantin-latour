@@ -27,8 +27,7 @@ public class ZipFilesDAOTest {
 	private ZipFilesDAO zipFilesDAO;
 	private FileFactory fileFactory;
 	private ZipFileFactory zipFileFactory;
-	private String exportDirname;
-	private String importDirname;
+	private String importExportDirname;
 	private String zipPrefix;
 	private String zipSuffix;
 
@@ -37,18 +36,23 @@ public class ZipFilesDAOTest {
 		ctrl = support.createControl();
 		fileFactory = ctrl.createMock(FileFactory.class);
 		zipFileFactory = ctrl.createMock(ZipFileFactory.class);
-		exportDirname = "exportDirname";
-		importDirname = "importDirname";
+		importExportDirname = "exportDirname";
+		
 		zipPrefix = "export-";
 		zipSuffix = "arc";
-		zipFilesDAO = new ZipFilesDAO(fileFactory, zipFileFactory, exportDirname, importDirname, zipPrefix, zipSuffix);
+		zipFilesDAO = new ZipFilesDAO(fileFactory, zipFileFactory, importExportDirname, zipPrefix, zipSuffix);
+	}
+	
+	@Test
+	public void testGetZipDirname(){
+		assertSame(importExportDirname,zipFilesDAO.getZipDirname());
 	}
 
 	@Test
 	public void testGetZipFileName() throws DataException {
 		support.replayAll();
 
-		assertEquals(exportDirname + File.separator + zipPrefix + "test." + zipSuffix,
+		assertEquals(importExportDirname + File.separator + zipPrefix + "test." + zipSuffix,
 				zipFilesDAO.getExportZipAbsoluteFilename("test"));
 
 		support.verifyAll();
@@ -59,7 +63,7 @@ public class ZipFilesDAOTest {
 
 		File inputFile = ctrl.createMock(File.class);
 
-		EasyMock.expect(fileFactory.create(exportDirname + File.separator + zipPrefix + "test" + "." + zipSuffix))
+		EasyMock.expect(fileFactory.create(importExportDirname + File.separator + zipPrefix + "test" + "." + zipSuffix))
 				.andReturn(inputFile);
 
 		EasyMock.expect(inputFile.exists()).andReturn(true);
@@ -188,7 +192,7 @@ public class ZipFilesDAOTest {
 	
 	@Test
 	public void testGetExportFilenameWildcardMatcher() {
-		assertEquals("export-*.arc",zipFilesDAO.getExportFilenameWildcardMatcher());
+		assertEquals("export-*.arc",zipFilesDAO.getZipFilenameWildcardMatcher());
 	}
 	
 	@Test

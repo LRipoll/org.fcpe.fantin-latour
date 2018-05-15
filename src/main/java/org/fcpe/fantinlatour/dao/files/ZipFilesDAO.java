@@ -17,24 +17,27 @@ import net.lingala.zip4j.model.ZipParameters;
 public class ZipFilesDAO {
 
 	private static final Logger logger = Logger.getLogger(ZipFilesDAO.class);
-	
+
 	private FileFactory fileFactory;
-	private String exportZipDirname;
-	private String importZipDirname;
+	private String zipDirname;
 	private ZipFileFactory zipFileFactory;
 	private String zipPrefix;
 	private String zipSuffix;
 
-	public ZipFilesDAO(FileFactory fileFactory, ZipFileFactory zipFileFactory, String exportZipDirname,
-			String importZipDirname, String zipPrefix, String zipSuffix) {
+	public ZipFilesDAO(FileFactory fileFactory, ZipFileFactory zipFileFactory, String zipDirname,
+			String zipPrefix, String zipSuffix) {
 		super();
 		this.fileFactory = fileFactory;
 		this.zipFileFactory = zipFileFactory;
-		this.exportZipDirname = exportZipDirname;
-		this.importZipDirname = importZipDirname;
+		this.zipDirname = zipDirname;
 		this.zipPrefix = zipPrefix;
 		this.zipSuffix = zipSuffix;
 
+	}
+	
+	
+	public String getZipDirname() {
+		return zipDirname;
 	}
 
 	public File pack(String zippedFilename, String zipFilename, String password) throws DataException {
@@ -66,19 +69,88 @@ public class ZipFilesDAO {
 
 	}
 
+	public String getExportZipAbsoluteFilename(String etablissement) {
+		return FilenameUtils.normalize(
+				String.format("%s%s%s", zipDirname, File.separator, getZipFilename(etablissement)));
+	}
+
+	public String getNameFromArchiveFilename(String archiveFilename) {
+
+		String baseName = FilenameUtils.getBaseName(archiveFilename);
+		return baseName.substring(zipPrefix.length());
+	}
+
+	public boolean exportZipFilenameAlreadyExists(String etablissement) {
+		String filename = getExportZipAbsoluteFilename(etablissement);
+		return fileFactory.create(filename).exists();
+	}
+
+	public boolean isValidArchiveFilename(String filename) {
+
+		return FilenameUtils.wildcardMatch(FilenameUtils.getName(filename), getZipFilenameWildcardMatcher());
+	}
+
+	public String getZipFilenameWildcardMatcher() {
+
+		return getZipFilename("*");
+	}
+
+	private String getZipFilename(String etablissement) {
+		return String.format("%s%s.%s", zipPrefix, etablissement, zipSuffix);
+	}
+
+	public boolean existsArchiveFile(String filename) {
+		return fileFactory.create(filename).exists();
+	}
+
+	public boolean isValidArchiveFile(String filename) {
+
+		try {
+			final ZipFile zipFile = createZipFile(filename);
+
+			return zipFile.isValidZipFile();
+		} catch (ZipException e) {
+			logger.error(e.getLocalizedMessage(), e);
+			return false;
+		}
+	}
+
+	public boolean containsExpectedArchives(String filename, String archiveHeaderFilename) {
+
+		try {
+			final ZipFile zipFile = createZipFile(filename);
+			FileHeader fileHeader = zipFile.getFileHeader(archiveHeaderFilename);
+
+			return fileHeader != null;
+		} catch (ZipException e) {
+			logger.error(e.getLocalizedMessage(), e);
+			return false;
+		}
+	}
+
+	public boolean isEncryptedArchiveFile(String filename) {
+		try {
+			final ZipFile zipFile = createZipFile(filename);
+			return zipFile.isEncrypted();
+		} catch (ZipException e) {
+			logger.error(e.getLocalizedMessage(), e);
+			return false;
+		}
+	}
+
 	public String unpack(String archiveFilename, String password, String archiveHeaderFilename) throws DataException {
-		String result = getImportZipDirname(FilenameUtils.getBaseName(archiveFilename));
+		String result = null;
 		ZipFile zfile;
 		try {
 			zfile = createZipFile(archiveFilename);
-			
+
 			File file = fileFactory.create(result);
 			if (file.isDirectory() && !file.exists()) {
 				file.mkdirs();
 			}
-			
+
 			zfile.setPassword(password.toCharArray());
-			
+
 			FileHeader fileHeader = zfile.getFileHeader(archiveHeaderFilename);
 			zfile.extractFile(fileHeader, result);
 			zfile.extractAll(result);
@@ -95,79 +167,6 @@ public class ZipFilesDAO {
 
 	}
 
-	private String getImportZipDirname(String zipFilename) {
-		return String.format("%s%s", String.format("%s%s%s", importZipDirname, File.separator, zipFilename));
-	}
-
-	public String getExportZipAbsoluteFilename(String etablissement) {
-		return FilenameUtils.normalize(
-				String.format("%s%s%s", exportZipDirname, File.separator, getExportZipFilename(etablissement)));
-	}
-
-	public String getNameFromArchiveFilename(String archiveFilename) {
-		
-		String baseName = FilenameUtils.getBaseName(archiveFilename);
-		return baseName.substring(zipPrefix.length());
-	}
-
-	public boolean exportZipFilenameAlreadyExists(String etablissement) {
-		String filename = getExportZipAbsoluteFilename(etablissement);
-		return fileFactory.create(filename).exists();
-	}
-
-	public boolean isValidArchiveFilename(String filename) {
-
-		return FilenameUtils.wildcardMatch(FilenameUtils.getName(filename), getExportFilenameWildcardMatcher());
-	}
-
-	public String getExportFilenameWildcardMatcher() {
-
-		return getExportZipFilename("*");
-	}
-
-	private String getExportZipFilename(String etablissement) {
-		return String.format("%s%s.%s", zipPrefix, etablissement, zipSuffix);
-	}
-
-	public boolean existsArchiveFile(String filename) {
-		return fileFactory.create(filename).exists();
-	}
-
-	public boolean isValidArchiveFile(String filename) {
-		
-		try {
-			final ZipFile zipFile = createZipFile(filename);
-			
-			return zipFile.isValidZipFile();
-		} catch (ZipException e) {
-			logger.error(e.getLocalizedMessage(),e);
-			return false;
-		}
-	}
-	
-	public boolean containsExpectedArchives(String filename, String archiveHeaderFilename) {
-		
-		try {
-			final ZipFile zipFile = createZipFile(filename);
-			FileHeader fileHeader = zipFile.getFileHeader(archiveHeaderFilename);
-			
-			return fileHeader!=null;
-		} catch (ZipException e) {
-			logger.error(e.getLocalizedMessage(),e);
-			return false;
-		}
-	}
-
-	public boolean isEncryptedArchiveFile(String filename)  {
-		try {
-			final ZipFile zipFile = createZipFile(filename);
-			return zipFile.isEncrypted();
-		} catch (ZipException e) {
-			logger.error(e.getLocalizedMessage(),e);
-			return false;
-		}
-	}
-	
 	private ZipFile createZipFile(String filename) throws ZipException {
 		return zipFileFactory.create(filename);
 	}

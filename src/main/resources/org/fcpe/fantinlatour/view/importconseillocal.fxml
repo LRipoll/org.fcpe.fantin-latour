@@ -24,10 +24,18 @@
 	<Label
 		text="%org.fcpe.fantinlatour.view.importconseillocal.file.label"
 		GridPane.columnIndex="0" GridPane.rowIndex="0" />
-	<TextField fx:id="fileTextField"
-		text="%org.fcpe.fantinlatour.view.importconseillocal.file.text"
-		GridPane.columnIndex="1" GridPane.rowIndex="0" />
-		
+	<HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="0">
+		<TextField fx:id="fileTextField"
+			text="%org.fcpe.fantinlatour.view.importconseillocal.file.text"/>
+		<Button onAction="#selectImportedFile"
+		text="%org.fcpe.fantinlatour.view.importconseillocal.selectButton.text"
+		prefWidth="10" >
+		<tooltip>
+			<Tooltip
+				text="%org.fcpe.fantinlatour.view.importconseillocal.selectButton.tooltip.text" />
+		</tooltip>
+	</Button>
+	</HBox>
 	<Label
 		text="%org.fcpe.fantinlatour.view.importconseillocal.password.label"
 		GridPane.columnIndex="0" GridPane.rowIndex="1" />

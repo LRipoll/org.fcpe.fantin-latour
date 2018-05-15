@@ -169,6 +169,10 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 		return result;
 	}
 
+	public String getArchiveDirname() {
+		return zipFilesDAO.getZipDirname();
+	}
+	
 	public String getExportedArchiveFilename() {
 		String result = null;
 		if (currentConseilLocalEtablissement != null) {
@@ -200,7 +204,7 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 	public ConseilLocalEtablissement importArchive(String archiveFilename, boolean isDefault, String password)
 			throws DataException {
 		String expectedFilename = getExpectedFilename(archiveFilename);
-
+		
 		String unzipDirname = zipFilesDAO.unpack(archiveFilename, password, expectedFilename);
 
 		ConseilLocalEtablissement result = conseilLocalEtablissementDAO.createFromArchive(unzipDirname);
@@ -231,8 +235,8 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 		return zipFilesDAO.isValidArchiveFilename(filename);
 	}
 
-	public String getExportFilenameWildcardMatcher() {
-		return zipFilesDAO.getExportFilenameWildcardMatcher();
+	public String getArchiveFilenameWildcardMatcher() {
+		return zipFilesDAO.getZipFilenameWildcardMatcher();
 	}
 
 	public boolean existsArchiveFile(String filename) {
@@ -255,4 +259,6 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 			userPreferencesDAO.store();
 		}
 	}
+
+	
 }
