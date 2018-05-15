@@ -460,6 +460,16 @@ public class ConseilLocalEtablissementDAOImplTest {
 		support.verifyAll();
 	}
 	
+	@Test
+	public void testGetAbsoluteArchiveDirname(){
+		EasyMock.expect(appDirManager.getAbsolutePath())
+		.andReturn(FileUtils.getAbsolutePath("userhome", "appRoot/Dir"));
+		support.replayAll();
+
+		assertEquals(FileUtils.getAbsolutePath("userhome", "appRoot/Dir"),conseilLocalEtablissementDAOImpl.getAbsoluteArchiveDirname());
+		support.verifyAll();
+
+	}
 	
 
 	@Test

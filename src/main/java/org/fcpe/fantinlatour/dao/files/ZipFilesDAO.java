@@ -153,7 +153,7 @@ public class ZipFilesDAO {
 						SpringFactory.getMessage("org.fcpe.fantinlatour.dao.files.ZipFilesDAO.unpack.password.failed"),
 						null);
 			}
-			throw new DataException("", e);
+			throw new DataException(SpringFactory.getMessage("org.fcpe.fantinlatour.dao.files.ZipFilesDAO.unpack.zipException"), e);
 		}
 
 	}
