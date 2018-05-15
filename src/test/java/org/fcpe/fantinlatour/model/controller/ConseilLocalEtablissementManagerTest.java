@@ -553,5 +553,57 @@ public class ConseilLocalEtablissementManagerTest {
 		support.verifyAll();
 
 	}
+	
+	@Test
+	public void testGetArchiveFilenameWildcardMatcher() {
+		EasyMock.expect(zipFilesDAO.getZipFilenameWildcardMatcher()).andReturn("Wildcard");
+		support.replayAll();
+		assertEquals("Wildcard", conseilLocalEtablissementManager.getArchiveFilenameWildcardMatcher());
+		support.verifyAll();
+	
+	}
+	
+	@Test
+	public void testImportArchiveWhenIsNotDefault() throws DataException {
+		EasyMock.expect(zipFilesDAO.getNameFromArchiveFilename("/a/exported.zip")).andReturn("exported");
+		EasyMock.expect(conseilLocalEtablissementDAO.getArchiveFilename("exported")).andReturn("file.ext");
+		EasyMock.expect(conseilLocalEtablissementDAO.getAbsoluteArchiveDirname()).andReturn("/app/dir");
+		zipFilesDAO.unpack("/a/exported.zip", "password", "file.ext",
+				"/app/dir");
+		
+		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
+		EasyMock.expect(conseilLocalEtablissementDAO.load("exported")).andReturn(conseilLocalEtablissement);
+		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
+		EasyMock.expectLastCall().once();
+	
+		support.replayAll();
+		assertSame(conseilLocalEtablissement, conseilLocalEtablissementManager.importArchive("/a/exported.zip", false, "password"));
+		support.verifyAll();
+		
+	}
+	
+	@Test
+	public void testImportArchiveWhenIsDefault() throws DataException {
+		EasyMock.expect(zipFilesDAO.getNameFromArchiveFilename("/a/exported.zip")).andReturn("exported");
+		EasyMock.expect(conseilLocalEtablissementDAO.getArchiveFilename("exported")).andReturn("file.ext");
+		EasyMock.expect(conseilLocalEtablissementDAO.getAbsoluteArchiveDirname()).andReturn("/app/dir");
+		zipFilesDAO.unpack("/a/exported.zip", "password", "file.ext",
+				"/app/dir");
+		
+		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
+		EasyMock.expect(conseilLocalEtablissementDAO.load("exported")).andReturn(conseilLocalEtablissement);
+
+		userPreferencesDAO.setDefaultConseilLocalName("exported");
+		EasyMock.expectLastCall().once();
+		EasyMock.expect(userPreferencesDAO.store()).andReturn(true);
+		
+		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
+		EasyMock.expectLastCall().once();
+	
+		support.replayAll();
+		assertSame(conseilLocalEtablissement, conseilLocalEtablissementManager.importArchive("/a/exported.zip", true, "password"));
+		support.verifyAll();
+		
+	}
 
 }
