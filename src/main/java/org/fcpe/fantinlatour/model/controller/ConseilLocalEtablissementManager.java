@@ -172,7 +172,7 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 	public String getArchiveDirname() {
 		return zipFilesDAO.getZipDirname();
 	}
-	
+
 	public String getExportedArchiveFilename() {
 		String result = null;
 		if (currentConseilLocalEtablissement != null) {
@@ -203,20 +203,24 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 
 	public ConseilLocalEtablissement importArchive(String archiveFilename, boolean isDefault, String password)
 			throws DataException {
-		String expectedFilename = getExpectedFilename(archiveFilename);
-		
-		String unzipDirname = zipFilesDAO.unpack(archiveFilename, password, expectedFilename);
 
-		ConseilLocalEtablissement result = conseilLocalEtablissementDAO.createFromArchive(unzipDirname);
+		ConseilLocalEtablissement result = null;
 
-		String name = result.getEtablissement().getNom();
+		String name = zipFilesDAO.getNameFromArchiveFilename(archiveFilename);
+		String expectedFilename = conseilLocalEtablissementDAO.getArchiveFilename(name);
+
+		zipFilesDAO.unpack(archiveFilename, password, expectedFilename,
+				conseilLocalEtablissementDAO.getAbsoluteArchiveDirname());
+
+		result = conseilLocalEtablissementDAO.load(name);
+
 		setDefaultConseilLocalName(isDefault, name);
 		notifyListeners(result);
 
 		return result;
 
 	}
-	
+
 	public boolean containsExpectedArchives(String archiveFilename) {
 		String expectedFilename = getExpectedFilename(archiveFilename);
 		return zipFilesDAO.containsExpectedArchives(archiveFilename, expectedFilename);
@@ -227,8 +231,6 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 		String expectedFilename = conseilLocalEtablissementDAO.getArchiveFilename(name);
 		return expectedFilename;
 	}
-
-	
 
 	public boolean isValidArchiveFilename(String filename) {
 
@@ -245,7 +247,7 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 
 	public boolean isValidArchiveFile(String filename) {
 		return zipFilesDAO.isValidArchiveFile(filename);
-	
+
 	}
 
 	public boolean isEncryptedArchiveFile(String filename) {
@@ -260,5 +262,4 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 		}
 	}
 
-	
 }

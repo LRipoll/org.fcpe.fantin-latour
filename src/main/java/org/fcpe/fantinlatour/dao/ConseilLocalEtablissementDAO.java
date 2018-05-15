@@ -12,13 +12,13 @@ public interface ConseilLocalEtablissementDAO {
 	boolean exists(String name);
 	boolean isValidName(String name);
 	ConseilLocalEtablissement create(String name, TypeEtablissement typeEtablissement) throws DataException;
-	ConseilLocalEtablissement load(String defaultName) throws DataException;
+	ConseilLocalEtablissement load(String name) throws DataException;
 	List<String> getExistingConseilEtablissements() throws DataException;
 	ConseilLocalEtablissement rename(String oldName, String newName) throws DataException;
 	void delete(String string) throws DataException;
 	
-	ConseilLocalEtablissement createFromArchive(String unzipDirname);
 	String getArchiveFilename(String name);
 	String getAbsoluteArchiveFilename(String name);
+	String getAbsoluteArchiveDirname();
 	
 }

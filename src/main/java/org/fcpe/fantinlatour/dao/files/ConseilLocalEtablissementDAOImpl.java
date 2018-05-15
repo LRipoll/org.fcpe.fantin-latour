@@ -74,7 +74,6 @@ public class ConseilLocalEtablissementDAOImpl extends AbstractFileManager implem
 	}
 
 	
-
 	@Override
 	public ConseilLocalEtablissement load(String name) throws DataException {
 		File file = getFile(name);
@@ -96,7 +95,7 @@ public class ConseilLocalEtablissementDAOImpl extends AbstractFileManager implem
 		List<String> result = new ArrayList<String>();
 		if (appDirManager.exists()) {
 
-			File appDir = getFileFactory().create(appDirManager.getAbsolutePath());
+			File appDir = getFileFactory().create(getAbsoluteArchiveDirname());
 
 			FilenameFilter filter = getFileFactory().createExtentionFilenameFilter(appFileExt);
 
@@ -151,10 +150,9 @@ public class ConseilLocalEtablissementDAOImpl extends AbstractFileManager implem
 	}
 
 	@Override
-	public ConseilLocalEtablissement createFromArchive(String unzipDirname) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public String getAbsoluteArchiveDirname() {
+		return appDirManager.getAbsolutePath();
+	}	
 
 	private File getFile(String filename) {
 		String absolutePath = getFilename(filename);
@@ -164,8 +162,10 @@ public class ConseilLocalEtablissementDAOImpl extends AbstractFileManager implem
 	}
 
 	private String getFilename(String filename) {
-		return FileUtils.getAbsolutePath(appDirManager.getAbsolutePath(), getArchiveFilename(filename));
-	}	
+		return FileUtils.getAbsolutePath(getAbsoluteArchiveDirname(), getArchiveFilename(filename));
+	}
+
+	
 
 	
 
