@@ -70,9 +70,10 @@ public class CreateConseilLocalEtablissementController extends AbstractConseilLo
 	protected void execute(ActionEvent event) {
 		try {
 
+			getEncryptHelper().setPassword(passwordTextField.getText());
 			conseilLocalEtablissementManager.create(nameTextField.getText(), typeComboBox.getValue(),
 					defaultCheckBox.isSelected());
-			getEncryptHelper().setPassword(passwordTextField.getText());
+			
 			super.execute(event);
 
 		} catch (DataException e) {

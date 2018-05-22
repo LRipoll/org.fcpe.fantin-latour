@@ -29,8 +29,8 @@ public class EncryptHelper {
 
 	public EncryptHelper() {
 		super();
-		setPassword("test");
 		try {
+			secretKeySpec = null;
 			cipher = Cipher.getInstance(ALGORITHM);
 		} catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
 			logger.error(e.getLocalizedMessage(), e);
