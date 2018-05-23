@@ -6,14 +6,18 @@ import java.util.ResourceBundle;
 import org.fcpe.fantinlatour.app.context.AppContext;
 import org.fcpe.fantinlatour.app.controller.validator.PasswordValidator;
 import org.fcpe.fantinlatour.dao.DataException;
+import org.fcpe.fantinlatour.dao.PasswordException;
 import org.fcpe.fantinlatour.dao.security.EncryptHelper;
 import org.fcpe.fantinlatour.model.controller.ConseilLocalEtablissementManager;
 import org.fcpe.fantinlatour.service.SpringFactory;
+import org.fcpe.fantinlatour.view.ExceptionAlertDialog;
 import org.fcpe.fantinlatour.view.ViewFactory;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Modality;
 
 public class AbstractSecureController extends AbstractController {
@@ -51,12 +55,14 @@ public class AbstractSecureController extends AbstractController {
 		try {
 			if (getAppContext().getCurrentConseiLocal() != null) {
 				conseilLocalEtablissementManager.open(getAppContext().getCurrentConseiLocal());
-			}
-			
-		} catch (DataException e) {
+			}	
+		} catch (PasswordException e) {
 			getAppContext().setConseiLocalToBeOpened(getAppContext().getCurrentConseiLocal());
 			ViewFactory viewFactory = SpringFactory.getService(ViewFactory.ID);
 			viewFactory.createStage("openconseillocal",new  Object[] {getAppContext().getCurrentConseiLocal()}, Modality.APPLICATION_MODAL).show();
+		} catch (DataException e) {
+			ExceptionAlertDialog exceptionAlertDialog = new ExceptionAlertDialog(new Alert(AlertType.ERROR), e);
+			exceptionAlertDialog.showAndWait();
 		}
 		
 	}
