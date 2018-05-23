@@ -9,10 +9,12 @@ import org.fcpe.fantinlatour.dao.DataException;
 import org.fcpe.fantinlatour.dao.security.EncryptHelper;
 import org.fcpe.fantinlatour.model.controller.ConseilLocalEtablissementManager;
 import org.fcpe.fantinlatour.service.SpringFactory;
+import org.fcpe.fantinlatour.view.ViewFactory;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
+import javafx.stage.Modality;
 
 public class AbstractSecureController extends AbstractController {
 
@@ -45,14 +47,18 @@ public class AbstractSecureController extends AbstractController {
 
 	@Override
 	protected void cancel(ActionEvent event) {
+		super.cancel(event);
 		try {
 			if (getAppContext().getCurrentConseiLocal() != null) {
 				conseilLocalEtablissementManager.open(getAppContext().getCurrentConseiLocal());
 			}
+			
 		} catch (DataException e) {
-
+			getAppContext().setConseiLocalToBeOpened(getAppContext().getCurrentConseiLocal());
+			ViewFactory viewFactory = SpringFactory.getService(ViewFactory.ID);
+			viewFactory.createStage("openconseillocal",new  Object[] {getAppContext().getCurrentConseiLocal()}, Modality.APPLICATION_MODAL).show();
 		}
-		super.cancel(event);
+		
 	}
 
 	protected EncryptHelper getEncryptHelper() {
