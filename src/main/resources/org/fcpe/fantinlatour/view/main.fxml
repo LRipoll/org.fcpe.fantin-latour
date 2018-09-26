@@ -50,11 +50,11 @@
                 <MenuItem text="%org.fcpe.fantinlatour.view.menu.financial.export" disable="true" id="MENUITEM_FINANCIAL_EXPORT"/>
             </items>
          </Menu>
-         <Menu text="%org.fcpe.fantinlatour.view.menu.mails" id="MENU_MAILS" disable="true">
+         <Menu text="%org.fcpe.fantinlatour.view.menu.mails" id="MENU_MAILS">
          	<items>
-                <MenuItem text="%org.fcpe.fantinlatour.view.menu.mails.publish" id="MENUITEM_MAILS_PUBLISH"/>
+                <MenuItem text="%org.fcpe.fantinlatour.view.menu.mails.publish" id="MENUITEM_MAILS_PUBLISH" disable="true"/>
                 <SeparatorMenuItem  />
-                <MenuItem text="%org.fcpe.fantinlatour.view.menu.mails.settings" id="MENUITEM_MAILS_SETTINGS" disable="true"/>
+                <MenuItem text="%org.fcpe.fantinlatour.view.menu.mails.settings" id="MENUITEM_MAIL_SETTINGS" disable="true" onAction="#handleConfigureMailAccount"/>
             </items>
          </Menu>
          <Menu text="%org.fcpe.fantinlatour.view.menu.help" id="MENU_HELP">

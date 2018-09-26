@@ -8,6 +8,15 @@ public class MailingListCSVFileFormat {
 	private boolean isSkipHeaderRecord;
 	
 	
+	public MailingListCSVFileFormat(String mailColumn, String delimiter, boolean isSkipHeaderRecord, String... columns) {
+		super();
+		this.columns = columns;
+		this.mailColumn = mailColumn;
+		this.delimiter = delimiter;
+		this.isSkipHeaderRecord = isSkipHeaderRecord;
+	}
+	
+	
 	public String[] getColumns() {
 		return columns;
 	}

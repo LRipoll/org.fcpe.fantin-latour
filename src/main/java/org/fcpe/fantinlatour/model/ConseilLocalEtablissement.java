@@ -7,10 +7,13 @@ public class ConseilLocalEtablissement {
 
 	@XStreamAlias("Etablissement")
 	private Etablissement etablissement;
+	@XStreamAlias("Courriel")
+	private MailSenderAccount mailSenderAccount;
 
 	public ConseilLocalEtablissement(Etablissement etablissement) {
 		super();
 		this.etablissement = etablissement;
+		mailSenderAccount  = new MailSenderAccount();
 	}
 
 

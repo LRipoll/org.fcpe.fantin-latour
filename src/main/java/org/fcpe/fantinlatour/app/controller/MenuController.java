@@ -98,6 +98,7 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 		viewFactory.createStage("renameconseillocal", Modality.APPLICATION_MODAL).show();
 	}
 	
+	
 	private void provideExportFunction() {
 		viewFactory.createStage("exportconseillocal", Modality.APPLICATION_MODAL).show();
 		
@@ -105,7 +106,14 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 	
 	private void provideImportFunction() {
 		viewFactory.createStage("importconseillocal", Modality.APPLICATION_MODAL).show();
-		
+	}	
+
+	@FXML
+	private void handleConfigureMailAccount(final ActionEvent event) {
+
+		// TODO https://codereview.stackexchange.com/questions/114005/javafx-email-client
+		viewFactory.createStage("configuremailaccount", Modality.APPLICATION_MODAL).show();
+
 	}
 
 	@FXML
