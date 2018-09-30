@@ -52,13 +52,10 @@ public class EmailTextValidatorTest {
 	}
 	
 	@Test
-	public void testWhenNameIsInvalidShouldSetAccordingToolTipAndStyle() {
+	public void testWhenEmailIsInvalidShouldSetAccordingToolTipAndStyle() {
 
 		
 		String name = "invalid";
-		
-		
-		
 		
 		support.replayAll();
 		nameTextField.setText(name);
@@ -73,12 +70,10 @@ public class EmailTextValidatorTest {
 	}
 	
 	@Test
-	public void testWhenNameIsValidShouldSetAccordingToolTipAndStyle() {
+	public void testWhenEMailIsValidShouldSetAccordingToolTipAndStyle() {
 
 		
-		String name = "valid";
-		
-		
+		String name = "valid@email.com";
 		
 		sceneValidator.onStateChange(emailValidator);
 		EasyMock.expectLastCall().once();
