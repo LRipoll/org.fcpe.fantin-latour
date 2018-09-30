@@ -1,16 +1,14 @@
 package org.fcpe.fantinlatour.app.controller.validator;
 
-import org.apache.commons.validator.routines.DomainValidator;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 
-public class DomainTextValidator extends AbstractControlValidatorListener implements ChangeListener<String> {
+public class DomainValidator extends AbstractControlValidatorListener implements ChangeListener<String> {
 
 	private String tooltipText;
 	
-	public DomainTextValidator(SceneValidator sceneValidator, TextField nameTextField, String validTootipText,
+	public DomainValidator(SceneValidator sceneValidator, TextField nameTextField, String validTootipText,
 			String invalidTootipText) {
 		super(sceneValidator, nameTextField, validTootipText, invalidTootipText);
 	
@@ -32,7 +30,7 @@ public class DomainTextValidator extends AbstractControlValidatorListener implem
 	private void updateTooltipText(String newValue) {
 		tooltipText = validTootipText;
 		
-		if (!DomainValidator.getInstance().isValid(newValue)) {
+		if (!org.apache.commons.validator.routines.DomainValidator.getInstance().isValid(newValue)) {
 
 			tooltipText = invalidTootipText;
 

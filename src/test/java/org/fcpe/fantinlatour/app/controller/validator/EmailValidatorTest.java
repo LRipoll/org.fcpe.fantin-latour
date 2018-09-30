@@ -17,7 +17,7 @@ import org.junit.Test;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.control.TextField;
 
-public class EmailTextValidatorTest {
+public class EmailValidatorTest {
 
 	private EasyMockSupport support = new EasyMockSupport();
 
@@ -26,7 +26,7 @@ public class EmailTextValidatorTest {
 	private TextField nameTextField;
 	private SceneValidator sceneValidator;
 	
-	private EmailTextValidator emailValidator;
+	private EmailValidator emailValidator;
 	
 	@Before
 	public void setup() throws InterruptedException {
@@ -45,7 +45,7 @@ public class EmailTextValidatorTest {
 		
 		nameTextField = new TextField();
 		sceneValidator = ctrl.createMock(SceneValidator.class);
-		emailValidator = new EmailTextValidator(sceneValidator, nameTextField, "okTooltip",
+		emailValidator = new EmailValidator(sceneValidator, nameTextField, "okTooltip",
 				 "invalidTooltip");
 		EasyMock.reset(sceneValidator);
 

@@ -26,7 +26,7 @@ public class DomainValidatorTest {
 	private TextField nameTextField;
 	private SceneValidator sceneValidator;
 	
-	private EmailValidator emailValidator;
+	private DomainValidator domainValidator;
 	
 	@Before
 	public void setup() throws InterruptedException {
@@ -45,46 +45,46 @@ public class DomainValidatorTest {
 		
 		nameTextField = new TextField();
 		sceneValidator = ctrl.createMock(SceneValidator.class);
-		emailValidator = new EmailValidator(sceneValidator, nameTextField, "okTooltip",
+		domainValidator = new DomainValidator(sceneValidator, nameTextField, "okTooltip",
 				 "invalidTooltip");
 		EasyMock.reset(sceneValidator);
 
 	}
 	
 	@Test
-	public void testWhenEmailIsInvalidShouldSetAccordingToolTipAndStyle() {
+	public void testWhenDomainIsInvalidShouldSetAccordingToolTipAndStyle() {
 
 		
 		String name = "invalid";
 		
 		support.replayAll();
 		nameTextField.setText(name);
-		emailValidator.changed(nameTextField.textProperty(), "", name);
+		domainValidator.changed(nameTextField.textProperty(), "", name);
 
 		assertEquals("invalidTooltip",nameTextField.getTooltip().getText());
 		assertTrue(nameTextField.getStyleClass().contains(UniqueNameValidator.TEXT_FIELD_ERROR));
-		assertFalse(emailValidator.isValid());
+		assertFalse(domainValidator.isValid());
 		
 		
 		support.verifyAll();
 	}
 	
 	@Test
-	public void testWhenEMailIsValidShouldSetAccordingToolTipAndStyle() {
+	public void testWhenDomainIsValidShouldSetAccordingToolTipAndStyle() {
 
 		
-		String name = "valid@email.com";
+		String name = "valid.domain.com";
 		
-		sceneValidator.onStateChange(emailValidator);
+		sceneValidator.onStateChange(domainValidator);
 		EasyMock.expectLastCall().once();
 		
 		support.replayAll();
 		nameTextField.setText(name);
-		emailValidator.changed(nameTextField.textProperty(), "", name);
+		domainValidator.changed(nameTextField.textProperty(), "", name);
 
 		assertEquals("okTooltip",nameTextField.getTooltip().getText());
 		assertFalse(nameTextField.getStyleClass().contains(UniqueNameValidator.TEXT_FIELD_ERROR));
-		assertTrue(emailValidator.isValid());
+		assertTrue(domainValidator.isValid());
 		
 		support.verifyAll();
 	}
