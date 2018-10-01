@@ -67,7 +67,7 @@ public class PasswordValidatorTest {
 
 	
 	@Test
-	public void testWhenNameIsValidShouldSetAccordingToolTipAndStyle() {
+	public void testWhenPasswordIsValidShouldSetAccordingToolTipAndStyle() {
 
 		String name = "valid";
 

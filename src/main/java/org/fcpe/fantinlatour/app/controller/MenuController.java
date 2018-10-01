@@ -112,7 +112,7 @@ public class MenuController implements Initializable, ConseilLocalEtablissementM
 	private void handleConfigureMailAccount(final ActionEvent event) {
 
 		// TODO https://codereview.stackexchange.com/questions/114005/javafx-email-client and https://www.programcreek.com/java-api-examples/?code=mychalvlcek/spring-rest-skeleton/spring-rest-skeleton-master/src/main/java/com/framework/email/configuration/EmailConfiguration.java#
-		viewFactory.createStage("configuremailaccount", Modality.APPLICATION_MODAL).show();
+		viewFactory.createStage("configureemailaccount", Modality.APPLICATION_MODAL).show();
 
 	}
 

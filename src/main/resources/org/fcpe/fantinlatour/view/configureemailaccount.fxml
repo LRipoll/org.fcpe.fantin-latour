@@ -1,0 +1,93 @@
+<?import java.net.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import org.fcpe.fantinlatour.model.*?>
+<GridPane id="windows" prefHeight="200.0" prefWidth="400.0" xmlns:fx="http://javafx.com/fxml" fx:controller="org.fcpe.fantinlatour.app.controller.ConfigureEmailAccountController">  
+<columnConstraints>
+		<ColumnConstraints fillWidth="true" percentWidth="100"/>
+	</columnConstraints>
+	<HBox alignment="BOTTOM_LEFT" GridPane.rowIndex="0">
+		<Label text="%org.fcpe.fantinlatour.view.configureemailaccount.email.label" GridPane.columnIndex="0" GridPane.rowIndex="0">
+			<HBox.margin>
+				<Insets bottom="10.0" right="15"/>
+			</HBox.margin>
+		</Label>
+		<TextField fx:id="emailTextField" text="%org.fcpe.fantinlatour.view.configureemailaccount.email.text" GridPane.columnIndex="1">
+			<HBox.margin>
+				<Insets bottom="10.0" />
+			</HBox.margin>
+		</TextField>
+	</HBox>
+	<HBox alignment="BOTTOM_LEFT" GridPane.rowIndex="1">
+		<Label text="%org.fcpe.fantinlatour.view.configureemailaccount.protocol.label" GridPane.columnIndex="0" GridPane.rowIndex="0">
+			<HBox.margin>
+				<Insets bottom="10.0" right="15"/>
+			</HBox.margin>
+		</Label>
+		<ComboBox fx:id="protocolComboBox" GridPane.columnIndex="1">
+			<HBox.margin>
+				<Insets bottom="10.0" />
+			</HBox.margin>
+		</ComboBox>
+	</HBox>
+	<!-- HBox alignment="BOTTOM_LEFT" GridPane.rowIndex="2">
+		<Label text="%org.fcpe.fantinlatour.view.configureemailaccount.host.label" GridPane.columnIndex="0" GridPane.rowIndex="0">
+			<HBox.margin>
+				<Insets bottom="10.0" right="15"/>
+			</HBox.margin>
+		</Label>
+		<TextField fx:id="hostTextField" text="%org.fcpe.fantinlatour.view.configureemailaccount.host.text" GridPane.columnIndex="1">
+			<HBox.margin>
+				<Insets bottom="10.0" />
+			</HBox.margin>
+		</TextField>
+	</HBox>
+	<HBox alignment="BOTTOM_LEFT" GridPane.rowIndex="3">
+		<Label text="%org.fcpe.fantinlatour.view.configureemailaccount.port.label" GridPane.columnIndex="0" GridPane.rowIndex="0">
+			<HBox.margin>
+				<Insets bottom="10.0" right="15"/>
+			</HBox.margin>
+		</Label>
+		<TextField fx:id="portTextField" text="%org.fcpe.fantinlatour.view.configureemailaccount.port.text" GridPane.columnIndex="1">
+			<HBox.margin>
+				<Insets bottom="10.0" />
+			</HBox.margin>
+		</TextField>
+	</HBox-->
+	
+	<HBox alignment="BOTTOM_LEFT" GridPane.rowIndex="4">
+		<Label text="%org.fcpe.fantinlatour.view.configureemailaccount.password.label" GridPane.columnIndex="0" GridPane.rowIndex="0">
+			<HBox.margin>
+				<Insets bottom="10.0" right="15"/>
+			</HBox.margin>
+		</Label>
+		<PasswordField fx:id="passwordTextField" text="%org.fcpe.fantinlatour.view.configureemailaccount.password.text" GridPane.columnIndex="1">
+			<HBox.margin>
+				<Insets bottom="10.0" />
+			</HBox.margin>
+		</PasswordField>
+	</HBox>
+	
+	<HBox alignment="BOTTOM_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="5">
+		<ButtonBar prefHeight="40.0">
+			<buttons>
+				<Button  onAction="#cancel" text="%org.fcpe.fantinlatour.view.configureemailaccount.cancelButton.text" prefWidth="90">
+					<HBox.margin>
+						<Insets right="20" left="40"/>
+					</HBox.margin>
+					<tooltip>
+				        <Tooltip text="%org.fcpe.fantinlatour.view.configureemailaccount.cancelButton.tooltip.text"/>
+				    </tooltip>
+			    </Button>
+			    <Button fx:id="okButton" onAction="#execute" text="%org.fcpe.fantinlatour.view.configureemailaccount.saveButton.text" prefWidth="90">
+					<tooltip>
+				        <Tooltip text="%org.fcpe.fantinlatour.view.configureemailaccount.saveButton.tooltip.text"/>
+				    </tooltip>
+			    </Button>
+			 </buttons>
+		</ButtonBar>
+	</HBox>
+</GridPane>

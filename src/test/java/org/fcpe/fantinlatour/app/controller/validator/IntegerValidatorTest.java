@@ -17,7 +17,7 @@ import org.junit.Test;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.control.TextField;
 
-public class EmailValidatorTest {
+public class IntegerValidatorTest {
 
 	private EasyMockSupport support = new EasyMockSupport();
 
@@ -26,7 +26,7 @@ public class EmailValidatorTest {
 	private TextField nameTextField;
 	private SceneValidator sceneValidator;
 	
-	private EmailValidator emailValidator;
+	private IntegerValidator integerValidator;
 	
 	@Before
 	public void setup() throws InterruptedException {
@@ -45,46 +45,66 @@ public class EmailValidatorTest {
 		
 		nameTextField = new TextField();
 		sceneValidator = ctrl.createMock(SceneValidator.class);
-		emailValidator = new EmailValidator(sceneValidator, nameTextField, "okTooltip",
-				 "invalidTooltip");
+		integerValidator = new IntegerValidator(sceneValidator, nameTextField, "okTooltip",
+				 "invalidTooltip",-1,1);
 		EasyMock.reset(sceneValidator);
 
 	}
 	
 	@Test
-	public void testWhenEmailIsInvalidShouldSetAccordingToolTipAndStyle() {
+	public void testWhenIntegerIsInvalidShouldSetAccordingToolTipAndStyle() {
 
 		
-		String name = "invalid";
+		String value = "invalid";
 		
 		support.replayAll();
-		nameTextField.setText(name);
-		emailValidator.changed(nameTextField.textProperty(), "", name);
+		nameTextField.setText(value);
+		integerValidator.changed(nameTextField.textProperty(), "", value);
 
 		assertEquals("invalidTooltip",nameTextField.getTooltip().getText());
 		assertTrue(nameTextField.getStyleClass().contains(UniqueNameValidator.TEXT_FIELD_ERROR));
-		assertFalse(emailValidator.isValid());
+		assertFalse(integerValidator.isValid());
 		
 		
 		support.verifyAll();
 	}
 	
 	@Test
-	public void testWhenEmailIsValidShouldSetAccordingToolTipAndStyle() {
+	public void testWhenIntegerIsOutRangeShouldSetAccordingToolTipAndStyle() {
 
 		
-		String name = "valid@email.com";
+		String value = "-2";
 		
-		sceneValidator.onStateChange(emailValidator);
+		
+		support.replayAll();
+		
+		nameTextField.setText(value);
+		integerValidator.changed(nameTextField.textProperty(), "", value);
+
+		assertEquals("invalidTooltip",nameTextField.getTooltip().getText());
+		assertTrue(nameTextField.getStyleClass().contains(UniqueNameValidator.TEXT_FIELD_ERROR));
+		assertFalse(integerValidator.isValid());
+		
+		
+		support.verifyAll();
+	}
+	
+	@Test
+	public void testWhenIntegeIsValidShouldSetAccordingToolTipAndStyle() {
+
+		
+		String value = "0";
+		
+		sceneValidator.onStateChange(integerValidator);
 		EasyMock.expectLastCall().once();
 		
 		support.replayAll();
-		nameTextField.setText(name);
-		emailValidator.changed(nameTextField.textProperty(), "", name);
+		nameTextField.setText(value);
+		integerValidator.changed(nameTextField.textProperty(), "", value);
 
 		assertEquals("okTooltip",nameTextField.getTooltip().getText());
 		assertFalse(nameTextField.getStyleClass().contains(UniqueNameValidator.TEXT_FIELD_ERROR));
-		assertTrue(emailValidator.isValid());
+		assertTrue(integerValidator.isValid());
 		
 		support.verifyAll();
 	}
