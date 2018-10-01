@@ -33,7 +33,7 @@
 			</HBox.margin>
 		</ComboBox>
 	</HBox>
-	<!-- HBox alignment="BOTTOM_LEFT" GridPane.rowIndex="2">
+	<HBox alignment="BOTTOM_LEFT" GridPane.rowIndex="2">
 		<Label text="%org.fcpe.fantinlatour.view.configureemailaccount.host.label" GridPane.columnIndex="0" GridPane.rowIndex="0">
 			<HBox.margin>
 				<Insets bottom="10.0" right="15"/>
@@ -56,7 +56,7 @@
 				<Insets bottom="10.0" />
 			</HBox.margin>
 		</TextField>
-	</HBox-->
+	</HBox>
 	
 	<HBox alignment="BOTTOM_LEFT" GridPane.rowIndex="4">
 		<Label text="%org.fcpe.fantinlatour.view.configureemailaccount.password.label" GridPane.columnIndex="0" GridPane.rowIndex="0">
