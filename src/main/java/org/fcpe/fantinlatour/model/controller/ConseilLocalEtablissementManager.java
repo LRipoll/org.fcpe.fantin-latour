@@ -262,4 +262,9 @@ public class ConseilLocalEtablissementManager implements UniqueNameManager {
 		}
 	}
 
+	public void store() throws DataException {
+		conseilLocalEtablissementDAO.store(currentConseilLocalEtablissement);
+		
+	}
+
 }

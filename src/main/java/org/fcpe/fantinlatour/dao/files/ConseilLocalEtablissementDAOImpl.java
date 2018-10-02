@@ -108,6 +108,17 @@ public class ConseilLocalEtablissementDAOImpl extends AbstractFileManager implem
 	}
 
 	@Override
+	public void store(ConseilLocalEtablissement etablissement)  throws DataException {
+		File file = getFile(etablissement.getEtablissement().getNom());
+		if (!xmlFileManager.store(etablissement, file)){
+			throw new DataException(
+					SpringFactory.getMessage(
+							"org.fcpe.fantinlatour.dao.files.ConseilLocalEtablissementDAOImpl.store.failed"),
+					new IOException("Store failed"));
+		}
+		
+	}
+	@Override
 	public ConseilLocalEtablissement rename(String oldName, String newName) throws DataException {
 		File file = getFile(oldName);
 		ConseilLocalEtablissement result = load(file);

@@ -40,7 +40,10 @@
 		        <Tooltip text="%org.fcpe.fantinlatour.view.newconseillocal.cancelButton.tooltip.text"/>
 		    </tooltip>
 	    </Button>
-	    <Button fx:id="okButton" onAction="#execute" text="%org.fcpe.fantinlatour.view.newconseillocal.createButton.text" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.halignment="CENTER"  prefWidth="90">
+	    <Button fx:id="okButton" onAction="#execute"
+	text="%org.fcpe.fantinlatour.view.newconseillocal.createButton.text"
+	GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.halignment="CENTER"
+	prefWidth="90">
 			<tooltip>
 		        <Tooltip text="%org.fcpe.fantinlatour.view.newconseillocal.createButton.tooltip.text"/>
 		    </tooltip>

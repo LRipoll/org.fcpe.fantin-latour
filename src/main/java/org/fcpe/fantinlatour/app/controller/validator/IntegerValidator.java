@@ -9,12 +9,14 @@ public class IntegerValidator extends AbstractControlValidatorListener implement
 	private String tooltipText;
 	private int min;
 	private int max;
+	private Integer value;
 	
 	public IntegerValidator(SceneValidator sceneValidator, TextField nameTextField, String validTootipText,
 			String invalidTootipText, int min, int max) {
 		super(sceneValidator, nameTextField, validTootipText, invalidTootipText);
 		this.min = min;
 		this.max = max;
+		this.value = null;
 	}
 
 	@Override
@@ -38,12 +40,18 @@ public class IntegerValidator extends AbstractControlValidatorListener implement
 			tooltipText = invalidTootipText;
 
 		} else {
-			int value = org.apache.commons.validator.routines.IntegerValidator.getInstance().validate(newValue);
+			value = org.apache.commons.validator.routines.IntegerValidator.getInstance().validate(newValue);
 			if (!org.apache.commons.validator.routines.IntegerValidator.getInstance().isInRange(value, min, max))  {
 				tooltipText = invalidTootipText;
+				value = null;
 			}
+		
 		}
+	}
 
+	public Integer getValue() {
+		
+		return value;
 	}
 	
 	

@@ -307,7 +307,7 @@ public class ConseilLocalEtablissementManagerTest {
 	}
 
 	@Test
-	public void testsetDefault() throws DataException {
+	public void testSetDefault() throws DataException {
 
 		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
 		Etablissement etablissement = ctrl.createMock(Etablissement.class);
@@ -336,6 +336,27 @@ public class ConseilLocalEtablissementManagerTest {
 		support.verifyAll();
 	}
 
+	@Test
+	public void testStore() throws DataException {
+
+		
+		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
+		Etablissement etablissement = ctrl.createMock(Etablissement.class);
+
+		EasyMock.expect(conseilLocalEtablissement.getEtablissement()).andReturn(etablissement).anyTimes();
+		
+		EasyMock.expect(conseilLocalEtablissementDAO.load("opened")).andReturn(conseilLocalEtablissement);
+		conseilLocalEtablissementManagerListener.onSelected(conseilLocalEtablissement);
+		EasyMock.expectLastCall().once();
+		
+		conseilLocalEtablissementDAO.store(conseilLocalEtablissement);
+		EasyMock.expectLastCall().once();
+		
+		support.replayAll();
+		conseilLocalEtablissementManager.open("opened");
+		conseilLocalEtablissementManager.store();
+		support.verifyAll();
+	}	
 	@Test
 	public void testRenameWhenItisTheDefault() throws DataException {
 

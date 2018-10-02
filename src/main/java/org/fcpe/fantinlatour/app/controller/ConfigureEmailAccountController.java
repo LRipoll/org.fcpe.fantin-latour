@@ -8,17 +8,23 @@ import org.fcpe.fantinlatour.app.controller.validator.EmailValidator;
 import org.fcpe.fantinlatour.app.controller.validator.IntegerValidator;
 import org.fcpe.fantinlatour.app.controller.validator.MandatoryListValidator;
 import org.fcpe.fantinlatour.app.controller.validator.PasswordValidator;
+import org.fcpe.fantinlatour.dao.DataException;
 import org.fcpe.fantinlatour.model.EmailSenderProtocol;
+import org.fcpe.fantinlatour.model.MailSenderAccount;
 import org.fcpe.fantinlatour.model.controller.ConseilLocalEtablissementManager;
 import org.fcpe.fantinlatour.service.SpringFactory;
+import org.fcpe.fantinlatour.view.ExceptionAlertDialog;
 
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 
 
 public class ConfigureEmailAccountController extends AbstractController {
@@ -50,6 +56,7 @@ public class ConfigureEmailAccountController extends AbstractController {
 	private TextField hostTextField;
 	@FXML
 	private TextField portTextField;
+	private IntegerValidator portValidator;
 
 	public ConfigureEmailAccountController() {
 		super();
@@ -60,20 +67,61 @@ public class ConfigureEmailAccountController extends AbstractController {
 	public void initialize(URL location, ResourceBundle resources) {
 		super.initialize(location, resources);
 
-
+		emailTextField.setText(getMailSenderAccount().getUsername());
 		emailTextField.textProperty().addListener(new EmailValidator(sceneValidator, emailTextField,
 				resources.getString(EMAIL_VALID), resources.getString(EMAIL_INVALID)));
+		
+		passwordTextField.setText(getMailSenderAccount().getProperties().getPassword());
 		passwordTextField.textProperty().addListener(new PasswordValidator(sceneValidator, passwordTextField,
 				resources.getString(PASSWORD_VALID), resources.getString(PASSWORD_INVALID)));
+		
 		listProtocol = FXCollections.observableArrayList(EmailSenderProtocol.values());
 		protocolComboBox.setItems(listProtocol);
 		MandatoryListValidator<EmailSenderProtocol> mandatoryListValidator = new MandatoryListValidator<EmailSenderProtocol>(
 				sceneValidator, protocolComboBox, resources.getString(PROTOCOL_SELECTED), resources.getString(PROTOCOL_UNSELECTED));
+		
+		
 		protocolComboBox.valueProperty().addListener((ChangeListener<? super EmailSenderProtocol>) mandatoryListValidator);
+		protocolComboBox.getSelectionModel().select(getMailSenderAccount().getProperties().getProtocol());
+		
+		
+		hostTextField.setText(getMailSenderAccount().getProperties().getHost());
 		hostTextField.textProperty().addListener(new DomainValidator(sceneValidator, hostTextField,
 				resources.getString(HOST_VALID), resources.getString(HOST_INVALID)));
-		portTextField.textProperty().addListener(new IntegerValidator(sceneValidator, portTextField,
-				resources.getString(PORT_VALID), resources.getString(PORT_INVALID),PORT_MIN,PORT_MAX));
+		
+		portTextField.setText(""+getMailSenderAccount().getProperties().getPort());
+		portValidator = new IntegerValidator(sceneValidator, portTextField,
+				resources.getString(PORT_VALID), resources.getString(PORT_INVALID),PORT_MIN,PORT_MAX);
+		portTextField.textProperty().addListener(portValidator);
 
+	}
+
+	@Override
+	protected void execute(ActionEvent event) {
+		try {
+
+			
+			getMailSenderAccount().setUserName(emailTextField.getText());
+			getMailSenderAccount().getProperties().setPassword(passwordTextField.getText());
+			getMailSenderAccount().getProperties().setHost(hostTextField.getText());
+			getMailSenderAccount().getProperties().setPort(portValidator.getValue());
+			getMailSenderAccount().getProperties().setProtocol(protocolComboBox.getValue());
+			conseilLocalEtablissementManager.store();
+			super.execute(event);
+
+		} catch (DataException e) {
+
+			ExceptionAlertDialog exceptionAlertDialog = new ExceptionAlertDialog(new Alert(AlertType.ERROR), e);
+			exceptionAlertDialog.showAndWait();
+
+		} finally {
+			passwordTextField.clear();
+			
+		}
+
+	}
+	private MailSenderAccount getMailSenderAccount() {
+		
+		return conseilLocalEtablissementManager.getCurrentConseilLocalEtablissement().getMailSenderAccount();
 	}
 }

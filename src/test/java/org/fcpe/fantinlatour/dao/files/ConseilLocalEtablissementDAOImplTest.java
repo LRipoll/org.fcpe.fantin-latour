@@ -309,6 +309,67 @@ public class ConseilLocalEtablissementDAOImplTest {
 
 		support.verifyAll();
 	}
+	
+	@Test
+	public void testStoreWhenStoreIsOK() throws DataException {
+
+		EasyMock.expect(appDirManager.exists()).andReturn(true).anyTimes();
+		EasyMock.expect(appDirManager.getAbsolutePath()).andReturn(FileUtils.getAbsolutePath("userhome", "appRoot/Dir"))
+				.anyTimes();
+		File file = ctrl.createMock(File.class);
+
+		
+		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
+
+		Etablissement etablissement = ctrl.createMock(Etablissement.class);
+		EasyMock.expect(etablissement.getNom()).andReturn("saved");
+		EasyMock.expect(conseilLocalEtablissement.getEtablissement()).andReturn(etablissement);
+
+		EasyMock.expect(
+				fileFactory.create("userhome" + File.separator + "appRoot/Dir" + File.separator + "saved.ext"))
+				.andReturn(file);
+		
+		EasyMock.expect(xmlFileManager.store(conseilLocalEtablissement, file)).andReturn(true);
+		
+		support.replayAll();
+
+		conseilLocalEtablissementDAOImpl.store(conseilLocalEtablissement);
+
+		support.verifyAll();
+	}
+	
+	@Test
+	public void testStoreWhenStoreIsKO() throws DataException {
+
+		EasyMock.expect(appDirManager.exists()).andReturn(true).anyTimes();
+		EasyMock.expect(appDirManager.getAbsolutePath()).andReturn(FileUtils.getAbsolutePath("userhome", "appRoot/Dir"))
+				.anyTimes();
+		File file = ctrl.createMock(File.class);
+
+		
+		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
+
+		Etablissement etablissement = ctrl.createMock(Etablissement.class);
+		EasyMock.expect(etablissement.getNom()).andReturn("saved");
+		EasyMock.expect(conseilLocalEtablissement.getEtablissement()).andReturn(etablissement);
+
+		EasyMock.expect(
+				fileFactory.create("userhome" + File.separator + "appRoot/Dir" + File.separator + "saved.ext"))
+				.andReturn(file);
+		
+		EasyMock.expect(xmlFileManager.store(conseilLocalEtablissement, file)).andReturn(false);
+		
+		support.replayAll();
+		try {
+			conseilLocalEtablissementDAOImpl.store(conseilLocalEtablissement);
+			fail("Should throw DataException");
+		} catch (DataException aExp) {
+			assertEquals("org.fcpe.fantinlatour.dao.files.ConseilLocalEtablissementDAOImpl.store.failed",
+					aExp.getMessage());
+
+		}
+		support.verifyAll();
+	}
 
 	@Test
 	public void testRenameWhenRenameOperationFailed() throws DataException {

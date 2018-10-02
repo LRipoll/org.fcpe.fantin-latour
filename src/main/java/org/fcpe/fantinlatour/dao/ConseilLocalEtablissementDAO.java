@@ -15,10 +15,13 @@ public interface ConseilLocalEtablissementDAO {
 	ConseilLocalEtablissement load(String name) throws DataException;
 	List<String> getExistingConseilEtablissements() throws DataException;
 	ConseilLocalEtablissement rename(String oldName, String newName) throws DataException;
+	void store(ConseilLocalEtablissement etablissement) throws DataException;
+	
 	void delete(String string) throws DataException;
 	
 	String getArchiveFilename(String name);
 	String getAbsoluteArchiveFilename(String name);
 	String getAbsoluteArchiveDirname();
+	
 	
 }

@@ -11,8 +11,8 @@ public class MailSenderPropertiesTest {
 
 	@Test
 	public void testBean() {
-		MailSenderProperties test  = new MailSenderProperties("protocol", "host", 0, "password", "defaultEncoding");
-		assertEquals("protocol",test.getProtocol());
+		MailSenderProperties test  = new MailSenderProperties(EmailSenderProtocol.SMTP, "host", 0, "password", "defaultEncoding");
+		assertEquals(EmailSenderProtocol.SMTP,test.getProtocol());
 		assertEquals("host",test.getHost());
 		assertEquals(0,test.getPort());
 		assertEquals("password",test.getPassword());

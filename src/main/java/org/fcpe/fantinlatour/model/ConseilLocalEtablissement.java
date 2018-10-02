@@ -17,6 +17,13 @@ public class ConseilLocalEtablissement {
 	}
 
 
+	
+	public MailSenderAccount getMailSenderAccount() {
+		return mailSenderAccount;
+	}
+
+
+
 	public Etablissement getEtablissement() {
 		return etablissement;
 	}

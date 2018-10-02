@@ -2,6 +2,7 @@ package org.fcpe.fantinlatour.app.controller.validator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.concurrent.CountDownLatch;
@@ -64,6 +65,7 @@ public class IntegerValidatorTest {
 		assertEquals("invalidTooltip",nameTextField.getTooltip().getText());
 		assertTrue(nameTextField.getStyleClass().contains(UniqueNameValidator.TEXT_FIELD_ERROR));
 		assertFalse(integerValidator.isValid());
+		assertNull(integerValidator.getValue());
 		
 		
 		support.verifyAll();
@@ -84,7 +86,7 @@ public class IntegerValidatorTest {
 		assertEquals("invalidTooltip",nameTextField.getTooltip().getText());
 		assertTrue(nameTextField.getStyleClass().contains(UniqueNameValidator.TEXT_FIELD_ERROR));
 		assertFalse(integerValidator.isValid());
-		
+		assertNull(integerValidator.getValue());
 		
 		support.verifyAll();
 	}
@@ -105,7 +107,7 @@ public class IntegerValidatorTest {
 		assertEquals("okTooltip",nameTextField.getTooltip().getText());
 		assertFalse(nameTextField.getStyleClass().contains(UniqueNameValidator.TEXT_FIELD_ERROR));
 		assertTrue(integerValidator.isValid());
-		
+		assertEquals(0, integerValidator.getValue().intValue());
 		support.verifyAll();
 	}
 }
