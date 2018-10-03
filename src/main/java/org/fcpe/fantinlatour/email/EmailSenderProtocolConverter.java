@@ -4,7 +4,7 @@ import org.fcpe.fantinlatour.model.EmailSenderProtocol;
 
 public class EmailSenderProtocolConverter {
 
-	private static final String SMTP = "smtp";
+	public static final String SMTP = "smtp";
 
 	public String convert(EmailSenderProtocol protocol) {
 		String result = null;

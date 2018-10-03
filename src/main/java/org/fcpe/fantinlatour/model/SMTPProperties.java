@@ -1,12 +1,14 @@
 package org.fcpe.fantinlatour.model;
 
+import java.util.Properties;
+
 import org.fcpe.fantinlatour.dao.files.xstream.EncryptedStringConverter;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 
-public class SMTPProperties extends EmailSenderProtocolProperties {
+public class SMTPProperties implements EmailSenderProtocolProperties {
 
 	@XStreamConverter(EncryptedStringConverter.class)
 	@XStreamAlias("AUTH")
@@ -27,6 +29,11 @@ public class SMTPProperties extends EmailSenderProtocolProperties {
 	}
 	public void setStarttls(boolean starttls) {
 		this.starttls = starttls;
+	}
+	@Override
+	public Properties accept(JavaMailPropertiesFactoryVisitor visitor) {
+		return visitor.visit(this);
+		
 	}
 	
 	

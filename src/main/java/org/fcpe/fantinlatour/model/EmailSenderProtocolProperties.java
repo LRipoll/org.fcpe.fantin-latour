@@ -1,5 +1,7 @@
 package org.fcpe.fantinlatour.model;
 
-public class EmailSenderProtocolProperties {
+import java.util.Properties;
 
+public interface EmailSenderProtocolProperties {
+	Properties accept(JavaMailPropertiesFactoryVisitor visitor);
 }
