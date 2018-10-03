@@ -2,8 +2,8 @@ package org.fcpe.fantinlatour.model;
 
 public class EmailSenderProtocolPropertiesFactory {
 
-	public IEmailSenderProtocolProperties create(EmailSenderProtocol protocol) {
-		IEmailSenderProtocolProperties result = null;
+	public EmailSenderProtocolProperties create(EmailSenderProtocol protocol) {
+		EmailSenderProtocolProperties result = null;
 		switch (protocol) {
 		case SMTP:
 			result = new SMTPProperties();

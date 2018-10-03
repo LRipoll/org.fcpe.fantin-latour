@@ -32,7 +32,7 @@ public class MailSenderProperties {
 	private String defaultEncoding;
 	
 	@XStreamAlias("Proprietes")
-	private IEmailSenderProtocolProperties emailSenderProtocolProperties;
+	private EmailSenderProtocolProperties emailSenderProtocolProperties;
 
 	@XStreamOmitField
 	private EmailSenderProtocolPropertiesFactory emailSenderProtocolPropertiesFactory;
@@ -45,6 +45,7 @@ public class MailSenderProperties {
 		this.password = password;
 		this.defaultEncoding = defaultEncoding;
 		this.emailSenderProtocolPropertiesFactory = emailSenderProtocolPropertiesFactory;
+		this.protocol = protocol;
 		createEmailSenderProperties(protocol);
 	
 	}
@@ -96,7 +97,7 @@ public class MailSenderProperties {
 		this.defaultEncoding = defaultEncoding;
 	}
 
-	public IEmailSenderProtocolProperties getEmailSenderProtocolProperties() {
+	public EmailSenderProtocolProperties getEmailSenderProtocolProperties() {
 		return emailSenderProtocolProperties;
 	}
 	

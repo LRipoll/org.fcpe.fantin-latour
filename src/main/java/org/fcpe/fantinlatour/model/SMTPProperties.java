@@ -6,7 +6,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 
-public class SMTPProperties implements IEmailSenderProtocolProperties {
+public class SMTPProperties extends EmailSenderProtocolProperties {
 
 	@XStreamConverter(EncryptedStringConverter.class)
 	@XStreamAlias("AUTH")

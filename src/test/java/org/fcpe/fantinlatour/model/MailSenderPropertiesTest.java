@@ -21,7 +21,7 @@ public class MailSenderPropertiesTest {
 		EmailSenderProtocolPropertiesFactory emailSenderProtocolPropertiesFactory = ctrl.createMock(EmailSenderProtocolPropertiesFactory.class);
 		EmailSenderProtocol protocol = EmailSenderProtocol.SMTP;
 		
-		IEmailSenderProtocolProperties emailSenderProtocolProperties = ctrl.createMock(IEmailSenderProtocolProperties.class);
+		EmailSenderProtocolProperties emailSenderProtocolProperties = ctrl.createMock(EmailSenderProtocolProperties.class);
 		
 		EasyMock.expect(emailSenderProtocolPropertiesFactory.create(protocol)).andReturn(emailSenderProtocolProperties).anyTimes();
 		support.replayAll();
