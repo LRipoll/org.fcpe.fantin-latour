@@ -11,6 +11,8 @@ import org.fcpe.fantinlatour.app.controller.validator.PasswordValidator;
 import org.fcpe.fantinlatour.dao.DataException;
 import org.fcpe.fantinlatour.model.EmailSenderProtocol;
 import org.fcpe.fantinlatour.model.MailSenderAccount;
+import org.fcpe.fantinlatour.model.MailSenderProperties;
+import org.fcpe.fantinlatour.model.SMTPProperties;
 import org.fcpe.fantinlatour.model.controller.ConseilLocalEtablissementManager;
 import org.fcpe.fantinlatour.service.SpringFactory;
 import org.fcpe.fantinlatour.view.ExceptionAlertDialog;
@@ -21,6 +23,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -57,6 +60,11 @@ public class ConfigureEmailAccountController extends AbstractController {
 	@FXML
 	private TextField portTextField;
 	private IntegerValidator portValidator;
+	
+	@FXML
+	private CheckBox authCheckBox;
+	@FXML
+	private CheckBox starttlsEnabledCheckBox;
 
 	public ConfigureEmailAccountController() {
 		super();
@@ -67,13 +75,16 @@ public class ConfigureEmailAccountController extends AbstractController {
 	public void initialize(URL location, ResourceBundle resources) {
 		super.initialize(location, resources);
 
-		emailTextField.setText(getMailSenderAccount().getUsername());
+		
 		emailTextField.textProperty().addListener(new EmailValidator(sceneValidator, emailTextField,
 				resources.getString(EMAIL_VALID), resources.getString(EMAIL_INVALID)));
+		emailTextField.setText(getMailSenderAccount().getUsername());
 		
-		passwordTextField.setText(getMailSenderAccount().getProperties().getPassword());
+		MailSenderProperties properties = getMailSenderAccount().getProperties();
+		
 		passwordTextField.textProperty().addListener(new PasswordValidator(sceneValidator, passwordTextField,
 				resources.getString(PASSWORD_VALID), resources.getString(PASSWORD_INVALID)));
+		passwordTextField.setText(properties.getPassword());
 		
 		listProtocol = FXCollections.observableArrayList(EmailSenderProtocol.values());
 		protocolComboBox.setItems(listProtocol);
@@ -82,18 +93,23 @@ public class ConfigureEmailAccountController extends AbstractController {
 		
 		
 		protocolComboBox.valueProperty().addListener((ChangeListener<? super EmailSenderProtocol>) mandatoryListValidator);
-		protocolComboBox.getSelectionModel().select(getMailSenderAccount().getProperties().getProtocol());
+		protocolComboBox.getSelectionModel().select(properties.getProtocol());
 		
 		
-		hostTextField.setText(getMailSenderAccount().getProperties().getHost());
+		
 		hostTextField.textProperty().addListener(new DomainValidator(sceneValidator, hostTextField,
 				resources.getString(HOST_VALID), resources.getString(HOST_INVALID)));
+		hostTextField.setText(properties.getHost());
 		
-		portTextField.setText(""+getMailSenderAccount().getProperties().getPort());
+		
 		portValidator = new IntegerValidator(sceneValidator, portTextField,
 				resources.getString(PORT_VALID), resources.getString(PORT_INVALID),PORT_MIN,PORT_MAX);
 		portTextField.textProperty().addListener(portValidator);
+		portTextField.setText(""+properties.getPort());
 
+		SMTPProperties smtpProperties = (SMTPProperties)properties.getEmailSenderProtocolProperties();
+		authCheckBox.setSelected(smtpProperties!=null && smtpProperties.isAuth());
+		starttlsEnabledCheckBox.setSelected(smtpProperties!=null && smtpProperties.isStarttls());
 	}
 
 	@Override
@@ -102,10 +118,14 @@ public class ConfigureEmailAccountController extends AbstractController {
 
 			
 			getMailSenderAccount().setUserName(emailTextField.getText());
-			getMailSenderAccount().getProperties().setPassword(passwordTextField.getText());
-			getMailSenderAccount().getProperties().setHost(hostTextField.getText());
-			getMailSenderAccount().getProperties().setPort(portValidator.getValue());
-			getMailSenderAccount().getProperties().setProtocol(protocolComboBox.getValue());
+			MailSenderProperties properties = getMailSenderAccount().getProperties();
+			properties.setPassword(passwordTextField.getText());
+			properties.setHost(hostTextField.getText());
+			properties.setPort(portValidator.getValue());
+			properties.setProtocol(protocolComboBox.getValue());
+			SMTPProperties smtpProperties = (SMTPProperties)properties.getEmailSenderProtocolProperties();
+			smtpProperties.setAuth(authCheckBox.isSelected());
+			smtpProperties.setStarttls(starttlsEnabledCheckBox.isSelected());
 			conseilLocalEtablissementManager.store();
 			super.execute(event);
 

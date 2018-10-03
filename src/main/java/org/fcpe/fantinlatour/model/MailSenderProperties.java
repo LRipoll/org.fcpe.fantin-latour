@@ -1,25 +1,29 @@
 package org.fcpe.fantinlatour.model;
 
+import org.fcpe.fantinlatour.dao.files.xstream.EncryptedStringConverter;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import com.thoughtworks.xstream.annotations.XStreamConverter;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 public class MailSenderProperties {
 	
 	private static final String DEFAULT_ENCODING = "UTF-8";
-
 	private static final int DEFAULT_PORT = 25;
-
 	private static final EmailSenderProtocol DEFAULT_PROTOCOL = EmailSenderProtocol.SMTP;
-
+	
 	@XStreamAlias("protocole")
 	@XStreamAsAttribute
 	private EmailSenderProtocol protocol;
+	@XStreamConverter(EncryptedStringConverter.class)
 	@XStreamAlias("serveur")
 	@XStreamAsAttribute
 	private String host;
 	@XStreamAlias("port")
 	@XStreamAsAttribute
 	private int port;
+	@XStreamConverter(EncryptedStringConverter.class)
 	@XStreamAlias("motDePasse")
 	@XStreamAsAttribute
 	private String password;
@@ -27,17 +31,26 @@ public class MailSenderProperties {
 	@XStreamAsAttribute
 	private String defaultEncoding;
 	
-	public MailSenderProperties(EmailSenderProtocol protocol, String host, int port, String password, String defaultEncoding) {
+	@XStreamAlias("Proprietes")
+	private IEmailSenderProtocolProperties emailSenderProtocolProperties;
+
+	@XStreamOmitField
+	private EmailSenderProtocolPropertiesFactory emailSenderProtocolPropertiesFactory;
+	
+	public MailSenderProperties(EmailSenderProtocol protocol, String host, int port, String password, String defaultEncoding,  EmailSenderProtocolPropertiesFactory emailSenderProtocolPropertiesFactory) {
 		super();
-		this.protocol = protocol;
+		
 		this.host = host;
 		this.port = port;
 		this.password = password;
 		this.defaultEncoding = defaultEncoding;
+		this.emailSenderProtocolPropertiesFactory = emailSenderProtocolPropertiesFactory;
+		createEmailSenderProperties(protocol);
+	
 	}
 
 	public MailSenderProperties() {
-		this(DEFAULT_PROTOCOL,"",DEFAULT_PORT,"",DEFAULT_ENCODING);
+		this(DEFAULT_PROTOCOL,"",DEFAULT_PORT,"",DEFAULT_ENCODING, new EmailSenderProtocolPropertiesFactory());
 	}
 
 	public EmailSenderProtocol getProtocol() {
@@ -62,7 +75,10 @@ public class MailSenderProperties {
 
 	public void setProtocol(EmailSenderProtocol protocol) {
 		this.protocol = protocol;
+		createEmailSenderProperties(protocol);
 	}
+
+	
 
 	public void setHost(String host) {
 		this.host = host;
@@ -79,6 +95,16 @@ public class MailSenderProperties {
 	public void setDefaultEncoding(String defaultEncoding) {
 		this.defaultEncoding = defaultEncoding;
 	}
+
+	public IEmailSenderProtocolProperties getEmailSenderProtocolProperties() {
+		return emailSenderProtocolProperties;
+	}
+	
+	private void createEmailSenderProperties(EmailSenderProtocol protocol) {
+		emailSenderProtocolProperties = emailSenderProtocolPropertiesFactory.create(protocol);
+	}
+	
+	
 	
 	
 	

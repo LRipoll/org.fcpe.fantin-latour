@@ -1,10 +1,14 @@
 package org.fcpe.fantinlatour.model;
 
+import org.fcpe.fantinlatour.dao.files.xstream.EncryptedStringConverter;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import com.thoughtworks.xstream.annotations.XStreamConverter;
 
 public class MailSenderAccount {
 
+	@XStreamConverter(EncryptedStringConverter.class)
 	@XStreamAlias("adresse")
 	@XStreamAsAttribute
 	private String username;

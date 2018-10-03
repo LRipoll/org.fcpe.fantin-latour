@@ -53,11 +53,25 @@
 	<PasswordField fx:id="passwordTextField"
 		text="%org.fcpe.fantinlatour.view.configureemailaccount.password.text"
 		GridPane.columnIndex="1" GridPane.rowIndex="4" />
+		
+	<Label
+		text="%org.fcpe.fantinlatour.view.configureemailaccount.auth.label"
+		GridPane.columnIndex="0" GridPane.rowIndex="5" />
+	<CheckBox fx:id="authCheckBox"
+		text="%org.fcpe.fantinlatour.view.configureemailaccount.auth.text"
+		GridPane.columnIndex="1" GridPane.rowIndex="5" />
+		
+	<Label
+		text="%org.fcpe.fantinlatour.view.configureemailaccount.starttlsEnabled.label"
+		GridPane.columnIndex="0" GridPane.rowIndex="6" />
+	<CheckBox fx:id="starttlsEnabledCheckBox"
+		text="%org.fcpe.fantinlatour.view.configureemailaccount.starttlsEnabled.text"
+		GridPane.columnIndex="1" GridPane.rowIndex="6" />
 
 
 	<Button onAction="#cancel"
 		text="%org.fcpe.fantinlatour.view.configureemailaccount.cancelButton.text"
-		GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.halignment="CENTER"
+		GridPane.columnIndex="0" GridPane.rowIndex="7" GridPane.halignment="CENTER"
 		prefWidth="90">
 		<tooltip>
 			<Tooltip
@@ -66,7 +80,7 @@
 	</Button>
 	<Button fx:id="okButton" onAction="#execute"
 		text="%org.fcpe.fantinlatour.view.configureemailaccount.saveButton.text"
-		GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.halignment="CENTER"
+		GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.halignment="CENTER"
 		prefWidth="90">
 		<tooltip>
 			<Tooltip
