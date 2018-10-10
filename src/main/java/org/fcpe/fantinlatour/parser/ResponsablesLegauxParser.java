@@ -14,8 +14,8 @@ public class ResponsablesLegauxParser extends AbstractCSVParser<ResponsableLegal
 	private static final String NOM_RESPONSABLE_LEGAL_COLUMN = "Votre nom";
 	private static final String CLASSE_COLUMN = "Dans quelle(s) classe(s) sont inscrits vos enfants ?";
 	private static final String DELEGUES_COLUMN = "Souhaitez vous être parent délégué des classes suivantes ? * [%sème%s]";
-	private static final String CA_COLUMN = "Souhaitez vous participer au conseil d'administration du collége ?";
-	private static final String COMMISSION_EDUCATIVE_COLUMN = "Souhaitez vous participer é la commission éducative ?";
+	private static final String CA_COLUMN = "Souhaitez vous participer au conseil d'administration du collège ?";
+	private static final String COMMISSION_EDUCATIVE_COLUMN = "Souhaitez vous participer à la commission éducative ?";
 	private static final String MEMBRE_BUREAU_COLUMN = "Souhaitez vous adhérez au conseil local FCPE ?";
 
 	private AnneeScolaire anneeScolaire;
@@ -26,6 +26,10 @@ public class ResponsablesLegauxParser extends AbstractCSVParser<ResponsableLegal
 		this.anneeScolaire = anneeScolaire;
 		this.responsablesLegauxParserListener  = responsablesLegauxParserListener;
 	}
+
+	
+	
+
 
 	@Override
 	protected ResponsableLegal parse(CSVRecord record) {
@@ -82,6 +86,18 @@ public class ResponsablesLegauxParser extends AbstractCSVParser<ResponsableLegal
 	@Override
 	protected CSVFormat getCVSFormat() {
 		return super.getCVSFormat().withHeader();
+	}
+
+	protected char getDelimiter() {
+		return ',';
+	}
+
+
+
+	@Override
+	protected String getEncoding() {
+		
+		return "UTF-8";
 	}
 
 }

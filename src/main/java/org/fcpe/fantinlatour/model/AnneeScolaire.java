@@ -42,10 +42,12 @@ public class AnneeScolaire {
 	}
 
 	public Classe getClasse(String nom) {
-		Classe result = classes.get(nom);
+		String division = getDivision(nom);
+		
+		Classe result = classes.get(division);
 		if (result == null) {
-			result = classeFactory.createClasse(this, nom, config);
-			classes.put(nom, result);
+			result = classeFactory.createClasse(this, division, config);
+			classes.put(division, result);
 		}
 
 		return result;

@@ -58,4 +58,14 @@ public class ElevesParser extends AbstractCSVParser<Eleve> {
 		return super.getCVSFormat().withHeader();
 	}
 
+	protected char getDelimiter() {
+		return ';';
+	}
+	
+	@Override
+	protected String getEncoding() {
+		
+		return "UTF-8";
+	}
+
 }

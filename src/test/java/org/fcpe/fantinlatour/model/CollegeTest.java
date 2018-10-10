@@ -62,9 +62,9 @@ public class CollegeTest {
 	public void testGetClasseWhenItsTheFirstTimeShouldReturnANewClasse() {
 
 		Classe classe = ctrl.createMock(Classe.class);
-		String nom = "Test";
+		String nom = "6ème2";
 
-		EasyMock.expect(classeFactory.createClasse(anneeScolaire, nom,config)).andReturn(classe);
+		EasyMock.expect(classeFactory.createClasse(anneeScolaire, "62",config)).andReturn(classe);
 
 		support.replayAll();
 
@@ -258,7 +258,7 @@ public class CollegeTest {
 	private void createClasseWithDeleguesVolontaireInattendus(int nbDeleguesVolontaires) {
 		Classe classe = ctrl.createMock(Classe.class);
 		String section = "6ème4";
-		EasyMock.expect(classeFactory.createClasse(anneeScolaire, section, config)).andReturn(classe);
+		EasyMock.expect(classeFactory.createClasse(anneeScolaire, "64", config)).andReturn(classe);
 		EasyMock.expect(classe.getNbCandidatsDeleguesAffirmés()).andReturn(nbDeleguesVolontaires);
 		support.replayAll();
 		anneeScolaire.getClasse(section);
@@ -267,11 +267,12 @@ public class CollegeTest {
 	private String createClasseWithDeleguesVolontaireAttendus(int nbDeleguesVolontaires) {
 		Classe classe = ctrl.createMock(Classe.class);
 		String section = "6ème4";
-		EasyMock.expect(classeFactory.createClasse(anneeScolaire, section, config)).andReturn(classe);
+		EasyMock.expect(classeFactory.createClasse(anneeScolaire, "64", config)).andReturn(classe);
 
 		EasyMock.expect(classe.getNbCandidatsDeleguesAffirmés()).andReturn(nbDeleguesVolontaires);
 		EasyMock.expect(classe.getNomComplet()).andReturn(section);
 		support.replayAll();
+		
 		anneeScolaire.getClasse(section);
 		return section;
 	}
@@ -283,14 +284,14 @@ public class CollegeTest {
 		Classe uneAutreClasse = ctrl.createMock(Classe.class);
 		String uneAutreSection = "6ème1";
 
-		EasyMock.expect(classeFactory.createClasse(anneeScolaire, uneSection, config)).andReturn(uneClasse);
+		EasyMock.expect(classeFactory.createClasse(anneeScolaire, "64", config)).andReturn(uneClasse);
 		EasyMock.expect(uneClasse.getNiveau()).andReturn("6").anyTimes();
 		EasyMock.expect(uneClasse.getSection()).andReturn("4").anyTimes();
 
 		EasyMock.expect(uneClasse.getNbCandidatsDeleguesAffirmés()).andReturn(nbDeleguesVolontaires);
 		EasyMock.expect(uneClasse.getNomComplet()).andReturn(uneSection);
 
-		EasyMock.expect(classeFactory.createClasse(anneeScolaire, uneAutreSection, config)).andReturn(uneAutreClasse);
+		EasyMock.expect(classeFactory.createClasse(anneeScolaire, "61", config)).andReturn(uneAutreClasse);
 		EasyMock.expect(uneAutreClasse.getNiveau()).andReturn("6").anyTimes();
 		EasyMock.expect(uneAutreClasse.getSection()).andReturn("1").anyTimes();
 		EasyMock.expect(uneAutreClasse.getNbCandidatsDeleguesAffirmés()).andReturn(nbDeleguesVolontaires);
@@ -306,9 +307,9 @@ public class CollegeTest {
 	public void testAddEleve() {
 
 		Classe classe = ctrl.createMock(Classe.class);
-		String section = "Test";
+		String section = "6ème1";
 
-		EasyMock.expect(classeFactory.createClasse(anneeScolaire, section, config)).andReturn(classe);
+		EasyMock.expect(classeFactory.createClasse(anneeScolaire, "61", config)).andReturn(classe);
 
 		String nom = "Nom";
 		String prenom = "Prenom";
@@ -326,9 +327,9 @@ public class CollegeTest {
 	public void testGetClasseWhenItsTheSecondTimeShouldReturnTheSameClasse() {
 
 		Classe classe = ctrl.createMock(Classe.class);
-		String nom = "Test";
+		String nom = "6ème2";
 
-		EasyMock.expect(classeFactory.createClasse(anneeScolaire, nom, config)).andReturn(classe);
+		EasyMock.expect(classeFactory.createClasse(anneeScolaire, "62", config)).andReturn(classe);
 
 		support.replayAll();
 

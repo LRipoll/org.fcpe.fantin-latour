@@ -30,7 +30,7 @@ public class AdherentsService extends AbstractVelocityService {
 
 		String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "velocity/adherents.vm", "UTF-8", model);
 		PrintWriter writer = new PrintWriter(
-				"/Users/mathieuripoll/eclipse-workspace/AnneeScolaire/target/exports/adherents.csv",
+				System.getProperty("user.home")+"/Documents/GitHub/org.fcpe.fantin-latour/target/exports/adherents.csv",
 				"UTF-8");
 		writer.println(text);
 		

@@ -42,6 +42,9 @@ public class AdhesionsParser extends AbstractCSVParser<ResponsableLegal> {
 		return super.getCVSFormat().withHeader();
 	}
 
-
+	@Override
+	protected String getEncoding() {
+		return "UTF-8";
+	}
 
 }

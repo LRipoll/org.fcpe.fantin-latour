@@ -33,7 +33,7 @@ public class DeleguesServiceCourrielListener implements AnneeScolaireServiceList
 			public void prepare(MimeMessage mimeMessage) throws Exception {
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
 				message.setTo("mailinglist@groupe.com");
-				// message.setBcc("adresse@operator.fr");
+				 message.setBcc("adresse@operator.fr");
 				message.setFrom(new InternetAddress("adresse@operator.fr"));
 				message.setSubject("Point sur les délégués de classes du collège Fantin Latour et autres informations");
 				message.setSentDate(new Date());

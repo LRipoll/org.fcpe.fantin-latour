@@ -21,7 +21,7 @@ public interface ConseilLocalConfig extends Config {
 	@Key("college.conseilLocal.bureau.sigle")
 	String getSigleBureau();
 
-	@DefaultValue("/Users/mathieuripoll/eclipse-workspace/AnneeScolaire/target/exports/delegues.html")
+	@DefaultValue("/Users/mathieuripoll/Documents/GitHub/org.fcpe.fantin-latour/target/exports/delegues.html")
 	@Key("college.fichiers.delegues")
 	String getDeleguesFilename();
 

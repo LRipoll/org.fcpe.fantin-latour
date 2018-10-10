@@ -3,12 +3,18 @@ package org.fcpe.fantinlatour.courriel;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import org.fcpe.fantinlatour.model.AnneeScolaire;
 import org.fcpe.fantinlatour.model.Classe;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
@@ -36,12 +42,12 @@ public class ClassesService extends AbstractVelocityService {
 			String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
 					"velocity/lettre-relance-conseil-classe.vm", "UTF-8", model);
 			PrintWriter writer = new PrintWriter(
-					"/Users/mathieuripoll/eclipse-workspace/College/target/exports/classe" + classe.getNom() + ".html",
+					System.getProperty("user.home")+"/Documents/GitHub/org.fcpe.fantin-latour/target/exports/classe" + classe.getNom() + ".html",
 					"UTF-8");
 			writer.println(text);
 
 			writer.close();
-/*
+
 			MimeMessagePreparator preparator = new MimeMessagePreparator() {
 				public void prepare(MimeMessage mimeMessage) throws Exception {
 					MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
@@ -68,7 +74,7 @@ public class ClassesService extends AbstractVelocityService {
 
 			};
 			mailSender.send(preparator);
-*/
+
 		}
 
 	}

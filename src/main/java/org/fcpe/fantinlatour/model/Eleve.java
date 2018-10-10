@@ -1,7 +1,10 @@
 package org.fcpe.fantinlatour.model;
 
+import org.apache.log4j.Logger;
+
 public class Eleve extends Personne {
 
+	private static final Logger logger = Logger.getLogger(Eleve.class);
 	private Classe classe;
 	private ResponsableLegal responsableLegal1;
 	private ResponsableLegal responsableLegal2;
@@ -50,7 +53,9 @@ public class Eleve extends Personne {
 
 	public ResponsableLegal getResponsableLegal(String nom, String prenom) {
 		ResponsableLegal result = null;
-		if (responsableLegal1.isThisPersonne(nom, prenom)) {
+		if (responsableLegal1 == null) {
+			logger.info("Cet élève n'a pas de responsable légal défini"+this);
+		} else if (responsableLegal1.isThisPersonne(nom, prenom)) {
 			result = responsableLegal1;
 		} else if (responsableLegal2 != null
 				&& responsableLegal2.isThisPersonne(nom, prenom)) {

@@ -38,5 +38,10 @@ public class GoogleGroupParser extends AbstractCSVParser<String> implements Grou
 		return result;
 
 	}
+	
+	@Override
+	protected String getEncoding() {
+		return "UTF-8";
+	}
 
 }

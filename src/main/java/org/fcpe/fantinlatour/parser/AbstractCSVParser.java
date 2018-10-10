@@ -1,7 +1,8 @@
 package org.fcpe.fantinlatour.parser;
 
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +23,13 @@ public abstract class AbstractCSVParser<T> {
 		super();
 
 	}
+	
+	protected abstract String getEncoding();
 
 	public List<T> parse(String filename) throws IOException {
-		Reader in = new FileReader(filename);
+		
+		
+		Reader in = new InputStreamReader(new FileInputStream(filename), getEncoding());
 		return parse(in);
 
 	}
