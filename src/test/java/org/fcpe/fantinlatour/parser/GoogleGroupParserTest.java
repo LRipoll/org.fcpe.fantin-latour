@@ -42,7 +42,17 @@ public class GoogleGroupParserTest {
 
 	@Test
 	public void testParseWhenOnlyHeaderAndAnIgnoredLineBeforeThenReturnEmptyList() throws IOException {
-		String input = "Ignore\nIgnore\n" + HEADER;
+		String input = "Ignore\nIgnore\nIgnore\n" + HEADER;
+
+		Reader reader = new StringReader(input);
+		List<String> expectedList = new ArrayList<String>();
+		assertEquals(expectedList, googleGroupParser.parse(reader));
+	}
+	
+	@Test
+	public void testParseWhenARowHasBeenDefinedButExcluThenReturnCourriel() throws IOException {
+		String input = HEADER + "\n"
+				+ "A.MAIL@YELLOW.NET,AMAIL,exclu,,e-mail,autorisé,2016,11,4,22,9,7,Heure d'été d'Europe centrale";
 
 		Reader reader = new StringReader(input);
 		List<String> expectedList = new ArrayList<String>();

@@ -89,6 +89,9 @@ public class ConseilLocalApp extends Application {
 			GoogleGroupServiceFactory factory = new GoogleGroupServiceFactory(new ListingFactory(anneeScolaire));
 			GoogleGroupService googleGroupAdherentsService = factory.create(args[2]);
 			googleGroupAdherentsService.run();
+			
+			GoogleGroupService googleGroupFCPEService = factory.create(args[3]);
+			googleGroupFCPEService.run();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -105,8 +108,6 @@ public class ConseilLocalApp extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 
-		
-		
 		viewFactory = SpringFactory.getService(ViewFactory.ID);
 		viewFactory.createScene(stage, "main");
 		ConseilLocalEtablissementManager conseilLocalEtablissementManager = SpringFactory
