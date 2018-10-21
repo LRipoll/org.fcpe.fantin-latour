@@ -92,6 +92,9 @@ public class ConseilLocalApp extends Application {
 			
 			GoogleGroupService googleGroupFCPEService = factory.create(args[3]);
 			googleGroupFCPEService.run();
+			
+			GoogleGroupService googleGroupCommeissionEducativeService = factory.create(args[4]);
+			googleGroupCommeissionEducativeService.run();
 
 		} catch (IOException e) {
 			e.printStackTrace();
