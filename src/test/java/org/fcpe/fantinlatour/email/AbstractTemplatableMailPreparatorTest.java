@@ -29,8 +29,6 @@ public class AbstractTemplatableMailPreparatorTest {
 	@Test
 	public void testCreate() throws MessagingException {
 		ctrl = support.createControl();
-		
-		
 	}
 	
 	@Before
