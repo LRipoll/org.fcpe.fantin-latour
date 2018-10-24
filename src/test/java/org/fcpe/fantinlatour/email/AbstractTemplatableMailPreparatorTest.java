@@ -11,6 +11,7 @@ import javax.mail.internet.MimeMessage;
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.easymock.IMocksControl;
+import org.fcpe.fantinlatour.template.TemplateFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -23,7 +24,7 @@ public class AbstractTemplatableMailPreparatorTest {
 	private MimeMessageHelperFactory mimeMessageHelperFactory;
 	private String encoding;
 	private String template;
-	private ModelFactory modelFactory;
+	private TemplateFactory modelFactory;
 	
 	
 	@Test
@@ -35,7 +36,7 @@ public class AbstractTemplatableMailPreparatorTest {
 	public void setup() {
 		ctrl = support.createControl();
 		mimeMessageHelperFactory = ctrl.createMock(MimeMessageHelperFactory.class);
-		modelFactory = ctrl.createMock(ModelFactory.class);
+		modelFactory = ctrl.createMock(TemplateFactory.class);
 		encoding = "Encoding";
 		template = "Template";
 	}

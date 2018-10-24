@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.fcpe.fantinlatour.template.TemplateFactory;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 
@@ -13,13 +14,13 @@ public abstract class AbstractTemplatableMailPreparator implements MimeMessagePr
 	private MimeMessageHelperFactory mimeMessageHelperFactory;
 	private String encoding;
 	private String template;
-	private ModelFactory modelFactory;
+	private TemplateFactory templateFactory;
 
-	public AbstractTemplatableMailPreparator(MimeMessageHelperFactory mimeMessageHelperFactory, ModelFactory modelFactory, String template,
+	public AbstractTemplatableMailPreparator(MimeMessageHelperFactory mimeMessageHelperFactory, TemplateFactory templateFactory, String template,
 			String encoding) {
 		super();
 		this.mimeMessageHelperFactory = mimeMessageHelperFactory;
-		this.modelFactory = modelFactory;
+		this.templateFactory = templateFactory;
 		this.template = template;
 		this.encoding = encoding;
 	}
@@ -41,7 +42,7 @@ public abstract class AbstractTemplatableMailPreparator implements MimeMessagePr
 	@Override
 	public Map<String, Object> getModel() {
 		
-		return modelFactory.create();
+		return templateFactory.create();
 	}
 	
 	

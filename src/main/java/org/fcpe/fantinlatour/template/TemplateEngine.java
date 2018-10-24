@@ -1,4 +1,4 @@
-package org.fcpe.fantinlatour.email;
+package org.fcpe.fantinlatour.template;
 
 import java.util.Map;
 
@@ -6,7 +6,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
-public class EmailTemplateEngine {
+public class TemplateEngine {
 
 	@Autowired
 	private VelocityEngine velocityEngine;

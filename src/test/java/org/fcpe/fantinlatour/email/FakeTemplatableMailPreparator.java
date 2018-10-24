@@ -2,9 +2,11 @@ package org.fcpe.fantinlatour.email;
 
 import javax.mail.internet.MimeMessage;
 
+import org.fcpe.fantinlatour.template.TemplateFactory;
+
 public class FakeTemplatableMailPreparator extends AbstractTemplatableMailPreparator {
 
-	public FakeTemplatableMailPreparator(MimeMessageHelperFactory mimeMessageHelperFactory, ModelFactory modelFactory, String template, String encoding) {
+	public FakeTemplatableMailPreparator(MimeMessageHelperFactory mimeMessageHelperFactory, TemplateFactory modelFactory, String template, String encoding) {
 		super(mimeMessageHelperFactory, modelFactory, template, encoding);
 		
 	}

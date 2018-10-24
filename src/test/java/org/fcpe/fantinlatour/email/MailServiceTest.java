@@ -10,6 +10,7 @@ import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.easymock.IMocksControl;
 import org.fcpe.fantinlatour.model.MailSenderAccount;
+import org.fcpe.fantinlatour.template.TemplateEngine;
 import org.junit.Test;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -24,7 +25,7 @@ public class MailServiceTest {
 		ctrl = support.createControl();
 		
 		JavaMailSenderFactory javaMailSenderFactory = ctrl.createMock(JavaMailSenderFactory.class);
-		EmailTemplateEngine emailTemplateEngine = ctrl.createMock(EmailTemplateEngine.class);
+		TemplateEngine emailTemplateEngine = ctrl.createMock(TemplateEngine.class);
 		
 	
 		TemplatableMailPreparator preparator = ctrl.createMock(TemplatableMailPreparator.class);

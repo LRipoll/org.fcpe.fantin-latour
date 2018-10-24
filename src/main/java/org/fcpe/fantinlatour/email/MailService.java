@@ -6,6 +6,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.fcpe.fantinlatour.model.MailSenderAccount;
+import org.fcpe.fantinlatour.template.TemplateEngine;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
@@ -13,9 +14,9 @@ public class MailService {
 
 	private JavaMailSenderFactory javaMailSenderFactory = null;
 
-	private EmailTemplateEngine emailTemplateEngine = null;
+	private TemplateEngine emailTemplateEngine = null;
 
-	public MailService(JavaMailSenderFactory javaMailSenderFactory, EmailTemplateEngine emailTemplateEngine) {
+	public MailService(JavaMailSenderFactory javaMailSenderFactory, TemplateEngine emailTemplateEngine) {
 		super();
 		this.javaMailSenderFactory = javaMailSenderFactory;
 		this.emailTemplateEngine = emailTemplateEngine;
