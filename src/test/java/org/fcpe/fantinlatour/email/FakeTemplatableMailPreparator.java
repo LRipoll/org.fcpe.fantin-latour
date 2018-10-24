@@ -6,8 +6,8 @@ import org.fcpe.fantinlatour.template.TemplateFactory;
 
 public class FakeTemplatableMailPreparator extends AbstractTemplatableMailPreparator {
 
-	public FakeTemplatableMailPreparator(MimeMessageHelperFactory mimeMessageHelperFactory, TemplateFactory modelFactory, String template, String encoding) {
-		super(mimeMessageHelperFactory, modelFactory, template, encoding);
+	public FakeTemplatableMailPreparator(MimeMessageHelperFactory mimeMessageHelperFactory, TemplateFactory modelFactory, InternetAddressFactory internetAddressFactory, DateProvider dateProvider, String template, String encoding) {
+		super(mimeMessageHelperFactory, modelFactory, internetAddressFactory, dateProvider, template, encoding);
 		
 	}
 

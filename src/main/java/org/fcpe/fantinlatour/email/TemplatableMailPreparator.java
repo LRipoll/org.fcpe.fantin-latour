@@ -9,7 +9,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 
 public interface TemplatableMailPreparator {
 
-	public void prepare(MimeMessage mimeMessage);
+	public void prepare(MimeMessage mimeMessage) throws MessagingException;
 
 	String getTemplate();
 
