@@ -15,6 +15,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 
 public class MailService implements ConseilLocalEtablissementManagerListener {
 
+	public static final String ID = "mailService";
+
 	private JavaMailSenderFactory javaMailSenderFactory = null;
 
 	private TemplateEngine emailTemplateEngine = null;
@@ -23,14 +25,18 @@ public class MailService implements ConseilLocalEtablissementManagerListener {
 
 	private InternetAddressFactory internetAddressFactory;
 
-	public MailService(JavaMailSenderFactory javaMailSenderFactory, TemplateEngine emailTemplateEngine, InternetAddressFactory internetAddressFactory) {
+	private MimeMessageHelperFactory mimeMessageHelperFactory;
+
+	public MailService(JavaMailSenderFactory javaMailSenderFactory, TemplateEngine emailTemplateEngine,
+			InternetAddressFactory internetAddressFactory, MimeMessageHelperFactory mimeMessageHelperFactory) {
 		super();
 		this.javaMailSenderFactory = javaMailSenderFactory;
 		this.emailTemplateEngine = emailTemplateEngine;
 		this.internetAddressFactory = internetAddressFactory;
+		this.mimeMessageHelperFactory = mimeMessageHelperFactory;
 	}
 
-	public void send(TemplatableMailPreparator preparator) throws MessagingException {
+	public void send(TemplatableMailPreparator preparator) throws Exception {
 		JavaMailSender mailSender = javaMailSenderFactory.create(conseilLocalEtablissement.getMailSenderAccount());
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 		preparator.prepare(mimeMessage);
@@ -41,7 +47,8 @@ public class MailService implements ConseilLocalEtablissementManagerListener {
 		String encoding = preparator.getEncoding();
 		String htmlContent = emailTemplateEngine.process(model, template, encoding);
 
-		MimeMessageHelper message = preparator.getMessageHelper(mimeMessage);
+		MimeMessageHelper message = preparator.createMimeMessageHelper(mimeMessage);
+		
 		message.setText(htmlContent, true);
 		mailSender.send(mimeMessage);
 
@@ -53,10 +60,15 @@ public class MailService implements ConseilLocalEtablissementManagerListener {
 
 	}
 	
+	MimeMessageHelper createMimeMessageHelper(MimeMessage mimeMessage, String encoding) throws MessagingException {
+
+		return mimeMessageHelperFactory.create(mimeMessage, encoding);
+	}
+
 	String getConseilLocalEtablissementEmail() {
 		return conseilLocalEtablissement.getMailSenderAccount().getUsername();
 	}
-	
+
 	InternetAddress getInternetAddressEmail() throws AddressException {
 		return internetAddressFactory.create(getConseilLocalEtablissementEmail());
 	}

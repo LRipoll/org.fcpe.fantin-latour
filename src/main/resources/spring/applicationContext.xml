@@ -42,6 +42,40 @@
 		scope="singleton">
 	</bean>
 	
+	<!--  Mail -->
+	<bean id="mailService" class="org.fcpe.fantinlatour.email.MailService"
+		scope="singleton">
+		<constructor-arg ref="javaMailSenderFactory"/>
+		<constructor-arg ref="emailTemplateEngine"/>
+		<constructor-arg ref="internetAddressFactory"/>
+		<constructor-arg ref="mimeMessageHelperFactory"/>
+	</bean>
+	
+	<bean id="mimeMessageHelperFactory" class="org.fcpe.fantinlatour.email.MimeMessageHelperFactory"
+		scope="singleton">
+	</bean>
+	<bean id="emailTemplateEngine" class="org.fcpe.fantinlatour.template.TemplateEngine"
+		scope="singleton">
+	</bean>
+	
+	<bean id="internetAddressFactory" class="org.fcpe.fantinlatour.email.InternetAddressFactory"
+		scope="singleton">
+	</bean>
+	
+	<bean id="javaMailSenderFactory" class="org.fcpe.fantinlatour.email.JavaMailSenderFactory"
+		scope="singleton">
+		<constructor-arg ref="protocolConverter"/>
+		<constructor-arg ref="javaMailPropertiesFactory"/>
+	</bean>
+	
+	<bean id="protocolConverter" class="org.fcpe.fantinlatour.email.EmailSenderProtocolConverter"
+		scope="singleton">
+	</bean>
+	
+	<bean id="javaMailPropertiesFactory" class="org.fcpe.fantinlatour.email.JavaMailPropertiesFactory"
+		scope="singleton">
+	</bean>
+	
 	<!--  Manager -->
 	<bean id="conseilLocalEtablissementManager" class="org.fcpe.fantinlatour.model.controller.ConseilLocalEtablissementManager"
 		scope="singleton">
@@ -49,6 +83,7 @@
 		<constructor-arg ref="userPreferencesDAO"/>
 		<constructor-arg ref="zipFilesDAO"/>
 	</bean>
+	
 	
 	
 	

@@ -3,7 +3,6 @@ package org.fcpe.fantinlatour.email;
 import java.util.Map;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.MimeMessage;
 
 import org.fcpe.fantinlatour.template.TemplateFactory;
@@ -12,7 +11,7 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 
 public abstract class AbstractTemplatableMailPreparator implements MimeMessagePreparator, TemplatableMailPreparator {
 
-	private MimeMessageHelperFactory mimeMessageHelperFactory;
+	
 	private String encoding;
 	private String template;
 	private TemplateFactory templateFactory;
@@ -21,10 +20,10 @@ public abstract class AbstractTemplatableMailPreparator implements MimeMessagePr
 	private MailService mailService;
 	
 
-	public AbstractTemplatableMailPreparator(MimeMessageHelperFactory mimeMessageHelperFactory, TemplateFactory templateFactory,MailService mailService, DateProvider dateProvider, String template,
+	public AbstractTemplatableMailPreparator(TemplateFactory templateFactory,MailService mailService, DateProvider dateProvider, String template,
 			String encoding) {
 		super();
-		this.mimeMessageHelperFactory = mimeMessageHelperFactory;
+		
 		this.templateFactory = templateFactory;
 		this.template = template;
 		this.encoding = encoding;
@@ -32,10 +31,7 @@ public abstract class AbstractTemplatableMailPreparator implements MimeMessagePr
 		this.mailService = mailService;
 	}
 
-	public MimeMessageHelper getMessageHelper(MimeMessage mimeMessage) throws MessagingException {
-
-		return mimeMessageHelperFactory.create(mimeMessage, encoding);
-	}
+	
 
 	@Override
 	public String getEncoding() {
@@ -52,9 +48,9 @@ public abstract class AbstractTemplatableMailPreparator implements MimeMessagePr
 		return templateFactory.create();
 	}
 	
-	protected MimeMessageHelper createMimeMessageHelper(MimeMessage mimeMessage)
-			throws MessagingException, AddressException {
-		final MimeMessageHelper message = getMessageHelper(mimeMessage);
+	@Override
+	public MimeMessageHelper createMimeMessageHelper(MimeMessage mimeMessage) throws MessagingException{
+		final MimeMessageHelper message = mailService.createMimeMessageHelper(mimeMessage, encoding);
 		message.setBcc(mailService.getConseilLocalEtablissementEmail());
 		message.setFrom(mailService.getInternetAddressEmail());
 		message.setSentDate(dateProvider.now());

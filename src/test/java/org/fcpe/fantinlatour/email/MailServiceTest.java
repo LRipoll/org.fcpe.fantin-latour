@@ -1,6 +1,7 @@
 package org.fcpe.fantinlatour.email;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +17,6 @@ import org.easymock.IMocksControl;
 import org.fcpe.fantinlatour.model.ConseilLocalEtablissement;
 import org.fcpe.fantinlatour.model.MailSenderAccount;
 import org.fcpe.fantinlatour.template.TemplateEngine;
-import org.fcpe.fantinlatour.template.TemplateFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -30,6 +30,7 @@ public class MailServiceTest {
 	private InternetAddressFactory internetAddressFactory;
 	private JavaMailSenderFactory javaMailSenderFactory;
 	private TemplateEngine emailTemplateEngine;
+	private MimeMessageHelperFactory mimeMessageHelperFactory;
 	
 	@Before
 	public void setup() {
@@ -38,9 +39,10 @@ public class MailServiceTest {
 		internetAddressFactory = ctrl.createMock(InternetAddressFactory.class);
 		 javaMailSenderFactory = ctrl.createMock(JavaMailSenderFactory.class);
 		 emailTemplateEngine = ctrl.createMock(TemplateEngine.class);
+		 mimeMessageHelperFactory = ctrl.createMock(MimeMessageHelperFactory.class);
 	}
 	@Test
-	public void testSend() throws MessagingException {
+	public void testSend() throws Exception {
 		ctrl = support.createControl();
 		
 		TemplatableMailPreparator preparator = ctrl.createMock(TemplatableMailPreparator.class);
@@ -65,7 +67,7 @@ public class MailServiceTest {
 		EasyMock.expect(emailTemplateEngine.process(model, "Template", "Encoding")).andReturn("htmlContent");
 		
 		MimeMessageHelper message  = ctrl.createMock(MimeMessageHelper.class);
-		EasyMock.expect(preparator.getMessageHelper(mimeMessage)).andReturn(message);
+		EasyMock.expect(preparator.createMimeMessageHelper(mimeMessage)).andReturn(message);
 		message.setText("htmlContent", true);
 		EasyMock.expectLastCall().once();
 		
@@ -126,7 +128,20 @@ public class MailServiceTest {
 		support.verifyAll();
 
 	}
+	
+	@Test
+	public void testCreateMimeMessageHelper() throws MessagingException {
+		MailService create = create();
+		MimeMessage mimeMessage = ctrl.createMock(MimeMessage.class);
+		MimeMessageHelper mimeMessageHelper = ctrl.createMock(MimeMessageHelper.class);
+		
+		String encoding ="Encoding";
+		EasyMock.expect(mimeMessageHelperFactory.create(mimeMessage, encoding )).andReturn(mimeMessageHelper);
+		support.replayAll();
+		assertSame(mimeMessageHelper, create.createMimeMessageHelper(mimeMessage, encoding));
+		support.verifyAll();
+	}
 	private MailService create() {
-		return new MailService(javaMailSenderFactory, emailTemplateEngine, internetAddressFactory);
+		return new MailService(javaMailSenderFactory, emailTemplateEngine, internetAddressFactory, mimeMessageHelperFactory);
 	}
 }

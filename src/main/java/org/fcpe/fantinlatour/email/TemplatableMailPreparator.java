@@ -6,17 +6,19 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 
-public interface TemplatableMailPreparator {
+public interface TemplatableMailPreparator extends MimeMessagePreparator {
 
-	public void prepare(MimeMessage mimeMessage) throws MessagingException;
-
+    
 	String getTemplate();
-
-	MimeMessageHelper getMessageHelper(MimeMessage mimeMessage) throws MessagingException;
-
+	
+	public MimeMessageHelper createMimeMessageHelper(MimeMessage mimeMessage) throws MessagingException;
+	
 	Map<String, Object> getModel();
 
 	String getEncoding();
+
+	
 
 }
