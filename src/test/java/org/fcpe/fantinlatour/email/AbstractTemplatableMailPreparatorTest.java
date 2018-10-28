@@ -31,7 +31,7 @@ public class AbstractTemplatableMailPreparatorTest {
 	private String encoding;
 	private String template;
 	private TemplateFactory modelFactory;
-	private InternetAddressFactory internetAddressFactory;
+	private MailService mailService;
 	private DateProvider dateProvider;
 
 	@Test
@@ -44,14 +44,14 @@ public class AbstractTemplatableMailPreparatorTest {
 		ctrl = support.createControl();
 		mimeMessageHelperFactory = ctrl.createMock(MimeMessageHelperFactory.class);
 		modelFactory = ctrl.createMock(TemplateFactory.class);
-		internetAddressFactory = ctrl.createMock(InternetAddressFactory.class);
+		mailService = ctrl.createMock(MailService.class);
 		dateProvider = ctrl.createMock(DateProvider.class);
 		encoding = "Encoding";
 		template = "Template";
 	}
 
 	private AbstractTemplatableMailPreparator create() {
-		return new FakeTemplatableMailPreparator(mimeMessageHelperFactory, modelFactory, internetAddressFactory,
+		return new FakeTemplatableMailPreparator(mimeMessageHelperFactory, modelFactory, mailService,
 				dateProvider, template, encoding);
 	}
 
@@ -88,59 +88,12 @@ public class AbstractTemplatableMailPreparatorTest {
 	}
 
 	@Test
-	public void testGetConseilLocalEtablissementEmail() {
-		AbstractTemplatableMailPreparator create = create();
-
-		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
-
-		MailSenderAccount mailSenderAccount = ctrl.createMock(MailSenderAccount.class);
-
-		EasyMock.expect(conseilLocalEtablissement.getMailSenderAccount()).andReturn(mailSenderAccount);
-		String email = "email";
-		EasyMock.expect(mailSenderAccount.getUsername()).andReturn(email);
-
-		support.replayAll();
-		create.onSelected(conseilLocalEtablissement);
-		assertEquals(email, create.getConseilLocalEtablissementEmail());
-		support.verifyAll();
-
-	}
-
-	@Test
-	public void testGetInternetAddressEmail() throws AddressException {
-		AbstractTemplatableMailPreparator create = create();
-
-		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
-
-		MailSenderAccount mailSenderAccount = ctrl.createMock(MailSenderAccount.class);
-
-		EasyMock.expect(conseilLocalEtablissement.getMailSenderAccount()).andReturn(mailSenderAccount);
-		String email = "email";
-		EasyMock.expect(mailSenderAccount.getUsername()).andReturn(email);
-
-		InternetAddress internetAddress = ctrl.createMock(InternetAddress.class);
-		EasyMock.expect(internetAddressFactory.create(email)).andReturn(internetAddress);
-		support.replayAll();
-		create.onSelected(conseilLocalEtablissement);
-		assertEquals(internetAddress, create.getInternetAddressEmail());
-		support.verifyAll();
-
-	}
-
-	@Test
 	public void testCreateMimeMessageHelper() throws MessagingException {
 		AbstractTemplatableMailPreparator create = create();
 
-		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
-
-		MailSenderAccount mailSenderAccount = ctrl.createMock(MailSenderAccount.class);
-
-		EasyMock.expect(conseilLocalEtablissement.getMailSenderAccount()).andReturn(mailSenderAccount).anyTimes();
 		String email = "email";
-		EasyMock.expect(mailSenderAccount.getUsername()).andReturn(email).anyTimes();
+		EasyMock.expect(mailService.getConseilLocalEtablissementEmail()).andReturn(email);
 
-		InternetAddress internetAddress = ctrl.createMock(InternetAddress.class);
-		EasyMock.expect(internetAddressFactory.create(email)).andReturn(internetAddress);
 
 		MimeMessage mimeMessage = ctrl.createMock(MimeMessage.class);
 
@@ -148,6 +101,10 @@ public class AbstractTemplatableMailPreparatorTest {
 		EasyMock.expect(mimeMessageHelperFactory.create(mimeMessage, encoding)).andReturn(mimeMessageHelper);
 		mimeMessageHelper.setBcc(email);
 		EasyMock.expectLastCall().once();
+		
+		
+		InternetAddress internetAddress= ctrl.createMock(InternetAddress.class);
+		EasyMock.expect(mailService.getInternetAddressEmail()).andReturn(internetAddress);
 		
 		mimeMessageHelper.setFrom(internetAddress);
 		EasyMock.expectLastCall().once();
@@ -159,7 +116,7 @@ public class AbstractTemplatableMailPreparatorTest {
 		
 		support.replayAll();
 
-		create.onSelected(conseilLocalEtablissement);
+		
 
 		assertSame(mimeMessageHelper, create.createMimeMessageHelper(mimeMessage));
 		support.verifyAll();

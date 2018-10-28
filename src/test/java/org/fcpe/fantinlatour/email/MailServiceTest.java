@@ -1,16 +1,23 @@
 package org.fcpe.fantinlatour.email;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.easymock.IMocksControl;
+import org.fcpe.fantinlatour.model.ConseilLocalEtablissement;
 import org.fcpe.fantinlatour.model.MailSenderAccount;
 import org.fcpe.fantinlatour.template.TemplateEngine;
+import org.fcpe.fantinlatour.template.TemplateFactory;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -20,19 +27,27 @@ public class MailServiceTest {
 	private EasyMockSupport support = new EasyMockSupport();
 	private IMocksControl ctrl;
 
+	private InternetAddressFactory internetAddressFactory;
+	private JavaMailSenderFactory javaMailSenderFactory;
+	private TemplateEngine emailTemplateEngine;
+	
+	@Before
+	public void setup() {
+		ctrl = support.createControl();
+		
+		internetAddressFactory = ctrl.createMock(InternetAddressFactory.class);
+		 javaMailSenderFactory = ctrl.createMock(JavaMailSenderFactory.class);
+		 emailTemplateEngine = ctrl.createMock(TemplateEngine.class);
+	}
 	@Test
 	public void testSend() throws MessagingException {
 		ctrl = support.createControl();
 		
-		JavaMailSenderFactory javaMailSenderFactory = ctrl.createMock(JavaMailSenderFactory.class);
-		TemplateEngine emailTemplateEngine = ctrl.createMock(TemplateEngine.class);
-		
-	
 		TemplatableMailPreparator preparator = ctrl.createMock(TemplatableMailPreparator.class);
 		
-		
-		JavaMailSender mailSender  = ctrl.createMock(JavaMailSender.class);
 		MailSenderAccount mailSenderAccount  = ctrl.createMock(MailSenderAccount.class);
+		JavaMailSender mailSender  = ctrl.createMock(JavaMailSender.class);
+		
 		EasyMock.expect(javaMailSenderFactory.create(mailSenderAccount)).andReturn(mailSender);
 		
 		MimeMessage mimeMessage = ctrl.createMock(MimeMessage.class);
@@ -56,12 +71,62 @@ public class MailServiceTest {
 		
 		mailSender.send(mimeMessage);
 		EasyMock.expectLastCall().once();		
+		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
+
+		EasyMock.expect(conseilLocalEtablissement.getMailSenderAccount()).andReturn(mailSenderAccount);
 		
-		MailService mailService = new MailService(javaMailSenderFactory, emailTemplateEngine);
+		
+		MailService mailService = create();
+		mailService.onSelected(conseilLocalEtablissement);
 		support.replayAll();
 		
-		mailService.send(preparator, mailSenderAccount);
+		mailService.send(preparator);
 		
 		support.verifyAll();
+	}
+	
+	@Test
+	public void testGetInternetAddressEmail() throws AddressException {
+		
+
+		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
+
+		MailSenderAccount mailSenderAccount = ctrl.createMock(MailSenderAccount.class);
+
+		EasyMock.expect(conseilLocalEtablissement.getMailSenderAccount()).andReturn(mailSenderAccount);
+		String email = "email";
+		EasyMock.expect(mailSenderAccount.getUsername()).andReturn(email);
+
+		InternetAddress internetAddress = ctrl.createMock(InternetAddress.class);
+		EasyMock.expect(internetAddressFactory.create(email)).andReturn(internetAddress);
+		support.replayAll();
+		MailService create = create();
+		create.onSelected(conseilLocalEtablissement);
+		assertEquals(internetAddress, create.getInternetAddressEmail());
+		support.verifyAll();
+
+	}
+	
+
+	@Test
+	public void testGetConseilLocalEtablissementEmail() {
+		MailService create = create();
+
+		ConseilLocalEtablissement conseilLocalEtablissement = ctrl.createMock(ConseilLocalEtablissement.class);
+
+		MailSenderAccount mailSenderAccount = ctrl.createMock(MailSenderAccount.class);
+
+		EasyMock.expect(conseilLocalEtablissement.getMailSenderAccount()).andReturn(mailSenderAccount);
+		String email = "email";
+		EasyMock.expect(mailSenderAccount.getUsername()).andReturn(email);
+
+		support.replayAll();
+		create.onSelected(conseilLocalEtablissement);
+		assertEquals(email, create.getConseilLocalEtablissementEmail());
+		support.verifyAll();
+
+	}
+	private MailService create() {
+		return new MailService(javaMailSenderFactory, emailTemplateEngine, internetAddressFactory);
 	}
 }

@@ -9,8 +9,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 public class DeleguesTemplateMailPreparator extends AbstractTemplatableMailPreparator {
 
 	public DeleguesTemplateMailPreparator(MimeMessageHelperFactory mimeMessageHelperFactory,
-			AnneeScolaireTemplateFactory templateFactory, InternetAddressFactory internetAddressFactory, DateProvider dateProvider, String template, String encoding) {
-		super(mimeMessageHelperFactory, templateFactory, internetAddressFactory, dateProvider, template, encoding);
+			AnneeScolaireTemplateFactory templateFactory, MailService mailService, DateProvider dateProvider, String template, String encoding) {
+		super(mimeMessageHelperFactory, templateFactory, mailService, dateProvider, template, encoding);
 	}
 
 	
@@ -19,9 +19,7 @@ public class DeleguesTemplateMailPreparator extends AbstractTemplatableMailPrepa
 		final MimeMessageHelper message = createMimeMessageHelper(mimeMessage);
 		message.setTo("mailinglist@groupe.com");
 		message.setSubject("Point sur les délégués de classes du collège Fantin Latour et autres informations");
-		
-
-
+	
 	}
 
 
