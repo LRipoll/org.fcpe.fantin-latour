@@ -15,6 +15,7 @@ import org.fcpe.fantinlatour.courriel.DeleguesServiceCourrielListener;
 import org.fcpe.fantinlatour.courriel.GoogleGroupService;
 import org.fcpe.fantinlatour.courriel.GoogleGroupServiceFactory;
 import org.fcpe.fantinlatour.courriel.ListingFactory;
+import org.fcpe.fantinlatour.email.MailService;
 import org.fcpe.fantinlatour.model.AnneeScolaire;
 import org.fcpe.fantinlatour.model.ClasseFactory;
 import org.fcpe.fantinlatour.model.ConseilLocalConfig;
@@ -115,6 +116,9 @@ public class ConseilLocalApp extends Application {
 		viewFactory.createScene(stage, "main");
 		ConseilLocalEtablissementManager conseilLocalEtablissementManager = SpringFactory
 				.getService(ConseilLocalEtablissementManager.ID);	
+		MailService mailService = SpringFactory
+				.getService(MailService.ID);	
+		conseilLocalEtablissementManager.addListener(mailService);
 		stage.show();
 		conseilLocalEtablissementManager.init();
 		
