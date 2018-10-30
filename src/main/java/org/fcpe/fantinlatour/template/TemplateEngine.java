@@ -8,6 +8,8 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
 
 public class TemplateEngine {
 
+	public static final String ID = "templateEngine";
+	
 	@Autowired
 	private VelocityEngine velocityEngine;
 	

@@ -26,6 +26,7 @@ import org.fcpe.fantinlatour.parser.ElevesParser;
 import org.fcpe.fantinlatour.parser.ResponsablesLegauxParser;
 import org.fcpe.fantinlatour.parser.ResponsablesLegauxParserListener;
 import org.fcpe.fantinlatour.service.SpringFactory;
+import org.fcpe.fantinlatour.template.TemplateEngine;
 import org.fcpe.fantinlatour.view.ViewFactory;
 import org.springframework.mail.javamail.JavaMailSender;
 
@@ -119,6 +120,11 @@ public class ConseilLocalApp extends Application {
 		MailService mailService = SpringFactory
 				.getService(MailService.ID);	
 		conseilLocalEtablissementManager.addListener(mailService);
+		
+		VelocityEngine velocityEngine = SpringFactory.getService("velocityEngine");
+		TemplateEngine templateEngine= SpringFactory.getService(TemplateEngine.ID);
+		templateEngine.setVelocityEngine(velocityEngine);
+		
 		stage.show();
 		conseilLocalEtablissementManager.init();
 		

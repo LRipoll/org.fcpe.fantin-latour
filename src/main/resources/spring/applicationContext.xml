@@ -46,7 +46,7 @@
 	<bean id="mailService" class="org.fcpe.fantinlatour.email.MailService"
 		scope="singleton">
 		<constructor-arg ref="javaMailSenderFactory"/>
-		<constructor-arg ref="emailTemplateEngine"/>
+		<constructor-arg ref="templateEngine"/>
 		<constructor-arg ref="internetAddressFactory"/>
 		<constructor-arg ref="mimeMessageHelperFactory"/>
 	</bean>
@@ -54,9 +54,7 @@
 	<bean id="mimeMessageHelperFactory" class="org.fcpe.fantinlatour.email.MimeMessageHelperFactory"
 		scope="singleton">
 	</bean>
-	<bean id="emailTemplateEngine" class="org.fcpe.fantinlatour.template.TemplateEngine"
-		scope="singleton">
-	</bean>
+	
 	
 	<bean id="internetAddressFactory" class="org.fcpe.fantinlatour.email.InternetAddressFactory"
 		scope="singleton">
@@ -75,6 +73,20 @@
 	<bean id="javaMailPropertiesFactory" class="org.fcpe.fantinlatour.email.JavaMailPropertiesFactory"
 		scope="singleton">
 	</bean>
+	
+	<!-- Template -->
+	<bean id="templateEngine" class="org.fcpe.fantinlatour.template.TemplateEngine"
+		scope="singleton">
+	</bean>
+	<!--  >bean id="anneeScolaireTemplateFactory" class="org.fcpe.fantinlatour.template.AnneeScolaireTemplateFactory"
+		scope="singleton">
+	</bean>
+	<bean id="classeTemplateFactory" class="org.fcpe.fantinlatour.template.ClasseTemplateFactory"
+		scope="singleton">
+	</bean>
+	<bean id="conseilLocalTemplateFactory" class="org.fcpe.fantinlatour.template.ConseilLocalTemplateFactory"
+		scope="singleton">
+	</bean-->
 	
 	<!--  Manager -->
 	<bean id="conseilLocalEtablissementManager" class="org.fcpe.fantinlatour.model.controller.ConseilLocalEtablissementManager"

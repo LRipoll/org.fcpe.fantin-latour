@@ -25,7 +25,7 @@
           	<TH>Nom</TH>
             <TH>Prénom</TH>
           </TR>
-        	#foreach( $delegue in $classe.DeleguesVolontaires )
+        	#foreach( $delegue in $classe.DeleguesRetenus )
           <TR class="#isOdd( $foreach.count "a" "b")">
             <TD>$delegue.responsableLegal.nom</TD>
             <TD>$delegue.responsableLegal.prenom</TD>

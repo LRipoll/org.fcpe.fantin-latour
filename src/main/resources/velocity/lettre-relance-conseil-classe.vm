@@ -32,7 +32,7 @@
           	<TH>Nom</TH>
             <TH>Prénom</TH>
           </TR>
-        	#foreach( $delegue in $classe.DeleguesVolontaires )
+        	#foreach( $delegue in $classe.DeleguesRetenus )
           <TR class="#isOdd( $foreach.count "a" "b")">
             <TD>$delegue.responsableLegal.nom</TD>
             <TD>$delegue.responsableLegal.prenom</TD>
@@ -61,10 +61,11 @@
           <TR class="#isOdd( $foreach.count "a" "b")">
             <TD>$eleve.nom</TD>
             <TD>$eleve.prenom</TD>
-            <TD>$eleve.responsableLegal1.nom</TD>
-            <TD>$eleve.responsableLegal1.prenom</TD>
-            <TD>$eleve.responsableLegal2.nom</TD>
-            <TD>$eleve.responsableLegal2.prenom</TD>
+           
+            <TD>#if ($eleve.responsableLegal1 != $null)$eleve.responsableLegal1.nom#end</TD>
+            <TD>#if ($eleve.responsableLegal1 != $null)$eleve.responsableLegal1.prenom#end</TD>
+            <TD>#if ($eleve.responsableLegal2 != $null)$eleve.responsableLegal2.nom#end</TD>
+            <TD>#if ($eleve.responsableLegal2 != $null)$eleve.responsableLegal2.prenom#end</TD>
           </TR>
          #end
       </TABLE>

@@ -6,7 +6,9 @@ import java.util.Map;
 public class TemplateFactory {
 
 	public Map<String, Object> create() {
-		return new HashMap<String, Object>();
+		HashMap<String, Object> model = new HashMap<String, Object>();
+		model.put(Integer.class.getSimpleName(), Integer.class);
+		return model;
 	}
 	
 }

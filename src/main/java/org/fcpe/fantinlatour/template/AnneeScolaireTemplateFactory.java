@@ -20,7 +20,7 @@ public class AnneeScolaireTemplateFactory extends TemplateFactory {
 		
 		Map<String, Object> model = super.create();
 		model.put("anneeScolaire", anneeScolaire);
-		model.put(Integer.class.getSimpleName(), Integer.class);
+		
 		
 		return model;
 		
